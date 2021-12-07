@@ -2,6 +2,12 @@ close all
 clear all
 clc
 
+
+% Add paths
+addpath('auxData_SHRU5/');
+addpath('DataAux/');
+addpath('mat_files/');
+
 %% Temperature
 load temp_shru5.mat
 
