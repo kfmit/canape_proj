@@ -7,7 +7,7 @@ close all
 % LATITUDES
 shrulat = [54.4123 45.2347 40.6924 36.6582 45.4580]/60;         % N
 shrulat = shrulat+72;                                           % latitude
-shrulon =[159.018066666666667 158.2721 157.9108 157.5375 157.4874 ];    % W
+shrulon =[159.018066666666667 158.2721 157.9108 157.5375 157.4874 ]*-1;    % W
 shrudepth = [163 163 163 163 163];  % start depth of each thing
 shrud_d = [0 2.5 5 7.5];
 % water depth is NOT shruepth
@@ -75,17 +75,20 @@ title('Hydrophone Location and Depth')
 %% Beamforming part of the array
 % aka just one shru: sensors ar 2.5 m apaprt
 
-n_chan = 4;     % in 
-c = 1442;       % in channel speed
-d = 2.5;        % in m
-fs = 3906.2;    % sample freq
-f0 = 300;       % Hz, what we're looking for 
+n_chan = 4;           % in 
+c = 1442;             % in channel speed
+d = 2.5;              % in m
+fs = 3906.2;          % sample freq
+%f0 = 300;            % Hz, what we're looking for
+f_test = [250:350];
 p_ = [0 2.5 5 7.5];           % remember this is vertical
 % checks
 if ~iscolumn(p_)
     p_=transpose(p_);
 end
 
+for n=1:length(f_test)
+    f0=f_test(n);
 
 % Conventional Beamforming
 % the general stuff: weighting, plotting, looking
@@ -111,7 +114,7 @@ for i=1:Ntheta
     %     Y_CBF(i_snap,i) = sum(w_'*s);
 end
 
-clear v k
+end
 
 % Plot conventional
 figure(1)
@@ -131,13 +134,24 @@ ylabel('|\Upsilon| Output')
 xlabel('\theta')
 title('Vertical: Conventional Beampattern Power of |\Upsilon|')
 
+figure
+imagesc(theta,250:350,20*log(abs(B_CBF)))
+xlabel('\theta')
+title('Vertical Array Response')
+cbar = colorbar
+set(get(cbar,'label'),'string','dB')
+
 %% Verical Array: Using the matlab toolbox
 H = phased.ULA('NumElements',4,'ElementSpacing',2.5);%'ArrayAxis','z');
 p_matlab =getElementPosition(H);
 % it doesn't like when I set it to the z axis
 viewArray(H)
 
-f_test = [250 275 300 325 350];
+% f_test = [250 275 300 325 350];
+%%%% F TEST
+f_test = [250:350];
+
+%%%% FTEST
 figure
 pattern(H,f_test,-180:180,0,'PropagationSpeed',c,'CoordinateSystem','rectangular','Type','powerdb','Normalize',true)
 
@@ -166,7 +180,7 @@ figure
 scatter(p_,zeros(1,length(p_)),70, 'filled')
 title('Geometry of Horizontal Array')
 xlabel('meters')
-%%
+%
 n_chan = 5;     % in 
 c = 1442;       % in channel speed
 d = 2.5;        % in m
@@ -177,7 +191,8 @@ fs = 3906.2;    % sample freq
 if ~iscolumn(p_)
     p_=transpose(p_);
 end
-
+%% Horizontal Conventional beamforming
+f_test = [1:1:50]; % lower freqs
 for n=1:length(f_test)
     f0=f_test(n);
 % Conventional Beamforming
@@ -217,14 +232,23 @@ xlim([theta(1) theta(end)]);
 ylabel('|\Upsilon| Output')
 xlabel('\theta')
 % legend('Broadside','Target')
-title('Horizontal: Conventional Beampattern |\Upsilon|')
-legend('250',' 275','300','325','350')
+title('Horizontal 0-50 Hz: Conventional Beampattern |\Upsilon|')
+%legend('250',' 275','300','325','350')
 
 figure
 plot(theta,20*log(abs(B_CBF)))
 ylabel('|\Upsilon| Output')
 xlabel('\theta')
-title('Horizontal: Conventional Beampattern Power of |\Upsilon|')
+title('Horizontal 0-50 Hz: Conventional Beampattern Power of |\Upsilon|')
+
+%
+figure
+imagesc(theta,0:50,20*log(abs(B_CBF)))
+xlabel('\theta')
+title('Horizontal Array Response 0-50 Hz')
+cbar = colorbar
+set(get(cbar,'label'),'string','dB')
+
 
 %% Horizontal Array: Using the matlab toolbox
 
@@ -233,3 +257,9 @@ H = phased.ULA('NumElements',4,'ElementSpacing',p_);%'ArrayAxis','z');
 % Handle as irregular array?
 
 % handle as triangular array
+
+%% proving the minimum freq is very small
+
+minlam = min(dist_shrus(2:5));
+minlam= minlam*2;      % must convert from km to m
+minf = c/(minlam*1000)
