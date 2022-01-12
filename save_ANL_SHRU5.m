@@ -26,6 +26,12 @@ timestamp_num_spectro=datenum(timestamp_wavDataFiles,'yyyymmddHHMMSS');
 %%
 ind_p=3;
 ind_capt=4;
+% original frequencies
+% f1=[30  50  500 1000 250];
+% f2=[80 500 1000 2000 350];
+
+
+%%% NEW Frequencies that I do
 f1=[30  50  500 1000 250];
 f2=[80 500 1000 2000 350];
 

@@ -1,3 +1,5 @@
+%% Julien wrote, modified by Kat
+
 clear all
 close all
 clc
@@ -65,9 +67,6 @@ end
 
 
 %% Beamform
-
-
-
 sig=x_vla_n;
 
 tic

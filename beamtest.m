@@ -1,3 +1,4 @@
+addpath('/home/kfung/Downloads/CANAPE/mat_files/')
 load('ANL_SHRU1.mat')
 c = 1422;
 f0 = 300;

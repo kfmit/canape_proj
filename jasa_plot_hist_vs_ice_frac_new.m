@@ -2,6 +2,7 @@ close all
 clear all
 clc
 
+% change load names as needed
 load ANL_SHRU5.mat
 load sunrise_sunset_2017_feb_april.mat
 

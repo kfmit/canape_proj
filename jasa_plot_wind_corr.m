@@ -75,7 +75,7 @@ for mm=1:N_month
     ice0=ice_frac_interp(ind_t);
     
     %%% keep only good points
-    ind_keep=find(anl_ok>20);
+    ind_keep=find(anl0>20);
     wind_ok=wind0(ind_keep);
     anl_ok=anl0(ind_keep);
     t_ok=t0(ind_keep);
