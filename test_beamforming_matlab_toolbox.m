@@ -5,7 +5,7 @@ clc
 fs=4e3;
 c=1440;
 
-%% Create array signal
+%% Create array signal, simulated
 t=0:1/fs:0.2;
 N=length(t);
 
@@ -97,8 +97,8 @@ pattern(antenna,f_test,azimuth,elevation,'PropagationSpeed',c,...
     'CoordinateSystem','rectangular', 'Type','directivity');
 
 
-% [PAT,AZ_ANG,EL_ANG] = pattern(antenna,f_test,azimuth,elevation,'PropagationSpeed',c,...
-%     'CoordinateSystem','rectangular', 'PlotStyle', 'waterfall', 'Type','directivity');
+ [PAT,AZ_ANG,EL_ANG] = pattern(antenna,f_test,azimuth,elevation,'PropagationSpeed',c,...
+    'CoordinateSystem','rectangular', 'PlotStyle', 'waterfall', 'Type','directivity');
 
 figure,
 imagesc(f_test,azimuth,PAT)

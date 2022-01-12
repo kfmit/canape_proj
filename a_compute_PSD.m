@@ -16,17 +16,16 @@ format short          % scaled fixed point with 5 digits
 chn =0:3; 
 
 %% user-defined parameters : LTSA option
-%%% decimation factor for LTSA computation 
-%%% LTSA: local tangent space alignment? linear time series modelling 
+%%% decimation factor for LTSA computation linear time series modelling 
 n_decimate=1;
 %%% NB: if n_decimate = 1, then no decimation 
 
 %%% Long term spectrogram parameters
-nFFT_sec= 2; % short window, in seconds
-nIntegWin_sec= 5*60; % long window, in seconds
+nFFT_sec= 2;                         % short window, in seconds
+nIntegWin_sec= 5*60;                 % long window, in seconds
 
-nOverlapFFT_sec = nFFT_sec/2; % in second
-nOverlapIntegWin_sec = 0; % in seconds
+nOverlapFFT_sec = nFFT_sec/2;        % in second
+nOverlapIntegWin_sec = 0;            % in seconds
 
 step_IntegWin = 1; % One IntegWin every step_IntegWin file will be processed to compute the LTSA. 
 %%%% NB: if step_IntegWin = 1, then all IntegWin will be processe
@@ -40,6 +39,7 @@ integrationMethod = 'kinda';
 percentil_kinda = [5 10 15 20 50];
 
 nmax_IntegWin_per_DataFile = Inf;% Max number of IntegWin per data files
+
 %%%% NB: if nmax_IntegWin_per_file = Inf, then LTSA will be computed over
 %%%% entire data files.
 step_DataFile = 1; % One data files every step_DataFile file will be processed to compute the LTSA. 
@@ -52,7 +52,7 @@ NberMaxFile=Inf; % Number of the last data file that will be processed
 
 %% Folders with acoustics data and routines
 
-fixed_gain = 26; 
+fixed_gain = 26;                        % gain is set to 26 (based on SNR?)
 hydrophone_sensitivity=170;
 Nchan=length(chn);
 
@@ -66,12 +66,12 @@ addpath('/mnt/usbdrive/shru_data/'); %% local for kat
 % addpath('/home/julien/SHRU_programs/') %% on chaos
 
 %%% Folder with SHRU data (not local, must be mounted first)
-%         SHRU_Data= '/home/julien/ju_boulot/canape_chaos/Canape2016_shru_data/'; %% on chaos from moliere
-%         SHRU_Data= '/home/jbonnel/canape_chaos/Canape2016_shru_data/'; %% on chaos from laptop
-%         SHRU_Data= '/data3/canape/Canape2016_shru_data/'; %% on chaos from chaos
+% SHRU_Data= '/home/julien/ju_boulot/canape_chaos/Canape2016_shru_data/'; %% on chaos from moliere
+% SHRU_Data= '/home/jbonnel/canape_chaos/Canape2016_shru_data/'; %% on chaos from laptop
+% SHRU_Data= '/data3/canape/Canape2016_shru_data/'; %% on chaos from chaos
 % SHRU_Data= '/raid0/canape/'; %% local on moliere
 
-% Kat Path
+%%% Kat Path %%%
 SHRU_Data= '/mnt/usbdrive/shru_data/'; %% local for kat
 %%% SHRU name/number (name of folder in SHRU_Data without suffix)
 %%% change to point at different SHRUs
@@ -144,18 +144,19 @@ ii=1;
 tic
 
 
-fs=fs_orig/n_decimate;          % sampling freq: orginal over decimation factor
+fs=fs_orig/n_decimate;              % sampling freq: orginal over decimation factor
 
-nFFT = 2^(nextpow2(nFFT_sec*fs)); %%% in samples      
-nOverlapFFT = 2^(nextpow2(nOverlapFFT_sec*fs)); %%% in samples  
 
-nIntegWin = round(nIntegWin_sec*fs);  %%% in samples      
+nFFT = 2^(nextpow2(nFFT_sec*fs));                   %%% in samples      
+nOverlapFFT = 2^(nextpow2(nOverlapFFT_sec*fs));     %%% in samples  
+
+nIntegWin = round(nIntegWin_sec*fs);                %%% in samples      
 nOverlapIntegWin = round(nOverlapIntegWin_sec*fs);  %%% in samples      
 
 
 for ww=1:step_DataFile:min(Nfile,NberMaxFile)
    
-    filename=SHRU.filenames(ww,:);
+    filename=SHRU.filenames(ww,        :);
     fid = fopen(filename,'rb','ieee-be');   % big endian for SHRU
     [drhs]=SHRU_getAllDRH(fid);             
     fclose(fid);
@@ -173,7 +174,7 @@ for ww=1:step_DataFile:min(Nfile,NberMaxFile)
     
     if n_decimate>1
         x_orig=x;
-        clear x
+        clear x        
         for cc=1:Nchan
             x(:,cc)=decimate(x_orig(:,cc),n_decimate);
         end
@@ -203,13 +204,13 @@ for ww=1:step_DataFile:min(Nfile,NberMaxFile)
         ddd = datestr(addtodate(tstartfile,round(1000*xStart(indIntegWin)/fs),'millisecond'),'yyyymmddHHMMSS');
         timestamp_wavDataFiles = [timestamp_wavDataFiles ; {ddd}];
 
-        %% pwelch
+        %% for pwelch analysis
         if strcmp(integrationMethod, 'pwelch')
             [vPSD_int,fPSD]=pwelch(xint,nFFT,nOverlapFFT,nFFT,fs,'psd','onesided');
             vPSD_pwelch(ii,:,:) = vPSD_int;
         end
 
-        %% kinda-integration
+        %% for kinda-integration analysis
         if strcmp(integrationMethod, 'kinda')
             for cc=1:Nchan
                 xint_mono=xint(:,cc);
