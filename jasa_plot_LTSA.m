@@ -2,7 +2,9 @@ close all
 clear all
 clc
 
-load ANL_SHRU5.mat
+% load ANL_SHRU5.mat
+
+load ANL_SHRU5_newfreq.mat
 
 load ArchivedPSDcomputation/PSD_CANAPE_SHRU5_914_sw_0.0625_lw_420_osw_0.03125_olw_0.mat
 ind_cut=34;
@@ -27,6 +29,7 @@ timestamp_num_spectro=datenum(timestamp_wavDataFiles,'yyyymmddHHMMSS');
 %%
 ind_p=3;
 ind_capt=4;
+%% change the freq range here1
 f1=250;
 f2=350;
 
@@ -80,7 +83,7 @@ c.Label.String = 'dB re 1\muPa^2 / Hz';
 
 %%
 
-ind_f=5;
+ind_f=5; %% this picks the column of freqs
 
 subplot(313)
 % yyaxis left

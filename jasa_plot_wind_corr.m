@@ -12,7 +12,8 @@ t_anl=timestamp_num_spectro;
 
 % f1=[40 450 900 1250 250];
 % f2=[60 550 1100 1750 350];
-anl=SPL_ANL(:,1);   %%% focus on the band 250-350 Hz, column 5
+ff = 5;
+anl=SPL_ANL(:,ff);   %%% focus on the band 250-350 Hz, column 5
 
 ice_frac=T_ssmi.icefrac;
 t_ice=timestamp_num_ssmi;
@@ -63,6 +64,7 @@ clc
 N_month=9;
 m0=10;
 
+
 hf=figure('units','normalized','outerposition',[0 0 .5 1]);
 for mm=1:N_month
 %     for mm=1
@@ -106,14 +108,14 @@ for mm=1:N_month
     grid on
     xlabel('Wind speed (m/s)')
     ylabel('ANL (dB re 1\muPa^2)')
-    title([datestr(t0(mm)), ' to ' datestr(t1(mm))])
+    title({[datestr(t0(mm))], [' to ' datestr(t1(mm))]})
     
     if mm==1
         legend('IC>50%', 'IC<50%','location','northwest')
     end
 
 end
-sgtitle('Wind Correlation for 250-350 Hz')
+sgtitle(['Wind Correlation for [' num2str(f1(ff)) ' - ' num2str(f2(ff)) '] Hz'])
 
 
 
@@ -124,7 +126,7 @@ dim = cellfun(@(x) x.*[1 1 0.5 0.5], pos, 'uni',0);
 
 for mm = 1:N_month
     annotation(hf, 'textbox',  dim{mm}, 'String', ['R=', num2str(round(R(mm)*100)/100)], 'vert', ...
-        'bottom', 'FitBoxToText','on', 'Color', 'k', 'fontsize',18,'fontweight',...
+        'bottom', 'FitBoxToText','on', 'Color', 'k', 'fontsize',17,'fontweight',...
         'bold','LineStyle','none');
 end
 

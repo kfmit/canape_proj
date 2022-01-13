@@ -2,10 +2,6 @@ close all
 clear all
 clc
 
-
-
-
-
 load ArchivedPSDcomputation/PSD_CANAPE_SHRU5_914_sw_1_lw_200_osw_0_olw_0.mat
 ind_cut=1; 
 ind_capt=4;
@@ -68,9 +64,10 @@ end
 %     hold on
 % end
 grid on
-xlim([20 350])
+xlim([0 1900])
 ylim([45 100])
-xticks([10 20 30 40 50 100 200 250 350])
+xticks([4 10 20 30 40 50 60 100 200 250 350 450 550 900 1100 1250 1750])
+xtickangle(45)
 xlabel('Frequency (Hz)')
 ylabel('Sound Spectrum level (dB re 1 \muPa^2/Hz)')
 % legend('November', 'December', 'January', 'February', 'March', 'April', 'May', 'June', 'July')
