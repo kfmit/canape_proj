@@ -3,12 +3,16 @@ clear all
 clc
 
 
-load ANL_SHRU5.mat
+load ANL_SHRU5_newfreq.mat
+% load ANL_SHRU5.mat
 
 wind=T_ecmwf.W10;
 t_wind=timestamp_num_ecmwf;
 t_anl=timestamp_num_spectro;
-anl=SPL_ANL(:,5);   %%% focus on the band 250-350 Hz
+
+% f1=[40 450 900 1250 250];
+% f2=[60 550 1100 1750 350];
+anl=SPL_ANL(:,1);   %%% focus on the band 250-350 Hz, column 5
 
 ice_frac=T_ssmi.icefrac;
 t_ice=timestamp_num_ssmi;
@@ -97,7 +101,7 @@ for mm=1:N_month
     plot(wind_ok(ice_ok<ice_limit),anl_ok(ice_ok<ice_limit),'ob')
     hold on
     plot(wind_lin,anl_lin,'k', 'linewidth',2)
-    xlim([0 15])
+    xlim([0 15])        % change as needed for each iteration
     ylim([60 95])
     grid on
     xlabel('Wind speed (m/s)')
@@ -109,7 +113,7 @@ for mm=1:N_month
     end
 
 end
-
+sgtitle('Wind Correlation for 250-350 Hz')
 
 
 
@@ -117,7 +121,29 @@ arrayfun(@(x) pbaspect(x, [1 1 1]), ha);
 drawnow;
 pos = arrayfun(@plotboxpos, ha, 'uni', 0);
 dim = cellfun(@(x) x.*[1 1 0.5 0.5], pos, 'uni',0);
+
 for mm = 1:N_month
-    annotation(hf, 'textbox',  dim{mm}, 'String', ['R=', num2str(round(R(mm)*100)/100)], 'vert', 'bottom', 'FitBoxToText','on', 'Color', 'k', 'fontsize',18,'fontweight','bold','LineStyle','none');
+    annotation(hf, 'textbox',  dim{mm}, 'String', ['R=', num2str(round(R(mm)*100)/100)], 'vert', ...
+        'bottom', 'FitBoxToText','on', 'Color', 'k', 'fontsize',18,'fontweight',...
+        'bold','LineStyle','none');
 end
 
+%% limits for each band
+
+% for 250-350
+% xlim([0 15])        % change as needed for each iteration
+% ylim([60 95])
+
+% for 40-60
+% xlim({})
+% ylim([60 95])
+
+% for 459-550
+% xlim({})
+% ylim([60 95])
+
+% for 900-1100
+% xlim({})
+% ylim([60 95])
+
+% for 1250-1750

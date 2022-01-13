@@ -32,8 +32,8 @@ ind_capt=4;
 
 
 %%% NEW Frequencies that I do
-f1=[30  50  500 1000 250];
-f2=[80 500 1000 2000 350];
+f1=[40 450 900 1250 250];
+f2=[60 550 1100 1750 350];
 
 ANL=squeeze(vPSD_kinda(:,:,ind_p,ind_capt));
 LTSA=squeeze(vPSD_pwelch_kinda(:,:,ind_capt));
@@ -91,6 +91,7 @@ for ff=1:Nf
     datetick('x','mmmyy')
     title('Raw data')
 end
+
 
 save ANL_SHRU5 timestamp_num_spectro SPL_ANL SPL_raw  ind_p ind_capt f1 f2 Nf Nt ...
     T_ssmi timestamp_num_ssmi T_ecmwf timestamp_num_ecmwf T_smos timestamp_num_smos T_temp timestamp_num_temp 

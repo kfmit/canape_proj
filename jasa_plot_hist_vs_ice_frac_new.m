@@ -3,11 +3,14 @@ clear all
 clc
 
 % change load names as needed
-load ANL_SHRU5.mat
+% load ANL_SHRU5.mat
+load ANL_SHRU5_newfreq.mat
 load sunrise_sunset_2017_feb_april.mat
 
+% f1=[40 450 900 1250 250];
+% f2=[60 550 1100 1750 350];
 
-ff=2;
+ff=5; % this picks the freq
 
 figure
 subplot(211)
@@ -18,7 +21,7 @@ plot(timestamp_num_ssmi,T_ssmi.icefrac)
 ylim([-10 110])
 grid on
 datetick('x')
-title('Ambient noise level')
+title(['Ambient noise level for [' num2str(f1(ff)) ' - ' num2str(f2(ff)) ']  Hz'])
 
 subplot(212)
 yyaxis left
@@ -28,7 +31,7 @@ plot(timestamp_num_ssmi,T_ssmi.icefrac)
 ylim([-10 110])
 grid on
 datetick('x','mmmyy')
-title('Raw data')
+title(['Raw data for [' num2str(f1(ff)) ' - ' num2str(f2(ff)) ']  Hz'])
 
 %%
 Nice=length(timestamp_num_ssmi);
@@ -51,8 +54,6 @@ ind_no_ice_2=find(timestamp_num_spectro > beg_no_ice);
 ind_no_ice=[ind_no_ice_1 ; ind_no_ice_2];
 
 
-
-
 figure
 p1=subplot(211);
 plot(timestamp_num_spectro,SPL_ANL(:,ff))
@@ -61,7 +62,7 @@ plot(timestamp_num_spectro(ind_ice),SPL_ANL(ind_ice,ff))
 plot(timestamp_num_spectro(ind_no_ice),SPL_ANL(ind_no_ice,ff), '.')
 grid on
 datetick('x')
-title('Ambient noise level')
+title(['Ambient noise level for [' num2str(f1(ff)) ' - ' num2str(f2(ff)) ']  Hz'])
 p2=subplot(212);
 plot(timestamp_num_ssmi,T_ssmi.icefrac)
 title('Ice concentration')
@@ -72,7 +73,9 @@ linkaxes([p1 p2], 'x')
 
 
 %% Histograms
-ff=5;
+
+% change ff as needed
+% ff=5;
 
 ANL_ice=SPL_ANL(ind_ice,ff);
 ANL_no_ice=SPL_ANL(ind_no_ice,ff);
@@ -92,7 +95,7 @@ hold on
 histogram(ANL_no_duct, ANL_vec,'Normalization', 'pdf')
 hold on
 histogram(ANL_no_ice, ANL_vec,'Normalization', 'pdf')
-legend('Ice with duct', 'Ice wihtout duct', 'No ice')
+legend('Ice with duct', 'Ice without duct', 'No ice')
 title(['Ambient noise level in [' num2str(f1(ff)) ' - ' num2str(f2(ff)) '] Hz'])
 grid on
 xlim([60 105])
