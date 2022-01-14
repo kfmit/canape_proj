@@ -12,7 +12,7 @@ t_anl=timestamp_num_spectro;
 
 % f1=[40 450 900 1250 250];
 % f2=[60 550 1100 1750 350];
-ff = 5;
+ff = 4;
 anl=SPL_ANL(:,ff);   %%% focus on the band 250-350 Hz, column 5
 
 ice_frac=T_ssmi.icefrac;
@@ -104,7 +104,7 @@ for mm=1:N_month
     hold on
     plot(wind_lin,anl_lin,'k', 'linewidth',2)
     xlim([0 15])        % change as needed for each iteration
-    ylim([60 95])
+    ylim([65 102])
     grid on
     xlabel('Wind speed (m/s)')
     ylabel('ANL (dB re 1\muPa^2)')

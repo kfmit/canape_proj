@@ -34,8 +34,13 @@ m0=10;
 hind = 1;         
 dbvec = 30:hind:90;
 
+% originals
+% min_f=25;  %% [Hz]
+% max_f=350;  %% [Hz]
+
 min_f=25;  %% [Hz]
 max_f=350;  %% [Hz]
+
 ind_f=find(fPSD<max_f & fPSD>min_f);
 
 ePSD=zeros(N_month,length(dbvec),length(fPSD(ind_f)));
@@ -80,16 +85,21 @@ for mm=1:N_month
     ylabel('ANL (dB re 1 \muPa^2/Hz)')
 end
 
-
+c=colorbar(ha(end));
+c.Location = 'southoutside'; 
+c.Label.String = 'Probability density';
+set(c, {'Position'}, mat2cell(vertcat(c.Position) .* [1 1 .92, 1], ones(size(c(:))),4))
 
 arrayfun(@(x) pbaspect(x, [1 1 1]), ha);
 drawnow;
 pos = arrayfun(@plotboxpos, ha, 'uni', 0);
 dim = cellfun(@(x) x.*[1 1 0.5 0.5], pos, 'uni',0);
 for mm = 1:N_month
-    annotation(hf, 'textbox',  dim{mm}, 'String', ['IC=' num2str(round(ic(mm))) '%'], 'vert', 'bottom', 'FitBoxToText','on', 'Color', 'r', 'fontsize',18,'fontweight','bold','LineStyle','none');
+    annotation(hf, 'textbox',  dim{mm}, 'String', ['IC=' num2str(round(ic(mm))) '%'],...
+        'vert', 'bottom', 'FitBoxToText','on', 'Color', 'r', 'fontsize',18,'fontweight','bold',...
+        'LineStyle','none');
 end
 
 
-c=colorbar('southoutside');
-c.Label.String = 'Probability density';
+
+
