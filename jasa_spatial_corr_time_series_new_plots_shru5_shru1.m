@@ -15,8 +15,10 @@ lonlimit=[gps_site(2)-dlon gps_site(2)+dlon];
 lonlimit_ok=[lonlimit(2) lonlimit(1)+360];
 latlimit=[65 85];
 
-load ANL_SHRU5.mat
+load ANL_SHRU5_newfreq.mat
+% load ANL_SHRU5.mat
 t=timestamp_num_spectro;
+%%% WHERE DO I CONTROL FREQ SPECTRUM
 
 % load auxData_icedrift_on_psd_time.mat
 
@@ -74,10 +76,6 @@ ccc=[0 0.7];  %%% for caxis
 
 for tt=3:11
 %     for tt=1
-   
-    
-   
-   
    t_beg_num=date_loop(1,tt);
    t_end_num=date_loop(2,tt);      
    ind_t_ok_osisaf=find(t_osisaf >= t_beg_num & t_osisaf <= t_end_num);
@@ -107,11 +105,9 @@ for tt=3:11
 %     latitude_type_ok=double(latitude_type(toto_type));
 %     longitude_type_ok=double(longitude_type(toto_type));  
     
-    
-    
-    
-    
-    figure('visible','off');
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE VISIBILITY HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    figure('visible','on');
+%%%%%%%%%%%%%%%%%%%%%%%%%%5%% FIGURE VISIBILITY HER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
 %     figure
     h = get(0,'children');
     scrsz = get(0,'ScreenSize');
@@ -132,7 +128,9 @@ for tt=3:11
    
    [cmax_shru1(tt), indc_ave2_shru1(tt)]=max((J_shru1(:))); 
    [ii_shru1 jj_shru1]=ind2sub(size(latitude), indc_ave2_shru1(tt));
-     %% Correlation map SHRU5
+     
+   
+   %% Correlation map SHRU5
     subplot(221)   
     maph=axesm('MapProjection','lambertstd','MapLatLimit',latlimit,'MapLonLimit',lonlimit);
 
@@ -323,11 +321,13 @@ for tt=3:11
     
     legend('ANL (SHRU1)', 'Ice drift')
     
-      
- %%% error in 328   
-        print(gcf,['./spatial_corr_result/jasa_plot/spatial_corr_' ...
+    print(gcf,['./new_figs/spatial_corr_result/jasa_plot/spatial_corr_' ...
         datestr(t_beg_num, 'yyyymmdd') '-' datestr(t_end_num, 'yyyymmdd')]  ...
         ,'-dpng')
+    
+%      print(gcf,['./spatial_corr_result/jasa_plot/spatial_corr_' ...
+%         datestr(t_beg_num, 'yyyymmdd') '-' datestr(t_end_num, 'yyyymmdd')]  ...
+%         ,'-dpng')
 end
 
   dist_shrus=distance(gps_site_shru1(1), gps_site_shru1(2),gps_site(1), gps_site(2),referenceSphere('Earth'))/1000

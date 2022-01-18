@@ -26,10 +26,13 @@ T4= readtable('auxData_SHRU5/variables_temp_SHRU5.csv');
 timestamp_num_temp=datenum(num2str(T4.timestamp),'yyyymmddHHMMSS');
 
 timestamp_num_spectro=datenum(timestamp_wavDataFiles,'yyyymmddHHMMSS');
-%%
+%% What do these capture?
 ind_p=3;
 ind_capt=4;
-%% change the freq range here1
+
+% f1=250;
+% f2=350;
+
 f1=250;
 f2=350;
 
@@ -52,7 +55,7 @@ axis xy
 caxis([20 110])
 hold on
 plot(timestamp_num_env,T.icefrac*15, 'r', 'linewidth', 2)
-title('Power Spectral Density')
+title(['Power Spectral Density for [' num2str(f1) ' - ' num2str(f2) ']'])
 ylabel('Frequency (Hz)')
 % xlim([timestamp_num_spectro(1) timestamp_num_spectro(end)])
 xlim([datenum([2016,10,1]), datenum([2017,08,1])])

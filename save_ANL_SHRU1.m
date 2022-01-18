@@ -26,8 +26,12 @@ timestamp_num_spectro=datenum(timestamp_wavDataFiles,'yyyymmddHHMMSS');
 %%
 ind_p=3;
 ind_capt=4;
-f1=[30  50  500 1000 250];
-f2=[80 500 1000 2000 350];
+% f1=[30  50  500 1000 250];
+% f2=[80 500 1000 2000 350];
+
+%%% NEW Frequencies that I do
+f1=[40 450 900 1250 250];
+f2=[60 550 1100 1750 350];
 
 ANL=squeeze(vPSD_kinda(:,:,ind_p,ind_capt));
 LTSA=squeeze(vPSD_pwelch_kinda(:,:,ind_capt));
