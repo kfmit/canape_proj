@@ -38,8 +38,8 @@ dbvec = 30:hind:90;
 % min_f=25;  %% [Hz]
 % max_f=350;  %% [Hz]
 
-min_f=25;  %% [Hz]
-max_f=350;  %% [Hz]
+min_f=40;  %% [Hz]
+max_f=1750;  %% [Hz]
 
 ind_f=find(fPSD<max_f & fPSD>min_f);
 

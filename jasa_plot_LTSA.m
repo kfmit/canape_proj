@@ -35,6 +35,8 @@ ind_capt=4;
 
 f1=250;
 f2=350;
+% for [' num2str(f1) ' - ' num2str(f2) ']
+
 
 ANL=squeeze(vPSD_kinda(:,:,ind_p,ind_capt));
 
@@ -55,7 +57,7 @@ axis xy
 caxis([20 110])
 hold on
 plot(timestamp_num_env,T.icefrac*15, 'r', 'linewidth', 2)
-title(['Power Spectral Density for [' num2str(f1) ' - ' num2str(f2) ']'])
+title(['Power Spectral Density'])
 ylabel('Frequency (Hz)')
 % xlim([timestamp_num_spectro(1) timestamp_num_spectro(end)])
 xlim([datenum([2016,10,1]), datenum([2017,08,1])])
@@ -80,13 +82,16 @@ xlim([datenum([2016,10,1]), datenum([2017,08,1])])
 xticks([datenum([2016,10,1]) datenum([2016,12,1]) datenum([2017,2,1]) datenum([2017,4,1]) datenum([2017,6,1]) datenum([2017,8,1])])
 xticklabels({'Oct 2016','Dec 2016','Feb 2017','Apr 2017','Jun 2017','Aug 2017'})
 
+%%%%% this colorbar messes up the plot so %%%%%%%%%%%%%%%%%%%%%%
 c=colorbar('southoutside')
 c.Label.String = 'dB re 1\muPa^2 / Hz';
 
 
 %%
-
-ind_f=5; %% this picks the column of freqs
+% 
+% f1=[40 450 900 1250 250];
+% f2=[60 550 1100 1750 350];
+ind_f=1; %% this picks the column of freqs
 
 subplot(313)
 % yyaxis left
@@ -94,7 +99,9 @@ plot(timestamp_num_spectro, SPL_raw(:,ind_f))
 hold on
 plot(timestamp_num_spectro, SPL_ANL(:,ind_f))
 ylabel('Sound level (dB re 1\muPa^2 / Hz)')
-legend('PSD_{300}', 'ANL_{300}')
+
+%%% CHANGE LEGEND IF DIFFERENT %%%%%
+legend('PSD_{50}', 'ANL_{50}')
 
 % yyaxis right
 % hold on

@@ -2,9 +2,12 @@ close all
 clear all
 clc
 
+addpath('/home/kfung/Downloads/CANAPE/mat_files/')
+addpath('/home/kfung/Downloads/CANAPE/new_figs/')
+
 load spatial_cor_results_interp_new_shru1.mat
-corr_spa_ave2_shru1=corr_spa_ave2;
-SPL_ANL_ave2_SHRU1=SPL_ANL_ave2;
+corr_spa_ave2_shru1 = corr_spa_ave2;
+SPL_ANL_ave2_SHRU1 = SPL_ANL_ave2;
 gps_site_shru1 = [72+54.4123/60 , -(159+1.0840/60)];  
 
 
@@ -107,7 +110,7 @@ for tt=3:11
     
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE VISIBILITY HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     figure('visible','on');
-%%%%%%%%%%%%%%%%%%%%%%%%%%5%% FIGURE VISIBILITY HER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
+%%%%%%%%%%%%%%%%%%%%%%%%%%5%% FIGURE VISIBILITY HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
 %     figure
     h = get(0,'children');
     scrsz = get(0,'ScreenSize');
@@ -122,6 +125,7 @@ for tt=3:11
    
    J_shru1=squeeze(corr_spa_ave2_shru1(:,:,tt));
    J_shru1(tutu)=NaN;
+   
 %    figure, imagesc(J)  
    [cmax_shru1(tt), indc_ave2_shru1(tt)]=max(abs(J_shru1(:))); 
    [ii_shru1 jj_shru1]=ind2sub(size(latitude), indc_ave2_shru1(tt));
