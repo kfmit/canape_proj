@@ -5,12 +5,14 @@ clc
 addpath('/home/kfung/Downloads/CANAPE/mat_files/')
 addpath('/home/kfung/Downloads/CANAPE/new_figs/')
 
+%%% change name as neeeded %%%%%%%%%%%%%
+% comes from spatial_corr_analysis_loop_interp_new_SHRU1.m
 load spatial_cor_results_interp_new_shru1.mat
 corr_spa_ave2_shru1 = corr_spa_ave2;
 SPL_ANL_ave2_SHRU1 = SPL_ANL_ave2;
 gps_site_shru1 = [72+54.4123/60 , -(159+1.0840/60)];  
 
-
+% comes from spatial
 load spatial_cor_results_interp_new.mat
 gps_site = [72+54.4580/60 , -(157+29.2442/60)];  
 dlon=40;
@@ -18,13 +20,16 @@ lonlimit=[gps_site(2)-dlon gps_site(2)+dlon];
 lonlimit_ok=[lonlimit(2) lonlimit(1)+360];
 latlimit=[65 85];
 
+
+% comes from spatial_corr_analysis_loop_interp_new_SHRU5.m
 load ANL_SHRU5_newfreq.mat
 % load ANL_SHRU5.mat
 t=timestamp_num_spectro;
 %%% WHERE DO I CONTROL FREQ SPECTRUM
 
 % load auxData_icedrift_on_psd_time.mat
-
+%%% contains lat/lon/dates/drift, doesn't need to change
+% created from the icedrift csv code where?
 load var_osisaf.mat
 t_osisaf=datenum_osisaf;
 
