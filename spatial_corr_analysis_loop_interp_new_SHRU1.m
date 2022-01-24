@@ -4,6 +4,8 @@ clc
 
 load ANL_SHRU1_newfreqs.mat
 t=timestamp_num_spectro;
+addpath('/home/kfung/Downloads/CANAPE/auxData_SHRU1/')
+addpath('/home/kfung/Downloads/CANAPE/DataAux/') % just straight up add them all i have NO IDEA what folder its is in
 
 %% Geography limit
 sitename = 'SHRU1';
@@ -51,8 +53,7 @@ longitude_type = ncread(file_edge, 'lon');
 
 %% Limit to a single frequency band, change here
 
-
-ff=5;
+ff=4;
 SPL_ANL_ok=SPL_ANL(:,ff);
 
 Nosisaf=length(datenum_osisaf);
@@ -247,7 +248,7 @@ for t_num_loop=t0_num:15:t1_num
     
     
 
-    print(gcf,['./spatial_corr_result/' sitename '_interp_new/spatial_corr_' ...
+    print(gcf,['./new_figs/spatial_corr_result/' sitename '_interp_new/spatial_corr_' ...
         '-freq_' num2str(f1(ff)) '-' num2str(f2(ff)) ...
         '_' datestr(t_beg_num, 'yyyymmdd') '-' datestr(t_end_num, 'yyyymmdd')]  ...
         ,'-dpng')
@@ -266,6 +267,6 @@ end
 
 %%%%%% change this name %%%%%%%%%%%%
 
-save spatial_cor_results_interp_new_shru1_.mat corr_spa_ave2 corr_spa_ave2_far date_loop f1 f2 latitude longitude SPL_ANL_ave2 SPL_ANL_ave2_far
+save spatial_cor_results_interp_new_shru1_1250_1750.mat corr_spa_ave2 corr_spa_ave2_far date_loop f1 f2 latitude longitude SPL_ANL_ave2 SPL_ANL_ave2_far
 
 disp('Done')

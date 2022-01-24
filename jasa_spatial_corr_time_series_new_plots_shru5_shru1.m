@@ -7,13 +7,21 @@ addpath('/home/kfung/Downloads/CANAPE/new_figs/')
 
 %%% change name as neeeded %%%%%%%%%%%%%
 % comes from spatial_corr_analysis_loop_interp_new_SHRU1.m
-load spatial_cor_results_interp_new_shru1.mat
+% ORIGINAL
+% load spatial_cor_results_interp_new_shru1.mat
+
+% NEW
+
 corr_spa_ave2_shru1 = corr_spa_ave2;
 SPL_ANL_ave2_SHRU1 = SPL_ANL_ave2;
 gps_site_shru1 = [72+54.4123/60 , -(159+1.0840/60)];  
 
-% comes from spatial
-load spatial_cor_results_interp_new.mat
+%%%% comes from spatial
+% ORIGINAL
+% load spatial_cor_results_interp_new.mat
+
+% NEW
+
 gps_site = [72+54.4580/60 , -(157+29.2442/60)];  
 dlon=40;
 lonlimit=[gps_site(2)-dlon gps_site(2)+dlon];

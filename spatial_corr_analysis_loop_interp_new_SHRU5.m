@@ -2,8 +2,11 @@ clear all
 close all
 clc
 
-load ANL_SHRU5.mat
+load ANL_SHRU5_newfreq.mat
 t=timestamp_num_spectro;
+
+addpath('/home/kfung/Downloads/CANAPE/auxData_SHRU5/')
+addpath('/home/kfung/Downloads/CANAPE/DataAux/')
 
 %% Geography limit
 sitename = 'SHRU5';
@@ -34,7 +37,7 @@ Nvar_ok=size(auxData_ok, 2);
 
 %% load ice edge and type
 
-ice_edge_dir='/home/julien/Desktop/DataAux/ice_edge/data_nc/ice_edge_nh_polstere-100_multi_';
+ice_edge_dir='/home/kfung/Downloads/CANAPE/DataAux/ice_edge/data_nc/ice_edge_nh_polstere-100_multi_';
 ddd='20161101';
 file_edge=[ice_edge_dir ddd '1200.nc'];
 
@@ -42,7 +45,7 @@ latitude_edge = ncread(file_edge, 'lat');
 longitude_edge = ncread(file_edge, 'lon');
 
 
-ice_type_dir='/home/julien/Desktop/DataAux/ice_type/data_nc/ice_type_nh_polstere-100_multi_';
+ice_type_dir='/home/kfung/Downloads/CANAPE/DataAux/ice_type/data_nc/ice_type_nh_polstere-100_multi_';
 ddd='20161101';
 file_edge=[ice_edge_dir ddd '1200.nc'];
 
@@ -304,7 +307,7 @@ for t_num_loop=t0_num:15:t1_num
 %     plotm(latitude_type_ok, longitude_type_ok, '.r','markersize',5,'linewidth',1)    
     
     
-    print(gcf,['./spatial_corr_result/' sitename '_interp_new/spatial_corr_' ...
+    print(gcf,['./new_figs/spatial_corr_result/' sitename '_interp_new/spatial_corr_' ...
         '-freq_' num2str(f1(ff)) '-' num2str(f2(ff)) ...
         '_' datestr(t_beg_num, 'yyyymmdd') '-' datestr(t_end_num, 'yyyymmdd')]  ...
         ,'-dpng')
@@ -321,6 +324,6 @@ for t_num_loop=t0_num:15:t1_num
     
 end
 
-save spatial_cor_results_interp_new.mat corr_spa_ave2 corr_spa_ave2_far date_loop f1 f2 latitude longitude SPL_ANL_ave2 SPL_ANL_ave2_far
+save spatial_cor_results_interp_new_250_350.mat corr_spa_ave2 corr_spa_ave2_far date_loop f1 f2 latitude longitude SPL_ANL_ave2 SPL_ANL_ave2_far
 
 disp('Done')

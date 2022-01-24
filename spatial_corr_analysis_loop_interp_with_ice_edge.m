@@ -2,6 +2,7 @@ clear all
 close all
 clc
 
+% CHANE THIS WHEN U NEED to
 load ANL_SHRU5.mat
 t=timestamp_num_spectro;
 
@@ -34,7 +35,7 @@ Nvar_ok=size(auxData_ok, 2);
 
 %% load ice edge and type
 
-ice_edge_dir='/home/julien/Desktop/DataAux/ice_edge/data_nc/ice_edge_nh_polstere-100_multi_';
+ice_edge_dir='/home/kfung/Downloads/CANAPE/DataAux/ice_edge/data_nc/ice_edge_nh_polstere-100_multi_';
 ddd='20161101';
 file_edge=[ice_edge_dir ddd '1200.nc'];
 
@@ -42,7 +43,7 @@ latitude_edge = ncread(file_edge, 'lat');
 longitude_edge = ncread(file_edge, 'lon');
 
 
-ice_type_dir='/home/julien/Desktop/DataAux/ice_type/data_nc/ice_type_nh_polstere-100_multi_';
+ice_type_dir='/home/kfung/Downloads/CANAPE/DataAux/ice_type/data_nc/ice_type_nh_polstere-100_multi_';
 ddd='20161101';
 file_edge=[ice_edge_dir ddd '1200.nc'];
 
