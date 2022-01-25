@@ -56,7 +56,7 @@ longitude_type = ncread(file_edge, 'lon');
 
 load ANL_far
 
-ff=5;
+ff=4;
 SPL_ANL_ok=SPL_ANL(:,ff);
 
 Nosisaf=length(datenum_osisaf);
@@ -324,6 +324,6 @@ for t_num_loop=t0_num:15:t1_num
     
 end
 
-save spatial_cor_results_interp_new_250_350.mat corr_spa_ave2 corr_spa_ave2_far date_loop f1 f2 latitude longitude SPL_ANL_ave2 SPL_ANL_ave2_far
+save spatial_cor_results_interp_new_1250_1750.mat corr_spa_ave2 corr_spa_ave2_far date_loop f1 f2 latitude longitude SPL_ANL_ave2 SPL_ANL_ave2_far
 
 disp('Done')

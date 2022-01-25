@@ -11,16 +11,18 @@ addpath('/home/kfung/Downloads/CANAPE/new_figs/')
 % load spatial_cor_results_interp_new_shru1.mat
 
 % NEW
+load spatial_cor_results_interp_new_shru1_1250_1750.mat
 
 corr_spa_ave2_shru1 = corr_spa_ave2;
 SPL_ANL_ave2_SHRU1 = SPL_ANL_ave2;
 gps_site_shru1 = [72+54.4123/60 , -(159+1.0840/60)];  
 
-%%%% comes from spatial
+%%%% comes from spatial_corr_analysis_loop_interp_SHRU5
 % ORIGINAL
 % load spatial_cor_results_interp_new.mat
 
 % NEW
+load spatial_cor_results_interp_new_1250_1750.mat
 
 gps_site = [72+54.4580/60 , -(157+29.2442/60)];  
 dlon=40;
@@ -338,7 +340,7 @@ for tt=3:11
     
     legend('ANL (SHRU1)', 'Ice drift')
     
-    print(gcf,['./new_figs/spatial_corr_result/jasa_plot/spatial_corr_' ...
+    print(gcf,['./new_figs/spatial_corr_result/jasa_plot/1250_1750/spatial_corr_' ...
         datestr(t_beg_num, 'yyyymmdd') '-' datestr(t_end_num, 'yyyymmdd')]  ...
         ,'-dpng')
     
