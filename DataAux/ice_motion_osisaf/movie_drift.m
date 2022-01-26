@@ -2,7 +2,7 @@ close all
 clear all
 clc
 
-
+%%%%%% go to path /home/kfung/Downloads/CANAPE/DataAux/ice_motion_osisaf
 nc_files = dir('./data/**/*.nc');
 
 % sitename = 'SHRU1';
