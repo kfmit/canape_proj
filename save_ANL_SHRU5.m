@@ -37,8 +37,13 @@ ind_capt=4;
 % 1500 1550 1600 1650 1700 1750 1800 1850 1900
 
 % bands 50Hz wide
-f1=[25 75  125 175 225 275 375 425 250];
-f2=[75 125 175 225 275 325 425 475 350];
+f1 = zeros(1,40);
+f2 = zeros(1,40);
+
+for i=1:40
+   f1(i)= 25 + 50*(i-1);
+   f2(i)= 75 + 50*(i-1);
+end
 
 ANL=squeeze(vPSD_kinda(:,:,ind_p,ind_capt));
 LTSA=squeeze(vPSD_pwelch_kinda(:,:,ind_capt));
@@ -98,5 +103,5 @@ for ff=1:Nf
 end
 
 
-save ANL_SHRU5 timestamp_num_spectro SPL_ANL SPL_raw  ind_p ind_capt f1 f2 Nf Nt ...
+save ANL_SHRU5_bigfreqs timestamp_num_spectro SPL_ANL SPL_raw  ind_p ind_capt f1 f2 Nf Nt ...
     T_ssmi timestamp_num_ssmi T_ecmwf timestamp_num_ecmwf T_smos timestamp_num_smos T_temp timestamp_num_temp 
