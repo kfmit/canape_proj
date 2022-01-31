@@ -51,7 +51,7 @@ ANL_min=min([min(ANL_ice) min(ANL_no_ice)]);
 ANL_max=max([max(ANL_ice) max(ANL_no_ice)]);
 ANL_vec=linspace(ANL_min, ANL_max, 50);
 
-
+avg_freq = (f1(ff)+f2(ff))/2;
 
 figure
 histogram(ANL_duct, ANL_vec,'Normalization', 'pdf')
@@ -63,10 +63,10 @@ legend('Ice with duct', 'Ice without duct', 'No ice')
 title(['Ambient noise level in [' num2str(f1(ff)) ' - ' num2str(f2(ff)) '] Hz'])
 grid on
 xlim([60 100])
-% ylim([0 0.18])
-xlabel('ANL_{300} (dB re 1 \muPa^2 / Hz)')
+ylim([0 0.18])
+xlabel(['ANL_{' num2str(avg_freq) '} (dB re 1 \muPa^2 / Hz)'])
 
-NameFig=['./new_figs/jasa_plot_hist_vs_ice_frac_new/figs_for_gif2/' num2str(f1(ff)) '-' num2str(f2(ff)) 'Hz'];
+NameFig=['./new_figs/jasa_plot_hist_vs_ice_frac_new/figs_for_gif/' num2str(f1(ff)) '-' num2str(f2(ff)) 'Hz'];
 print(gcf,NameFig,'-dpng')
     
 close(gcf)

@@ -11,9 +11,9 @@ load sunrise_sunset_2017_feb_april.mat
 % f2=[60 550 1100 1750 350];
 % 40 is EMPTY
 
-% for i=1:39
-% ff=i; % this picks the freq
-ff = 1;
+ for i=1:39
+ff=i; % this picks the freq
+
 %%
 Nice=length(timestamp_num_ssmi);
 %%%%% Period with ice
@@ -36,10 +36,7 @@ ind_no_ice=[ind_no_ice_1 ; ind_no_ice_2];
 
 
 
-%% Histograms
-
-% change ff as needed
-% ff=5;
+%%
 
 ANL_ice=SPL_ANL(ind_ice,ff);
 ANL_no_ice=SPL_ANL(ind_no_ice,ff);
@@ -51,36 +48,48 @@ ANL_min=min([min(ANL_ice) min(ANL_no_ice)]);
 ANL_max=max([max(ANL_ice) max(ANL_no_ice)]);
 ANL_vec=linspace(ANL_min, ANL_max, 50);
 
-ANL_duct_avg = mean(ANL_duct);
-ANL_no_duct_avg = mean(ANL_no_duct);
-ANL_no_ice_avg= mean(ANL_no_ice);
+ANL_duct_avg(i) = mean(ANL_duct);
+ANL_no_duct_avg(i) = mean(ANL_no_duct);
+ANL_no_ice_avg(i)= mean(ANL_no_ice);
+
+ end
+
+
+%% Figure Creation: Trend Analysis
+figure
+plot(f1(1:39),ANL_duct_avg)
+hold on
+plot(f1(1:39),ANL_no_duct_avg)
+plot(f1(1:39),ANL_no_ice_avg)
+ylabel('ANL (dB re 1 \muPa^2 / Hz)')
+xlabel('Frequency (Hz)')
+title('Average noise level at each frequency')
 
 
 
-
-%% Figure Creation
+%% Figure Creation: Histograms
 
 
 
 % histogram fig
-figure
-histogram(ANL_duct, ANL_vec,'Normalization', 'pdf')
-hold on
-histogram(ANL_no_duct, ANL_vec,'Normalization', 'pdf')
-hold on
-histogram(ANL_no_ice, ANL_vec,'Normalization', 'pdf')
-legend('Ice with duct', 'Ice without duct', 'No ice')
-title(['Ambient noise level in [' num2str(f1(ff)) ' - ' num2str(f2(ff)) '] Hz'])
-grid on
-xlim([60 100])
-ylim([0 0.18])
-xlabel('ANL_{300} (dB re 1 \muPa^2 / Hz)')
-
-NameFig=['./new_figs/jasa_plot_hist_vs_ice_frac_new/figs_for_gif/' num2str(f1(ff)) '-' num2str(f2(ff)) 'Hz'];
-% print(gcf,NameFig,'-dpng')
-    
-close(gcf)
-
-% end
+% figure
+% histogram(ANL_duct, ANL_vec,'Normalization', 'pdf')
+% hold on
+% histogram(ANL_no_duct, ANL_vec,'Normalization', 'pdf')
+% hold on
+% histogram(ANL_no_ice, ANL_vec,'Normalization', 'pdf')
+% legend('Ice with duct', 'Ice without duct', 'No ice')
+% title(['Ambient noise level in [' num2str(f1(ff)) ' - ' num2str(f2(ff)) '] Hz'])
+% grid on
+% xlim([60 100])
+% ylim([0 0.18])
+% xlabel('ANL_{300} (dB re 1 \muPa^2 / Hz)')
+% 
+% NameFig=['./new_figs/jasa_plot_hist_vs_ice_frac_new/figs_for_gif/' num2str(f1(ff)) '-' num2str(f2(ff)) 'Hz'];
+% % print(gcf,NameFig,'-dpng')
+%     
+% close(gcf)
+% 
+% % end
 
 
