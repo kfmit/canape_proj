@@ -11,7 +11,7 @@ load sunrise_sunset_2017_feb_april.mat
 % f2=[60 550 1100 1750 350];
 % 40 is EMPTY
 
-for i=1:39
+for i=4:22
 ff=i; % this picks the freq
 
 %%
@@ -62,11 +62,11 @@ histogram(ANL_no_ice, ANL_vec,'Normalization', 'pdf')
 legend('Ice with duct', 'Ice without duct', 'No ice')
 title(['Ambient noise level in [' num2str(f1(ff)) ' - ' num2str(f2(ff)) '] Hz'])
 grid on
-xlim([44 110])
-ylim([0 0.30])
+xlim([50 105])
+ylim([0 0.20])
 xlabel(['ANL_{' num2str(avg_freq) '} (dB re 1 \muPa^2 / Hz)'])
 
-NameFig=['./new_figs/jasa_plot_hist_vs_ice_frac_new/figs_for_gif/' num2str(f1(ff)) '-' num2str(f2(ff)) 'Hz'];
+NameFig=['./new_figs/jasa_plot_hist_vs_ice_frac_new/figs_for_gif3/' num2str(f1(ff)) '-' num2str(f2(ff)) 'Hz'];
 print(gcf,NameFig,'-dpng')
     
 close(gcf)

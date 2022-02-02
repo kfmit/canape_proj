@@ -8,7 +8,7 @@ load ANL_SHRU5_bigfreqs.mat
 load sunrise_sunset_2017_feb_april.mat
 
 % f1=[40 450 900 1250 250];
-% f2=[60 550 1100 1750 350];
+% f2=[60 550 1100 1750 350]; 
 % 40 is EMPTY
 
 ANL_duct_avg=zeros(1,39);
@@ -115,7 +115,8 @@ title('Average ANL Difference at each frequency')
 %%
 C = [0 2 4 6; 8 10 12 14; 16 18 20 22];
 figure
-imagesc(avg_freq,-50:45,ANL_duct_noduct)
+imagesc(avg_freq,-50:45,ANL_duct_noduct) % the y axis is time/date!!! 21488 long
+% axis xy
 title('Difference in ANL by frequency')
 xlabel('Frequency')
 ylabel('Differnce in ANL between duct/no duct')
@@ -136,7 +137,7 @@ Sn_inv=inv(Sn);
 
 Sx=Sx/n_snap;
 Sx_inv=inv(Sx);
-%%
+%% Matlab generated covariance
 cov_duct_freqs = cov(ANL_duct);
 cov_no_duct_freqs = cov(ANL_no_duct);
 cov_noice_freqs = cov(ANL_no_ice);
