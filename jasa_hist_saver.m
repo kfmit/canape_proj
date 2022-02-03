@@ -112,44 +112,56 @@ xticks([100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1
 xtickangle(-45)
 title('Average ANL Difference at each frequency')
 
-%%
-C = [0 2 4 6; 8 10 12 14; 16 18 20 22];
-figure
-imagesc(avg_freq,-50:45,ANL_duct_noduct) % the y axis is time/date!!! 21488 long
-% axis xy
-title('Difference in ANL by frequency')
-xlabel('Frequency')
-ylabel('Differnce in ANL between duct/no duct')
-colorbar
+%% Not really a point in making an imagcesc
 
-%%
-Sn=zeros(size(sigma));
-Sx=zeros(size(sigma));
-for ii=1:n_snap
-    n=v_interf_rep(:,ii)+noise_ok(:,ii);
-    s=v_interf_rep(:,ii)+noise_ok(:,ii)+v_t_rep(:,ii);
-    
-    Sn=Sn+n*n';
-    Sx=Sx+s*s';
-end
-Sn=Sn/n_snap;
-Sn_inv=inv(Sn);
 
-Sx=Sx/n_snap;
-Sx_inv=inv(Sx);
+%% covariance created not
+% sigma1 = ANL_duct;
+% sigma1 = ANL_no_duct;
+% sigma1 = ANL_no_ice;
+% Sn=zeros(size(sigma));
+% Sx=zeros(size(sigma));
+% for ii=1:39
+%     n=v_interf_rep(:,ii)+noise_ok(:,ii);
+%     s=v_interf_rep(:,ii)+noise_ok(:,ii)+v_t_rep(:,ii);
+%     
+%     Sn=Sn+n*n';
+%     Sx=Sx+s*s';
+% end
+% Sn=Sn/n_snap;
+% Sn_inv=inv(Sn);
+% 
+% Sx=Sx/n_snap;
+% Sx_inv=inv(Sx);
 %% Matlab generated covariance
 cov_duct_freqs = cov(ANL_duct);
 cov_no_duct_freqs = cov(ANL_no_duct);
 cov_noice_freqs = cov(ANL_no_ice);
 
 figure
-imagesc(cov_duct_freqs)
-title('Covariance between Frequencies with Duct')
+imagesc(avg_freq,avg_freq,cov_duct_freqs)
+xlabel('Frequency (Hz)')
+ylabel('Frequency (Hz)')
+title('Covariance between Frequencies under Ice with Duct')
+c = colorbar
+axis xy
 
 figure
-imagesc(cov_no_duct_freqs)
-title('Covariance between Frequencies with No Duct')
+imagesc(avg_freq,avg_freq,cov_no_duct_freqs)
+xlabel('Frequency (Hz)')
+title('Covariance between Frequencies under Ice with No Duct')
+c = colorbar
+axis xy
 
 figure
-imagesc(cov_noice_freqs)
+imagesc(avg_freq,avg_freq,cov_noice_freqs)
+xlabel('Frequency (Hz)')
 title('Covariance between Frequencies with No Ice')
+c = colorbar
+axis xy
+
+%% Correlation is NOT covariance
+
+corr_ANL_no_ice = corrcoef(ANL_no_ice);
+figure
+imagesc(corr_ANL_no_ice)
