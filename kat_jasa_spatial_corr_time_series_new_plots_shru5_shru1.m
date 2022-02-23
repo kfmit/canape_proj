@@ -13,27 +13,49 @@ addpath('/home/kfung/Downloads/CANAPE/new_figs/')
 % comes from spatial_corr_analysis_loop_interp_new_SHRU1.m
 % ORIGINAL
 % load spatial_cor_results_interp_new_shru1.mat
-freq_range1 = 1250;
-freq_range2 = 1750;
+freq_range1 = 900;
+freq_range2 = 1100;
 filename1 = ['spatial_cor_results_interp_new_shru1_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
 filename2 = ['spatial_cor_results_interp_new_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
 
-% NEW
-load(filename1);
+freq_range3 = 1250;
+freq_range4 = 1750;
+filename3 = ['spatial_cor_results_interp_new_shru1_' num2str(freq_range3) '_' num2str(freq_range4) '.mat'];
+filename4 = ['spatial_cor_results_interp_new_' num2str(freq_range3) '_' num2str(freq_range4) '.mat'];
+
+% Load SHRU1 files, SKIPPED
 %spatial_cor_results_interp_new_shru1_1250_1750.mat
 
-corr_spa_ave2_shru1 = corr_spa_ave2;
-SPL_ANL_ave2_SHRU1 = SPL_ANL_ave2;
-gps_site_shru1 = [72+54.4123/60 , -(159+1.0840/60)];
+% load(filename1);
+% % save the specific variables to new names!
+% corr_spa_ave2_shru1 = corr_spa_ave2;
+% SPL_ANL_ave2_SHRU1 = SPL_ANL_ave2;
+% gps_site = [72+54.4123/60 , -(159+1.0840/60)];
+% 
+% % SHRU 1
+% load(filename3);
+% % save the specific variables to new names!
+% corr_spa_ave2_shru1_3 = corr_spa_ave2;
+% SPL_ANL_ave2_SHRU1_3 = SPL_ANL_ave2;
 
 %%%% comes from spatial_corr_analysis_loop_interp_SHRU5
-% ORIGINAL
-% load spatial_cor_results_interp_new.mat
+%% LOAD SHRU5 Data
+% load spatial_cor_results_interp_new.mat and spatial_cor_results_interp_new_1250_1750.mat
 
-% NEW
+% NEW SHRU5 name
 load(filename2);
-%spatial_cor_results_interp_new_1250_1750.mat
+% save the specific variables to new names!
+corr_spa_ave2_shru5_2 = corr_spa_ave2;
+SPL_ANL_ave2_SHRU5_2 = SPL_ANL_ave2;
 
+load(filename4);
+% save the specific variables to new names!
+corr_spa_ave2_shru5_4 = corr_spa_ave2;
+SPL_ANL_ave2_SHRU5_4 = SPL_ANL_ave2;
+
+
+
+% GPS data
 gps_site = [72+54.4580/60 , -(157+29.2442/60)];
 dlon=40;
 lonlimit=[gps_site(2)-dlon gps_site(2)+dlon];
@@ -42,10 +64,10 @@ latlimit=[65 85];
 
 
 % comes from spatial_corr_analysis_loop_interp_new_SHRU5.m
-load ANL_SHRU5_newfreq.mat
+load ANL_SHRU5_newfreq.mat % should already have everything
 % load ANL_SHRU5.mat
 t=timestamp_num_spectro;
-%%% WHERE DO I CONTROL FREQ SPECTRUM
+
 
 % load auxData_icedrift_on_psd_time.mat
 %%% contains lat/lon/dates/drift, doesn't need to change
@@ -99,15 +121,15 @@ land = shaperead('landareas.shp', 'UseGeoCoords', true);
 
 ccc=[0 0.7];  %%% for caxis
 
-%% Loop
-
-
-for tt=3:11
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Loop for generating figure %%%%%%%%%%%%%%%%%%%%%%%
+%%
+% for tt=3:11, actual loop length is 11
+loop_end = 11;
+for tt=3:loop_end  % loop 1 long
     %     for tt=1
     t_beg_num=date_loop(1,tt);
     t_end_num=date_loop(2,tt);
     ind_t_ok_osisaf=find(t_osisaf >= t_beg_num & t_osisaf <= t_end_num);
-
 
     %% Read ice edge and type
 
@@ -134,9 +156,10 @@ for tt=3:11
     %     longitude_type_ok=double(longitude_type(toto_type));
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE VISIBILITY HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    figure('visible','on');
+    figure('visible','off');
     %%%%%%%%%%%%%%%%%%%%%%%%%%5%% FIGURE VISIBILITY HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %     figure
+
     h = get(0,'children');
     scrsz = get(0,'ScreenSize');
     set(h,'Position',[scrsz(1) scrsz(2) scrsz(3)/2 floor(scrsz(4)*0.66)])
@@ -148,7 +171,7 @@ for tt=3:11
     [ii jj]=ind2sub(size(latitude), indc_ave2(tt));
 
 
-    J_shru1=squeeze(corr_spa_ave2_shru1(:,:,tt));
+    J_shru1=squeeze(corr_spa_ave2_shru5_2(:,:,tt));
     J_shru1(tutu)=NaN;
 
     %    figure, imagesc(J)
@@ -159,7 +182,8 @@ for tt=3:11
     [ii_shru1 jj_shru1]=ind2sub(size(latitude), indc_ave2_shru1(tt));
 
 
-    %% Correlation map SHRU5
+    %%%%%%%%%%%%%%%%%% SHRU5: BELOW  %%%%%%%%%%%%%%%%%%%
+    %% Correlation map SHRU5, FREQ 1-2
     subplot(221)
     maph=axesm('MapProjection','lambertstd','MapLatLimit',latlimit,'MapLonLimit',lonlimit);
 
@@ -196,11 +220,11 @@ for tt=3:11
     %     title(['2-day averaged SPL - Max corr = ' num2str(R(tt))])
     title([datestr(t_beg_num, 'dd mmm yyyy') ' to ' datestr(t_end_num, 'dd mmm yyyy')], 'fontsize',20,'fontweight', 'bold')
 
-    ylabel('SHRU5', 'fontsize',30,'fontweight', 'bold')
+    ylabel([num2str(freq_range1) '-' num2str(freq_range2)], 'fontsize',30,'fontweight', 'bold')
 
     dist(tt)=distance(gps_site(1), gps_site(2), double(latitude(toto, tata)),double(longitude(toto, tata)),referenceSphere('Earth'));
 
-    %% Time series SHRU5
+    %% Time series SHRU5, FREQ 1-2
 
     SPL_ANL_ok=SPL_ANL_ave2(ind_t_ok_osisaf);
     d_ok=squeeze(d(ind_t_ok_osisaf,ii,jj));
@@ -215,7 +239,7 @@ for tt=3:11
     [d_ok_norm, mu_d, sigma_d]=zscore(d_ok(ind_no_nan));
     d_ok_norm2=(d_ok-mu_d)/sigma_d;
 
-    %%%%%%%%% FINDING CORRELATION VALUES
+    %%%%%%%%% FINDING CORRELATION VALUES SHRU5 %%%%%%%%%%%%%%%%%
     [R(tt), Pvalue]=corr(SPL_ANL_ok_norm,d_ok_norm,'type','Pearson','rows','all','tail','both');
 
     toto=find(~isnan(d_ok));
@@ -251,10 +275,10 @@ for tt=3:11
     xlabel('Days')
     grid on
     ylim([-3 4])
-    legend('ANL (SHRU5)', 'Ice drift')
+    legend(['ANL' num2str(freq_range1) '-' num2str(freq_range2)], 'Ice drift')
 
 
-    %% Correlation map SHRU1
+    %% Correlation map SHRU5, FREQ 3-5 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     subplot(223)
     maph=axesm('MapProjection','lambertstd','MapLatLimit',latlimit,'MapLonLimit',lonlimit);
 
@@ -275,10 +299,10 @@ for tt=3:11
     geoshow(maph, land, 'FaceColor',[0.80 0.80 0.80],'EdgeColor',0.30*[1 1 1]);
 
     %%% plot data
-    surfm(double(latitude), double(longitude), squeeze(corr_spa_ave2_shru1(:,:,tt)))
+    surfm(double(latitude), double(longitude), squeeze(corr_spa_ave2_shru5_2(:,:,tt)))
 
     %%% add mooring
-    plotm(gps_site_shru1(1),gps_site_shru1(2),'xk','markersize',16,'linewidth',3)
+    plotm(gps_site(1),gps_site(2),'xk','markersize',16,'linewidth',3)
     [toto, tata]=ind2sub(size(latitude), indc_ave2_shru1(tt));
     plotm(double(latitude(toto, tata)),double(longitude(toto,tata)),'xr','markersize',16,'linewidth',3)
 
@@ -291,13 +315,13 @@ for tt=3:11
     %     title(['2-day averaged SPL - Max corr = ' num2str(R(tt))])
     %     title([datestr(t_beg_num, 'dd mmm yyyy') ' to ' datestr(t_end_num, 'dd mmm yyyy')], 'fontsize',20,'fontweight', 'bold')
 
-    ylabel('SHRU1', 'fontsize',30,'fontweight', 'bold')
+    ylabel([num2str(freq_range3) '-' num2str(freq_range4)], 'fontsize',30,'fontweight', 'bold')
 
-    dist_shru1(tt)=distance(gps_site_shru1(1), gps_site_shru1(2), double(latitude(toto, tata)),double(longitude(toto, tata)),referenceSphere('Earth'));
+    dist_shru1(tt)=distance(gps_site(1), gps_site(2), double(latitude(toto, tata)),double(longitude(toto, tata)),referenceSphere('Earth'));
 
-    %% Time series   SHRU1
+    %% Time series SHRU1
 
-    SPL_ANL_ok=SPL_ANL_ave2_SHRU1(ind_t_ok_osisaf);
+    SPL_ANL_ok=SPL_ANL_ave2_SHRU5_2(ind_t_ok_osisaf);
     d_ok=squeeze(d(ind_t_ok_osisaf,ii_shru1,jj_shru1));
     %    d_ok_interp=interp1(t_osisaf(ind_t_ok_osisaf), d_ok, t(ind_t_ok), 'nearest');
     t_ok=t_osisaf(ind_t_ok_osisaf); %%% common time axis
@@ -309,7 +333,8 @@ for tt=3:11
     [SPL_ANL_ok_norm, mu_spl, sigma_spl]=zscore(SPL_ANL_ok(ind_no_nan));
     [d_ok_norm, mu_d, sigma_d]=zscore(d_ok(ind_no_nan));
     d_ok_norm2=(d_ok-mu_d)/sigma_d;
-
+    
+    %%%%%%%%%%% Correlation Values! %%%%%%%%%%%%%%%%
     [R_shru1(tt), Pvalue]=corr(SPL_ANL_ok_norm,d_ok_norm,'type','Pearson','rows','all','tail','both');
 
     toto=find(~isnan(d_ok));
@@ -346,26 +371,33 @@ for tt=3:11
     grid on
     ylim([-3 4])
 
-    legend('ANL (SHRU1)', 'Ice drift')
+    legend(['ANL' num2str(freq_range3) '-' num2str(freq_range4)], 'Ice drift')
+
+    % title of the whole figure
+    sgtitle(['Ice Drift Correlation for ' num2str(freq_range1) '-' num2str(freq_range2) ...
+        ' to ' num2str(freq_range3) '-' num2str(freq_range4) 'Hz'])
 
     % printer currently OFF
     %%%%%%%%%%%% TURN ON AND OFF PRINTING %%%%%%%%%%%%%%%%%%%%%%%%
-    %     print(gcf,['./new_figs/spatial_corr_result/jasa_plot/1250_1750/spatial_corr_' ...
-    %         datestr(t_beg_num, 'yyyymmdd') '-' datestr(t_end_num, 'yyyymmdd')]  ...
-    %         ,'-dpng')
+        print(gcf,['./new_figs/spatial_corr_result/jasa_plot/' num2str(freq_range1) '_' ... 
+            num2str(freq_range4) '/spatial_corr_' datestr(t_beg_num, 'yyyymmdd') '-' datestr(t_end_num, 'yyyymmdd')]  ...
+            ,'-dpng')
 
     %      print(gcf,['./spatial_corr_result/jasa_plot/spatial_corr_' ...
     %         datestr(t_beg_num, 'yyyymmdd') '-' datestr(t_end_num, 'yyyymmdd')]  ...
     %         ,'-dpng')
+
 end
+%%%% end of the figure generator %%%%
+
 
 %%%%% Functions! %%%%%%%
-dist_shrus=distance(gps_site_shru1(1), gps_site_shru1(2),gps_site(1), gps_site(2),referenceSphere('Earth'))/1000
+dist_shrus=distance(gps_site(1), gps_site(2),gps_site(1), gps_site(2),referenceSphere('Earth'))/1000
 
-dist_corr_shru5=[min(dist(3:11)) mean(dist(3:11)) max(dist(3:11))]/1000
+dist_corr_shru5=[min(dist(3:loop_end)) mean(dist(3:loop_end)) max(dist(3:loop_end))]/1000
 
-dist_corr_shru1=[min(dist_shru1(3:11)) mean(dist_shru1(3:11)) max(dist_shru1(3:11))]/1000
+dist_corr_shru1=[min(dist_shru1(3:loop_end)) mean(dist_shru1(3:loop_end)) max(dist_shru1(3:loop_end))]/1000
 
-r_shru5=[min(R(3:11)) mean(R(3:11)) max(R(3:11))]
+r_shru5=[min(R(3:loop_end)) mean(R(3:loop_end)) max(R(3:loop_end))]
 
-r_shru1=[min(R_shru1(3:11)) mean(R_shru1(3:11)) max(R_shru1(3:11))]
+r_shru1=[min(R_shru1(3:loop_end)) mean(R_shru1(3:loop_end)) max(R_shru1(3:loop_end))]
