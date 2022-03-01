@@ -13,10 +13,10 @@ bins=-10:db:10;     % create bin edges for the histogram
 % bin1= the bin edges, not that this comes back as the same input as bins!
 
 % i chose to get ride of the probability normalization
-[val1, bin1]=histcounts(x1,bins,'Normalization','pdf');   %,,'Normalization','pdf');  
+[val1, bin1]=histcounts(x1,bins,'Normalization','pdf');  
 bin1_c=bin1(1:end-1)+db/2;  % cut off the extra edge so we can use it for plotting
 
-[val2, bin2]=histcounts(x2,bins,'Normalization','pdf');    %,'Normalization','pdf');  
+[val2, bin2]=histcounts(x2,bins,'Normalization','pdf');  
 bin2_c=bin2(1:end-1)+db/2;  % cut off the extra edge so we can use it for plotting
 
 % make a figure that plots the raw data straight up

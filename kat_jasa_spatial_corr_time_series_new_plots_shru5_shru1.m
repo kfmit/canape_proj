@@ -13,13 +13,13 @@ addpath('/home/kfung/Downloads/CANAPE/new_figs/')
 % comes from spatial_corr_analysis_loop_interp_new_SHRU1.m
 % ORIGINAL
 % load spatial_cor_results_interp_new_shru1.mat
-freq_range1 = 900;
-freq_range2 = 1100;
+freq_range1 = 250;
+freq_range2 = 350;
 filename1 = ['spatial_cor_results_interp_new_shru1_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
 filename2 = ['spatial_cor_results_interp_new_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
 
-freq_range3 = 1250;
-freq_range4 = 1750;
+freq_range3 = 450;
+freq_range4 = 550;
 filename3 = ['spatial_cor_results_interp_new_shru1_' num2str(freq_range3) '_' num2str(freq_range4) '.mat'];
 filename4 = ['spatial_cor_results_interp_new_' num2str(freq_range3) '_' num2str(freq_range4) '.mat'];
 
@@ -275,7 +275,7 @@ for tt=3:loop_end  % loop 1 long
     xlabel('Days')
     grid on
     ylim([-3 4])
-    legend(['ANL' num2str(freq_range1) '-' num2str(freq_range2)], 'Ice drift')
+    legend(['ANL ' num2str(freq_range1) '-' num2str(freq_range2)], 'Ice drift')
 
 
     %% Correlation map SHRU5, FREQ 3-5 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -371,11 +371,11 @@ for tt=3:loop_end  % loop 1 long
     grid on
     ylim([-3 4])
 
-    legend(['ANL' num2str(freq_range3) '-' num2str(freq_range4)], 'Ice drift')
+    legend(['ANL ' num2str(freq_range3) '-' num2str(freq_range4)], 'Ice drift')
 
     % title of the whole figure
     sgtitle(['Ice Drift Correlation for ' num2str(freq_range1) '-' num2str(freq_range2) ...
-        ' to ' num2str(freq_range3) '-' num2str(freq_range4) 'Hz'])
+        ' to ' num2str(freq_range3) '-' num2str(freq_range4) ' Hz'])
 
     % printer currently OFF
     %%%%%%%%%%%% TURN ON AND OFF PRINTING %%%%%%%%%%%%%%%%%%%%%%%%

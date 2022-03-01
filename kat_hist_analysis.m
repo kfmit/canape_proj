@@ -88,7 +88,6 @@ p_no_ice = polyfit(avg_freq,ANL_no_ice_avg,1)
 %% Figure Creation: Histograms
 
 
-
 % histogram fig
 % figure
 % histogram(ANL_duct, ANL_vec,'Normalization', 'pdf')

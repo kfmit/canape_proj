@@ -134,9 +134,9 @@ ANL_vec=linspace(ANL_min, ANL_max, 50);
 
 for i=1:39
     % number in each bin, edges
-[N_duct,edges_duct] = histcounts(ANL_duct(:,i),ANL_vec);    %,'Normalization','pdf');
-[N_no_duct,edges_no_duct] = histcounts(ANL_no_duct(:,i),ANL_vec);    %,'Normalization','pdf');
-[N_no_ice,edges_no_ice] = histcounts(ANL_no_ice(:,i),ANL_vec);    %,'Normalization','pdf'); %,'Normalization','pdf');
+[N_duct,edges_duct] = histcounts(ANL_duct(:,i),ANL_vec,'Normalization','pdf');
+[N_no_duct,edges_no_duct] = histcounts(ANL_no_duct(:,i),ANL_vec,'Normalization','pdf');
+[N_no_ice,edges_no_ice] = histcounts(ANL_no_ice(:,i),ANL_vec,'Normalization','pdf'); %,'Normalization','pdf');
 
 % edge realignment
 edges_duct=edges_duct(1:end-1)+(1.369/2);
@@ -151,9 +151,9 @@ edges_no_ice=edges_no_ice(1:end-1)+(1.369/2);
 
 % total var difference
 % N_* is rewritten everytime and represents the count
-totalvar_dist_duct_noduct(i)=sum(abs(N_duct-N_no_duct))/2;
-totalvar_dist_duct_noice(i) = sum(abs(N_duct-N_no_ice))/2;
-totalvar_dist_noice_noduct(i) = sum(abs(N_no_ice-N_no_duct))/2;
+totalvar_dist_duct_noduct(i)=sum(abs(N_duct-N_no_duct)/2;
+totalvar_dist_duct_noice(i) = sum(abs(N_duct-N_no_ice(i)))/2;
+totalvar_dist_noice_noduct(i) = sum(abs(N_no_ice(i)-N_no_duct(i)))/2;
 
 % pairwise diff of max modes
 pair_dist_duct_noduct(i)=edges_duct(ind_duct(i))-edges_no_duct(ind_no_duct(i));
@@ -173,7 +173,7 @@ xlabel('Frequency (Hz)')
 xticks([100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900])
 xtickangle(-45)
 title('Total Variation Distance of ANL at each frequency')
-legend('Ice with duct/No Duct','Ice with duct/No Ice','No Ice/No Duct','Location','best')
+legend('Ice with duct/No Duct','Ice with duct/No Ice','No Ice/No Duct')
 
 %% MODE DIFFS - this is essentially pairwise differnce
 figure
@@ -224,7 +224,7 @@ hold on
 p2 = plot(avg_freq,pair_dist_noice_noduct,'-o','MarkerEdgeColor','#D95319','MarkerFaceColor','#D95319')
 p3 = plot(avg_freq,pair_dist_duct_noice,'-o','MarkerEdgeColor','#EDB120','MarkerFaceColor','#EDB120')
 
-ylabel(['Pairwise Differnce of Peak (dB re 1 \muPa^2 / Hz)'])
+ylabel(['Pairwise Differnce of Max of ANL (dB re 1 \muPa^2 / Hz)'])
 xlabel('Frequency (Hz)')
 xticks([100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900])
 xtickangle(-45)
