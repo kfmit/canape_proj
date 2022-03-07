@@ -134,9 +134,9 @@ ANL_vec=linspace(ANL_min, ANL_max, 50);
 
 for i=1:39
     % number in each bin, edges
-[N_duct,edges_duct] = histcounts(ANL_duct(:,i),ANL_vec,'Normalization','probability');    %,'Normalization','pdf');
-[N_no_duct,edges_no_duct] = histcounts(ANL_no_duct(:,i),ANL_vec,'Normalization','probability');    %,'Normalization','pdf');
-[N_no_ice,edges_no_ice] = histcounts(ANL_no_ice(:,i),ANL_vec,'Normalization','probability');    %,'Normalization','pdf'); %,'Normalization','pdf');
+[N_duct,edges_duct] = histcounts(ANL_duct(:,i),ANL_vec,'Normalization','pdf');    %,'Normalization','pdf');
+[N_no_duct,edges_no_duct] = histcounts(ANL_no_duct(:,i),ANL_vec,'Normalization','pdf');    %,'Normalization','pdf');
+[N_no_ice,edges_no_ice] = histcounts(ANL_no_ice(:,i),ANL_vec,'Normalization','pdf');    %,'Normalization','pdf'); %,'Normalization','pdf');
 
 % edge realignment
 edges_duct=edges_duct(1:end-1)+(1.369/2);
@@ -155,7 +155,7 @@ totalvar_dist_duct_noduct(i)=sum(abs(N_duct-N_no_duct))/2;
 totalvar_dist_duct_noice(i) = sum(abs(N_duct-N_no_ice))/2;
 totalvar_dist_noice_noduct(i) = sum(abs(N_no_ice-N_no_duct))/2;
 
-% pairwise diff of max modes
+% pairwise diff of max modes and screw preallocating
 pair_dist_duct_noduct(i)=edges_duct(ind_duct(i))-edges_no_duct(ind_no_duct(i));
 pair_dist_duct_noice(i)=edges_no_ice(ind_no_ice(i))-edges_duct(ind_duct(i));
 pair_dist_noice_noduct(i)=edges_no_ice(ind_no_ice(i))-edges_no_duct(ind_no_duct(i));
@@ -163,45 +163,45 @@ end
 
 %% Figure of Total Variation Dist %%%%%%%%%%%%%%%%%
 figure
-p1 = plot(avg_freq,totalvar_dist_duct_noduct,'-o','MarkerEdgeColor','#4DBEEE','MarkerFaceColor','#4DBEEE')
+p1 = plot(avg_freq,totalvar_dist_duct_noduct,'-o','Color','#7E2F8E','MarkerEdgeColor','#7E2F8E','MarkerFaceColor','#7E2F8E');
 hold on
-p2 = plot(avg_freq,totalvar_dist_duct_noice,'-o','MarkerEdgeColor','#D95319','MarkerFaceColor','#D95319')
-p3 = plot(avg_freq,totalvar_dist_noice_noduct,'-o','MarkerEdgeColor','#EDB120','MarkerFaceColor','#EDB120')
+p2 = plot(avg_freq,totalvar_dist_duct_noice,'-o','Color','#77AC30','MarkerEdgeColor','#77AC30','MarkerFaceColor','#77AC30');
+p3 = plot(avg_freq,totalvar_dist_noice_noduct,'-o','Color','#FF8800','MarkerEdgeColor','#FF8800','MarkerFaceColor','#FF8800');
 
 ylabel(['Total variation Distance'])
 xlabel('Frequency (Hz)')
 xticks([100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900])
 xtickangle(-45)
 title('Total Variation Distance of ANL at each frequency')
-legend('Ice with duct/Ice No Duct','Ice with duct/No Ice','No Ice/Ice No Duct','Location','best')
+legend('Ice with duct/Ice without Duct','Ice with duct/No Ice','No Ice/Ice No Duct','Location','best')
 
 %% MODE DIFFS - this is essentially pairwise differnce
 figure
-p1 = plot(avg_freq,ANL_vec(ind_duct)-ANL_vec(ind_no_duct),'-o','MarkerEdgeColor','#4DBEEE','MarkerFaceColor','#4DBEEE')
+p1 = plot(avg_freq,ANL_vec(ind_duct)-ANL_vec(ind_no_duct),'-o','Color','#7E2F8E','MarkerEdgeColor','#7E2F8E','MarkerFaceColor','#7E2F8E');
 hold on
-p2 = plot(avg_freq,ANL_vec(ind_no_ice)-ANL_vec(ind_duct),'-o','MarkerEdgeColor','#D95319','MarkerFaceColor','#D95319')
-p3 = plot(avg_freq,ANL_vec(ind_no_ice)-ANL_vec(ind_no_duct),'-o','MarkerEdgeColor','#EDB120','MarkerFaceColor','#EDB120')
+p2 = plot(avg_freq,ANL_vec(ind_no_ice)-ANL_vec(ind_duct),'-o','Color','#77AC30','MarkerEdgeColor','#77AC30','MarkerFaceColor','#77AC30');
+p3 = plot(avg_freq,ANL_vec(ind_no_ice)-ANL_vec(ind_no_duct),'-o','Color','#FF8800','MarkerEdgeColor','#FF8800','MarkerFaceColor','#FF8800');
 
 ylabel(['Pairwise Differnce of Modes of ANL (dB re 1 \muPa^2 / Hz)'])
 xlabel('Frequency (Hz)')
 xticks([100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900])
 xtickangle(-45)
 title('Pairwise Difference between Modes of ANL at each frequency')
-legend('Ice w/duct-Ice w/o duct','No Ice-Ice w/o duct','No Ice - Ice w/o duct')
+legend('Ice with duct/Ice without duct','Ice with duct/No Ice','Ice without duct/No Ice','Location','best')
 
 %% MODE DIFFS - this is essentially pairwise differnce
 figure
-p1 = plot(avg_freq,ANL_vec(ind_duct)-ANL_vec(ind_no_duct),'-o','MarkerEdgeColor','#4DBEEE','MarkerFaceColor','#4DBEEE')
+p1 = plot(avg_freq,ANL_vec(ind_duct)-ANL_vec(ind_no_duct),'-o','Color','#7E2F8E','MarkerEdgeColor','#7E2F8E','MarkerFaceColor','#7E2F8E');
 hold on
-p2 = plot(avg_freq,ANL_vec(ind_no_ice)-ANL_vec(ind_duct),'-o','MarkerEdgeColor','#D95319','MarkerFaceColor','#D95319')
-p3 = plot(avg_freq,ANL_vec(ind_no_ice)-ANL_vec(ind_no_duct),'-o','MarkerEdgeColor','#EDB120','MarkerFaceColor','#EDB120')
+p2 = plot(avg_freq,ANL_vec(ind_no_ice)-ANL_vec(ind_duct),'-o','Color','#77AC30','MarkerEdgeColor','#77AC30','MarkerFaceColor','#77AC30');
+p3 = plot(avg_freq,ANL_vec(ind_no_ice)-ANL_vec(ind_no_duct),'-o','Color','#FF8800','MarkerEdgeColor','#FF8800','MarkerFaceColor','#FF8800');
 
 ylabel(['Pairwise Differnce of Modes of ANL (dB re 1 \muPa^2 / Hz)'])
 xlabel('Frequency (Hz)')
 xticks([100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900])
 xtickangle(-45)
 title('Pairwise Difference between Modes of ANL at each frequency')
-legend('Ice w/duct-Ice w/o duct','No Ice-Ice w/o duct','No Ice - Ice w/o duct')
+legend('Ice with duct/Ice without duct','Ice with duct/No Ice','Ice without duct/No Ice')
 
 %% MODE PLOTS %%%%%%%%%%%
 figure
@@ -216,7 +216,7 @@ xticks([100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1
 xtickangle(-45)
 title('Mode of ANL at each frequency')
 legend('Ice with duct','Ice without duct','No Ice')
-%% Try by pairwise again?
+%% Try by pairwise again
 
 figure
 p1 = plot(avg_freq,pair_dist_duct_noduct,'-o','MarkerEdgeColor','#4DBEEE','MarkerFaceColor','#4DBEEE');
@@ -229,4 +229,15 @@ xlabel('Frequency (Hz)')
 xticks([100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900])
 xtickangle(-45)
 title('Pairwise Difference of ANL at each frequency')
-legend('Ice with duct/Ice No Duct','Ice with Duct/Ice No Duct','Ice No Duct/No Ice','Location','best')
+legend('Ice with duct/Ice without Duct','Ice with Duct/No Ice','Ice without Duct/No Ice','Location','best')
+
+%% Pairwise but just the last one
+figure
+p1 = plot(avg_freq,pair_dist_duct_noduct,'-o','Color','#FF8800','MarkerEdgeColor','#FF0000','MarkerFaceColor','#FF0000');
+
+ylabel(['Pairwise Differnce of Mode (dB re 1 \muPa^2 / Hz)'])
+xlabel('Frequency (Hz)')
+xticks([100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900])
+xtickangle(-45)
+title('Pairwise Difference of ANL at each frequency')
+legend('Ice with duct/Ice without Duct','Location','best')
