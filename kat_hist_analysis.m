@@ -39,8 +39,6 @@ ind_no_ice_2=find(timestamp_num_spectro > beg_no_ice);
 
 ind_no_ice=[ind_no_ice_1 ; ind_no_ice_2];
 
-
-
 %%
 
 ANL_ice=SPL_ANL(ind_ice,ff);

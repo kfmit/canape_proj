@@ -4,19 +4,19 @@ clc
 
 % first create two random data sets of size 1000
 x1=randn(1000);     % make data 1
-x2=randn(1000)+1; % make data 2 and make it "SOME OFFSET" higher than the other one
+x2=randn(1000)+10; % make data 2 and make it "SOME OFFSET" higher than the other one
 db=0.1;             % establish distance between bins
-bins=-10:db:10;     % create bin edges for the histogram
+bins=-10:db:10;     % create bin edges for the histogram/ we have 200 bins, 201 edgesmac
 
 % Now create histcounts of the two variables
 % histcounts functions: val1 = the number of instances in this bin
 % bin1= the bin edges, not that this comes back as the same input as bins!
 
 % i chose to get ride of the probability normalization
-[val1, bin1]=histcounts(x1,bins,'Normalization','pdf');   %,,'Normalization','pdf');  
+[val1, bin1]=histcounts(x1,bins,'Normalization','probability');   %,,'Normalization','pdf');  
 bin1_c=bin1(1:end-1)+db/2;  % cut off the extra edge so we can use it for plotting
 
-[val2, bin2]=histcounts(x2,bins,'Normalization','pdf');    %,'Normalization','pdf');  
+[val2, bin2]=histcounts(x2,bins,'Normalization','probability');    %,'Normalization','pdf');  
 bin2_c=bin2(1:end-1)+db/2;  % cut off the extra edge so we can use it for plotting
 
 % make a figure that plots the raw data straight up
@@ -40,7 +40,7 @@ dist_mode=bin2_c(ind_bin2)-bin1_c(ind_bin1)
 
 % total variation distance - literally how much distance is there between
 % every count of every bin, larger number is more differnet
-dist_tv=sum(abs(val2-val1))/2
+dist_tv=sum(abs(val1-val2))/2
 
 % This is a figure that plots the bin edge of the maximum value and the max
 % value
