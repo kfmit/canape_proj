@@ -219,10 +219,10 @@ legend('Ice with duct','Ice without duct','No Ice')
 %% Try by pairwise again
 
 figure
-p1 = plot(avg_freq,pair_dist_duct_noduct,'-o','MarkerEdgeColor','#4DBEEE','MarkerFaceColor','#4DBEEE');
+p1 = plot(avg_freq,pair_dist_duct_noduct,'-o','Color','#7E2F8E','MarkerEdgeColor','#7E2F8E','MarkerFaceColor','#7E2F8E');
 hold on
-p2 = plot(avg_freq,pair_dist_duct_noice,'-o','MarkerEdgeColor','#D95319','MarkerFaceColor','#D95319');
-p3 = plot(avg_freq,pair_dist_noice_noduct,'-o','MarkerEdgeColor','#EDB120','MarkerFaceColor','#EDB120');
+p2 = plot(avg_freq,pair_dist_duct_noice,'-o','Color','#77AC30','MarkerEdgeColor','#77AC30','MarkerFaceColor','#77AC30');
+p3 = plot(avg_freq,pair_dist_noice_noduct,'-o','Color','#FF8800','MarkerEdgeColor','#FF8800','MarkerFaceColor','#FF8800');
 
 ylabel(['Pairwise Differnce of Peak (dB re 1 \muPa^2 / Hz)'])
 xlabel('Frequency (Hz)')
