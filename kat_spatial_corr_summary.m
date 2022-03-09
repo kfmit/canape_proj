@@ -16,7 +16,7 @@ addpath('/home/kfung/Downloads/CANAPE/new_figs/')
 freq_array1=[40 250 450 900 1250];
 freq_array2=[60 350 550 1100 1750];
 
-for i=1:1 %(length(freq_array1)-1)
+for i=5:5 %(length(freq_array1)-1)
     freq_range1 = freq_array1(i);
     freq_range2 = freq_array2(i);
     filename1 = ['spatial_cor_results_interp_new_shru1_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
@@ -71,7 +71,6 @@ for i=1:1 %(length(freq_array1)-1)
 
     Nloop=size(date_loop,2);
 
-
     %% prepare plot map
     latlimit=[65 85];
     dlon=40;
@@ -95,7 +94,7 @@ for i=1:1 %(length(freq_array1)-1)
 
     loop_end = 11; % change back to 11 after testing
     for tt=3:loop_end  % loop 1 long
-        %     for tt=1
+
         t_beg_num=date_loop(1,tt);
         t_end_num=date_loop(2,tt);
         ind_t_ok_osisaf=find(t_osisaf >= t_beg_num & t_osisaf <= t_end_num);
@@ -110,8 +109,9 @@ for i=1:1 %(length(freq_array1)-1)
         scrsz = get(0,'ScreenSize');
         set(h,'Position',[scrsz(1) scrsz(2) scrsz(3)/2 floor(scrsz(4)*0.66)])
 
-        J=squeeze(corr_spa_ave2(:,:,tt));
+        J=squeeze(corr_spa_ave2_shru5_2(:,:,tt));
         J(tutu)=NaN;
+
         %    figure, imagesc(J)
         [cmax(tt), indc_ave2(tt)]=max(abs(J(:)));
         [ii jj]=ind2sub(size(latitude), indc_ave2(tt));
@@ -121,58 +121,22 @@ for i=1:1 %(length(freq_array1)-1)
         J_shru1(tutu)=NaN;
 
         %    figure, imagesc(J)
-        [cmax_shru1(tt), indc_ave2_shru1(tt)]=max(abs(J_shru1(:)));
-        [ii_shru1 jj_shru1]=ind2sub(size(latitude), indc_ave2_shru1(tt));
 
-        [cmax_shru1(tt), indc_ave2_shru1(tt)]=max((J_shru1(:)));
-        [ii_shru1 jj_shru1]=ind2sub(size(latitude), indc_ave2_shru1(tt));
+        % index of max corr 
+        [toto, tata]=ind2sub(size(latitude), indc_ave2(tt));
 
 
         %%%%%%%%%%%%%%%%%% SHRU5: BELOW  %%%%%%%%%%%%%%%%%%%
-        %% Correlation map SHRU5, FREQ 1-2
-        hold on
-        maph=axesm('MapProjection','lambertstd','MapLatLimit',latlimit,'MapLonLimit',lonlimit);
-
-        %%% add grid
-        setm(maph,'Grid','on','Glinewidth',1,'PLineLocation',parallel, 'MLineLocation',MLabelLocation);
-
-        %%% add grid labeling
-        setm(maph,'Fontangle','normal',...
-            'FontSize',12,'fontweight','b',...
-            'MeridianLabel','on',...
-            'MLabelLocation',MLabelLocation,...
-            'MLabelParallel',Mpos,...
-            'ParallelLabel','on',...
-            'PLabelLocation',parallel,...
-            'PLabelMeridian',PLabelMeridian);
-
-        %%% add land
-        geoshow(maph, land, 'FaceColor',[0.80 0.80 0.80],'EdgeColor',0.30*[1 1 1]);
-
-        %%% plot data
-        %     surfm(double(latitude), double(longitude), squeeze(corr_spa_ave2(:,:,tt)))
-
-        %%% add mooring SHRU
-        plotm(gps_site(1),gps_site(2),'xk','markersize',16,'linewidth',3)
-
+        %
+        
+        % index of max corr 
         [toto, tata]=ind2sub(size(latitude), indc_ave2(tt));
 
-        % IMPORTANT: Location of SHRU
-        plotm(double(latitude(toto, tata)),double(longitude(toto,tata)),'xr','markersize',16,'linewidth',3)
+        % save the coords of location
+        maxcorr_lat(tt)=double(latitude(toto, tata));
+        maxcorr_lon(tt)=double(longitude(toto,tata));
 
-        %     %%% add edges
-        %     plotm(latitude_edge_ok, longitude_edge_ok, '.k','markersize',3,'linewidth',1)
-
-        c=colorbar;
-        c.Label.String = 'Correlation coefficient';
-        caxis(ccc)
-        %     title(['2-day averaged SPL - Max corr = ' num2str(R(tt))])
-        title([datestr(t_beg_num, 'dd mmm yyyy') ' to ' datestr(t_end_num, 'dd mmm yyyy')], 'fontsize',20,'fontweight', 'bold')
-
-        ylabel([num2str(freq_range1) '-' num2str(freq_range2)], 'fontsize',30,'fontweight', 'bold')
-
-        dist(tt)=distance(gps_site(1), gps_site(2), double(latitude(toto, tata)),double(longitude(toto, tata)),referenceSphere('Earth'));
-
+        dist(tt)=distance(gps_site(1), gps_site(2), double(latitude(toto, tata)),double(longitude(toto, tata)),referenceSphere('Earth'));        
         %% Time series SHRU5, FREQ 1-2
 
         SPL_ANL_ok=SPL_ANL_ave2(ind_t_ok_osisaf);
@@ -208,7 +172,48 @@ for i=1:1 %(length(freq_array1)-1)
 
     end        % end of loop looking through the months
     % pause inside fig gen to check points have been added
-    pause
+
+    % Correlation map SHRU5, FREQ 1-2
+        hold on
+        maph=axesm('MapProjection','lambertstd','MapLatLimit',latlimit,'MapLonLimit',lonlimit);
+
+        %%% add grid
+        setm(maph,'Grid','on','Glinewidth',1,'PLineLocation',parallel, 'MLineLocation',MLabelLocation);
+
+        %%% add grid labeling
+        setm(maph,'Fontangle','normal',...
+            'FontSize',12,'fontweight','b',...
+            'MeridianLabel','on',...
+            'MLabelLocation',MLabelLocation,...
+            'MLabelParallel',Mpos,...
+            'ParallelLabel','on',...
+            'PLabelLocation',parallel,...
+            'PLabelMeridian',PLabelMeridian);
+
+        %%% add land
+        geoshow(maph, land, 'FaceColor',[0.80 0.80 0.80],'EdgeColor',0.30*[1 1 1]);
+
+        %%% plot data
+        %     surfm(double(latitude), double(longitude), squeeze(corr_spa_ave2(:,:,tt)))
+
+        %%% add mooring SHRU
+        plotm(gps_site(1),gps_site(2),'xk','markersize',16,'linewidth',3)
+
+        % IMPORTANT: Location of
+        plotm(maxcorr_lat,maxcorr_lon,'--xr','markersize',16,'linewidth',3)
+
+%             %%% add edges
+%             plotm(latitude_edge_ok, longitude_edge_ok, '.k','markersize',3,'linewidth',1)
+
+        c=colorbar;
+        c.Label.String = 'Correlation coefficient';
+        caxis(ccc)
+        %     title(['2-day averaged SPL - Max corr = ' num2str(R(tt))])
+        title([datestr(t_beg_num, 'dd mmm yyyy') ' to ' datestr(t_end_num, 'dd mmm yyyy')], 'fontsize',20,'fontweight', 'bold')
+
+        ylabel([num2str(freq_range1) '-' num2str(freq_range2)], 'fontsize',30,'fontweight', 'bold')
+
+%         dist(tt)=distance(gps_site(1), gps_site(2), double(latitude(toto, tata)),double(longitude(toto, tata)),referenceSphere('Earth'));
 
     % printer currently OFF
     %%%%%%%%%%%% TURN ON AND OFF PRINTING %%%%%%%%%%%%%%%%%%%%%%%%
