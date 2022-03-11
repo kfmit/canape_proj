@@ -16,7 +16,7 @@ addpath('/home/kfung/Downloads/CANAPE/new_figs/')
 freq_array1=[40 250 450 900 1250];
 freq_array2=[60 350 550 1100 1750];
 
-for i=5:5 %(length(freq_array1)-1)
+for i=1:5 %(length(freq_array1)-1)
     freq_range1 = freq_array1(i);
     freq_range2 = freq_array2(i);
     filename1 = ['spatial_cor_results_interp_new_shru1_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
@@ -133,9 +133,9 @@ for i=5:5 %(length(freq_array1)-1)
         [toto, tata]=ind2sub(size(latitude), indc_ave2(tt));
 
         % save the coords of location
+        % useful saveable vars: maxcorr_lat, maxcorr_lon, cmax, dist
         maxcorr_lat(tt)=double(latitude(toto, tata));
         maxcorr_lon(tt)=double(longitude(toto,tata));
-
         dist(tt)=distance(gps_site(1), gps_site(2), double(latitude(toto, tata)),double(longitude(toto, tata)),referenceSphere('Earth'));        
         %% Time series SHRU5, FREQ 1-2
 
@@ -173,45 +173,45 @@ for i=5:5 %(length(freq_array1)-1)
     end        % end of loop looking through the months
     % pause inside fig gen to check points have been added
 
-    % Correlation map SHRU5, FREQ 1-2
-        hold on
-        maph=axesm('MapProjection','lambertstd','MapLatLimit',latlimit,'MapLonLimit',lonlimit);
-
-        %%% add grid
-        setm(maph,'Grid','on','Glinewidth',1,'PLineLocation',parallel, 'MLineLocation',MLabelLocation);
-
-        %%% add grid labeling
-        setm(maph,'Fontangle','normal',...
-            'FontSize',12,'fontweight','b',...
-            'MeridianLabel','on',...
-            'MLabelLocation',MLabelLocation,...
-            'MLabelParallel',Mpos,...
-            'ParallelLabel','on',...
-            'PLabelLocation',parallel,...
-            'PLabelMeridian',PLabelMeridian);
-
-        %%% add land
-        geoshow(maph, land, 'FaceColor',[0.80 0.80 0.80],'EdgeColor',0.30*[1 1 1]);
-
-        %%% plot data
-        %     surfm(double(latitude), double(longitude), squeeze(corr_spa_ave2(:,:,tt)))
-
-        %%% add mooring SHRU
-        plotm(gps_site(1),gps_site(2),'xk','markersize',16,'linewidth',3)
-
-        % IMPORTANT: Location of
-        plotm(maxcorr_lat,maxcorr_lon,'--xr','markersize',16,'linewidth',3)
-
-%             %%% add edges
-%             plotm(latitude_edge_ok, longitude_edge_ok, '.k','markersize',3,'linewidth',1)
-
-        c=colorbar;
-        c.Label.String = 'Correlation coefficient';
-        caxis(ccc)
-        %     title(['2-day averaged SPL - Max corr = ' num2str(R(tt))])
-        title([datestr(t_beg_num, 'dd mmm yyyy') ' to ' datestr(t_end_num, 'dd mmm yyyy')], 'fontsize',20,'fontweight', 'bold')
-
-        ylabel([num2str(freq_range1) '-' num2str(freq_range2)], 'fontsize',30,'fontweight', 'bold')
+%     % Correlation map SHRU5, FREQ 1-2
+%         hold on
+%         maph=axesm('MapProjection','lambertstd','MapLatLimit',latlimit,'MapLonLimit',lonlimit);
+% 
+%         %%% add grid
+%         setm(maph,'Grid','on','Glinewidth',1,'PLineLocation',parallel, 'MLineLocation',MLabelLocation);
+% 
+%         %%% add grid labeling
+%         setm(maph,'Fontangle','normal',...
+%             'FontSize',12,'fontweight','b',...
+%             'MeridianLabel','on',...
+%             'MLabelLocation',MLabelLocation,...
+%             'MLabelParallel',Mpos,...
+%             'ParallelLabel','on',...
+%             'PLabelLocation',parallel,...
+%             'PLabelMeridian',PLabelMeridian);
+% 
+%         %%% add land
+%         geoshow(maph, land, 'FaceColor',[0.80 0.80 0.80],'EdgeColor',0.30*[1 1 1]);
+% 
+%         %%% plot data
+%         %     surfm(double(latitude), double(longitude), squeeze(corr_spa_ave2(:,:,tt)))
+% 
+%         %%% add mooring SHRU
+%         plotm(gps_site(1),gps_site(2),'xk','markersize',16,'linewidth',3)
+% 
+%         % IMPORTANT: Location of
+%         plotm(maxcorr_lat,maxcorr_lon,'--xr','markersize',16,'linewidth',3)
+% 
+% %             %%% add edges
+% %             plotm(latitude_edge_ok, longitude_edge_ok, '.k','markersize',3,'linewidth',1)
+% 
+%         c=colorbar;
+%         c.Label.String = 'Correlation coefficient';
+%         caxis(ccc)
+%         %     title(['2-day averaged SPL - Max corr = ' num2str(R(tt))])
+%         title([datestr(t_beg_num, 'dd mmm yyyy') ' to ' datestr(t_end_num, 'dd mmm yyyy')], 'fontsize',20,'fontweight', 'bold')
+% 
+%         ylabel([num2str(freq_range1) '-' num2str(freq_range2)], 'fontsize',30,'fontweight', 'bold')
 
 %         dist(tt)=distance(gps_site(1), gps_site(2), double(latitude(toto, tata)),double(longitude(toto, tata)),referenceSphere('Earth'));
 
@@ -221,6 +221,8 @@ for i=5:5 %(length(freq_array1)-1)
     %             num2str(freq_range4) '/spatial_corr_' datestr(t_beg_num, 'yyyymmdd') '-' datestr(t_end_num, 'yyyymmdd')]  ...
     %             ,'-dpng')
 
+    savestring = [num2str(freq_range1) '_' num2str(freq_range2) 'corr']
+    save(savestring,'freq_range1','freq_range2','maxcorr_lat','maxcorr_lon','cmax','dist')
 end     % end of loop going through freqs
 
 %%%% end of the figure generator %%%%
