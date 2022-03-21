@@ -80,7 +80,7 @@ lonlimit=[-180 -145];
     PLabelMeridian=30;
     land = shaperead('landareas.shp', 'UseGeoCoords', true);
 
-
+%%
     loop_end = 11; % change back to 11 after testing
     for tt=3:loop_end  % loop 1 long, keeping for info needed
 
@@ -193,8 +193,8 @@ lonlimit=[-180 -145];
     maxcorr_val1500 = cmax;
     dist1500 = dist;
     size1500=maxcorr_val1500*200;
-    
-   %% 
+
+    %%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE VISIBILITY HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     figure('visible','on');
     %%%%%%%%%%%%%%%%%%%%%%%%%%5%% FIGURE VISIBILITY HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -225,25 +225,25 @@ lonlimit=[-180 -145];
     plotm(gps_site(1),gps_site(2),'xk','markersize',16,'linewidth',3)
 
     % IMPORTANT: Location of path, assuming
-%     p50 = plotm(maxcorr_lat50,maxcorr_lon50,'--r','linewidth',2);
+    %     p50 = plotm(maxcorr_lat50,maxcorr_lon50,'--r','linewidth',2);
     p300 = plotm(maxcorr_lat300,maxcorr_lon300,'-g','linewidth',1);
     p500 = plotm(maxcorr_lat500,maxcorr_lon500,'-b','linewidth',1);
     p1000 = plotm(maxcorr_lat1000,maxcorr_lon1000,'-c','linewidth',1);
     p1500 = plotm(maxcorr_lat1500,maxcorr_lon1500,'-m','linewidth',1);
 
-%     % scatter with size change
-%     sp50 = scatterm(maxcorr_lat50(3:end),maxcorr_lon50(3:end),size50(3:end),'or');
-%     sp300 = scatterm(maxcorr_lat300(3:end),maxcorr_lon300(3:end),size300(3:end),'*g');
-%     sp500 = scatterm(maxcorr_lat500(3:end),maxcorr_lon500(3:end),size500(3:end),'sb');
-%     sp1000 = scatterm(maxcorr_lat1000(3:end),maxcorr_lon1000(3:end),size1000(3:end),'^c');
-%     sp1500 = scatterm(maxcorr_lat1500(3:end),maxcorr_lon1500(3:end),size1500(3:end),'hm');
+    %     % scatter with size change
+    %     sp50 = scatterm(maxcorr_lat50(3:end),maxcorr_lon50(3:end),size50(3:end),'or');
+    %     sp300 = scatterm(maxcorr_lat300(3:end),maxcorr_lon300(3:end),size300(3:end),'*g');
+    %     sp500 = scatterm(maxcorr_lat500(3:end),maxcorr_lon500(3:end),size500(3:end),'sb');
+    %     sp1000 = scatterm(maxcorr_lat1000(3:end),maxcorr_lon1000(3:end),size1000(3:end),'^c');
+    %     sp1500 = scatterm(maxcorr_lat1500(3:end),maxcorr_lon1500(3:end),size1500(3:end),'hm');
 
-% scatter with color change,
-% sp50 = scatterm(maxcorr_lat50(3:end),maxcorr_lon50(3:end),size50(3:end),maxcorr_val50(3:end),'o');
-sp300 = scatterm(maxcorr_lat300(3:end),maxcorr_lon300(3:end),size300(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','g');
-sp500 = scatterm(maxcorr_lat500(3:end),maxcorr_lon500(3:end),size500(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','b');
-sp1000 = scatterm(maxcorr_lat1000(3:end),maxcorr_lon1000(3:end),size1000(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','c');
-sp1500 = scatterm(maxcorr_lat1500(3:end),maxcorr_lon1500(3:end),size1500(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','m');
+    % scatter with color change,
+    % sp50 = scatterm(maxcorr_lat50(3:end),maxcorr_lon50(3:end),size50(3:end),maxcorr_val50(3:end),'o');
+    sp300 = scatterm(maxcorr_lat300(3:end),maxcorr_lon300(3:end),size300(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','g');
+    sp500 = scatterm(maxcorr_lat500(3:end),maxcorr_lon500(3:end),size500(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','b');
+    sp1000 = scatterm(maxcorr_lat1000(3:end),maxcorr_lon1000(3:end),size1000(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','c');
+    sp1500 = scatterm(maxcorr_lat1500(3:end),maxcorr_lon1500(3:end),size1500(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','m');
 
 
     %             %%% add edges
@@ -260,22 +260,23 @@ sp1500 = scatterm(maxcorr_lat1500(3:end),maxcorr_lon1500(3:end),size1500(3:end),
     title('Highest Correlation between Ice Drift and ANL')
     %     ylabel([num2str(freq_range1) '-' num2str(freq_range2)], 'fontsize',30,'fontweight', 'bold')
 
-%     legend('SHRU5','50 Hz','300 Hz','500 Hz','1000 Hz','1500 Hz')
+    %     legend('SHRU5','50 Hz','300 Hz','500 Hz','1000 Hz','1500 Hz')
     legend('SHRU5','300 Hz','500 Hz','1000 Hz','1500 Hz')
 
 
-%% next figure
+%% next figure, distance
 
 figure
 hold on
-scatter(start_date_vec(3:end),dist50(3:end)/1000,size300(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','r','LineWidth',2)
+% scatter(start_date_vec(3:end),dist50(3:end)/1000,size50(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','r','LineWidth',2)
 scatter(start_date_vec(3:end),dist300(3:end)/1000,size300(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','g','LineWidth',2)
 scatter(start_date_vec(3:end),dist500(3:end)/1000,size300(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','b','LineWidth',2)
 scatter(start_date_vec(3:end),dist1000(3:end)/1000,size300(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','c','LineWidth',2)
 scatter(start_date_vec(3:end),dist1500(3:end)/1000,size300(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','m','LineWidth',2)
 datetick('x',1)
 ylabel('Distance (km)')
-legend('SHRU5','300 Hz','500 Hz','1000 Hz','1500 Hz')
+% legend('50 Hz','300 Hz','500 Hz','1000 Hz','1500 Hz')
+legend('300 Hz','500 Hz','1000 Hz','1500 Hz')
 title('Distance between Max Correlation Point and SHRU5')
 
 colormap(1-gray)
