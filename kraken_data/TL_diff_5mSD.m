@@ -1,4 +1,5 @@
 %% kraken trend analysis
+% there is a built in function but its kinda weird
 
 clear all
 close all
@@ -31,7 +32,7 @@ end
 set(gca,'YDir','reverse')
 xlabel('Range (m)')
 ylabel('Transmission Loss (dB)')
-title(['Moving mean, ' num2str(k) ' datapoints constant ssp, Zr=166m'])
+title(['Double Duct TL (movmean: ' num2str(k) ' datapoints) Zr=166m'])
 xlim([min(min(R)) max(max(R))])
 ylim([min(min(TL)) max(max(TL))])
 % change legend by hand
