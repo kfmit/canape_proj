@@ -317,7 +317,7 @@ for tt=3:loop_end  % loop 1 long
 
     ylabel([num2str(freq_range3) '-' num2str(freq_range4)], 'fontsize',30,'fontweight', 'bold')
 
-    dist_shru1(tt)=distance(gps_site(1), gps_site(2), double(latitude(toto, tata)),double(longitude(toto, tata)),referenceSphere('Earth'));
+    dist_shru1(tt)=distance(gps_site_shru1(1), gps_site_shru1(2), double(latitude(toto, tata)),double(longitude(toto, tata)),referenceSphere('Earth'));
 
     %% Time series SHRU1
 
@@ -392,7 +392,7 @@ end
 
 
 %%%%% Functions! %%%%%%%
-dist_shrus=distance(gps_site(1), gps_site(2),gps_site(1), gps_site(2),referenceSphere('Earth'))/1000
+dist_shrus=distance(gps_site(1), gps_site(2),gps_site_shru1(1), gps_site_shru1(2),referenceSphere('Earth'))/1000
 
 dist_corr_shru5=[min(dist(3:loop_end)) mean(dist(3:loop_end)) max(dist(3:loop_end))]/1000
 

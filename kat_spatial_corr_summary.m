@@ -22,10 +22,10 @@ for i=1:5 %(length(freq_array1)-1)
     filename1 = ['spatial_cor_results_interp_new_shru1_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
     filename2 = ['spatial_cor_results_interp_new_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
 
-    load(filename1);
-    % save the specific variables to new names!
-    corr_spa_ave2_shru1 = corr_spa_ave2;
-    SPL_ANL_ave2_SHRU1 = SPL_ANL_ave2;
+%     load(filename1);
+%     % save the specific variables to new names!
+%     corr_spa_ave2_shru1 = corr_spa_ave2;
+%     SPL_ANL_ave2_SHRU1 = SPL_ANL_ave2;
     gps_site = [72+54.4123/60 , -(159+1.0840/60)];
 
     %%%% comes from spatial_corr_analysis_loop_interp_SHRU5
@@ -33,7 +33,8 @@ for i=1:5 %(length(freq_array1)-1)
     % load spatial_cor_results_interp_new.mat and spatial_cor_results_interp_new_1250_1750.mat
 
     % NEW SHRU5 name
-    load(filename2);
+    %%%%%%%% it SHOULD be filename2 but we want SHRU1 rn %%%%%%%%%%%%%%
+    load(filename1);
     % save the specific variables to new names!
     corr_spa_ave2_shru5_2 = corr_spa_ave2;
     SPL_ANL_ave2_SHRU5_2 = SPL_ANL_ave2;
@@ -54,6 +55,7 @@ for i=1:5 %(length(freq_array1)-1)
 
     % comes from spatial_corr_analysis_loop_interp_new_SHRU5.m
     load ANL_SHRU5_newfreq.mat % should already have everything
+%     load ANL_SHRU1.mat % should already have everything
     % load ANL_SHRU5.mat
     t=timestamp_num_spectro;
 
@@ -89,7 +91,7 @@ for i=1:5 %(length(freq_array1)-1)
     % for tt=3:11, actual loop length is 11, actual length is 15, but summer
     % months irrelevant
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE VISIBILITY HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    figure('visible','on');
+    figure('visible','off');
     %%%%%%%%%%%%%%%%%%%%%%%%%%5%% FIGURE VISIBILITY HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
     loop_end = 11; % change back to 11 after testing
@@ -137,6 +139,7 @@ for i=1:5 %(length(freq_array1)-1)
         maxcorr_lat(tt)=double(latitude(toto, tata));
         maxcorr_lon(tt)=double(longitude(toto,tata));
         dist(tt)=distance(gps_site(1), gps_site(2), double(latitude(toto, tata)),double(longitude(toto, tata)),referenceSphere('Earth'));        
+        
         %% Time series SHRU5, FREQ 1-2
 
         SPL_ANL_ok=SPL_ANL_ave2(ind_t_ok_osisaf);
@@ -211,7 +214,7 @@ for i=1:5 %(length(freq_array1)-1)
 %         %     title(['2-day averaged SPL - Max corr = ' num2str(R(tt))])
 %         title([datestr(t_beg_num, 'dd mmm yyyy') ' to ' datestr(t_end_num, 'dd mmm yyyy')], 'fontsize',20,'fontweight', 'bold')
 % 
-%         ylabel([num2str(freq_range1) '-' num2str(freq_range2)], 'fontsize',30,'fontweight', 'bold')
+% dist        ylabel([num2str(freq_range1) '-' num2str(freq_range2)], 'fontsize',30,'fontweight', 'bold')
 
 %         dist(tt)=distance(gps_site(1), gps_site(2), double(latitude(toto, tata)),double(longitude(toto, tata)),referenceSphere('Earth'));
 
@@ -221,7 +224,7 @@ for i=1:5 %(length(freq_array1)-1)
     %             num2str(freq_range4) '/spatial_corr_' datestr(t_beg_num, 'yyyymmdd') '-' datestr(t_end_num, 'yyyymmdd')]  ...
     %             ,'-dpng')
 
-    savestring = [num2str(freq_range1) '_' num2str(freq_range2) 'corr']
+    savestring = ['SHRU1_' num2str(freq_range1) '_' num2str(freq_range2) 'corr']
     save(savestring,'freq_range1','freq_range2','maxcorr_lat','maxcorr_lon','cmax','dist')
 end     % end of loop going through freqs
 
@@ -229,7 +232,7 @@ end     % end of loop going through freqs
 
 
 %%%%% Functions! %%%%%%%
-dist_shrus=distance(gps_site(1), gps_site(2),gps_site(1), gps_site(2),referenceSphere('Earth'))/1000
+dist_shrus=distance(gps_site(1), gps_site(2),gps_site_shru1(1), gps_site_shru1(2),referenceSphere('Earth'))/1000
 
 dist_corr_shru5=[min(dist(3:loop_end)) mean(dist(3:loop_end)) max(dist(3:loop_end))]/1000
 

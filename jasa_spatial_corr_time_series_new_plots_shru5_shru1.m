@@ -130,7 +130,7 @@ for tt=3:11
     %     longitude_type_ok=double(longitude_type(toto_type));
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE VISIBILITY HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    figure('visible','on');
+    figure('visible','off');
     %%%%%%%%%%%%%%%%%%%%%%%%%%5%% FIGURE VISIBILITY HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %     figure
     h = get(0,'children');

@@ -42,6 +42,7 @@ end
 
 
     % GPS data
+    gps_site_shru1 = [72+54.4123/60 , -(159+1.0840/60)];
     gps_site = [72+54.4580/60 , -(157+29.2442/60)];
     dlon=40;
     lonlimit=[gps_site(2)-dlon gps_site(2)+dlon];
@@ -159,35 +160,36 @@ lonlimit=[-180 -145];
 
 
     %% load oldcorrs for plotting
-    load('40_60corr.mat')
+    % its either shru1_max, c_max_shru1, dist_shru1
+    load('combo_40_60corr.mat')
     maxcorr_lat50 = maxcorr_lat;
     maxcorr_lon50 = maxcorr_lon;
     maxcorr_val50 = cmax;
     dist50 = dist;
     size50=maxcorr_val50*200;
 
-    load('250_350corr.mat')
+    load('combo_250_350corr.mat')
     maxcorr_lat300 = maxcorr_lat;
     maxcorr_lon300 = maxcorr_lon;
     maxcorr_val300 = cmax;
     dist300 = dist;
     size300=maxcorr_val300*200;
 
-    load('450_550corr.mat')
+    load('combo_450_550corr.mat')
     maxcorr_lat500 = maxcorr_lat;
     maxcorr_lon500 = maxcorr_lon;
     maxcorr_val500 = cmax;
     dist500 = dist;
     size500=maxcorr_val500*200;
 
-    load('900_1100corr.mat')
+    load('combo_900_1100corr.mat')
     maxcorr_lat1000 = maxcorr_lat;
     maxcorr_lon1000 = maxcorr_lon;
     maxcorr_val1000 = cmax;
     dist1000 = dist;
     size1000=maxcorr_val1000*200;
 
-    load('1250_1750corr.mat')
+    load('combo_1250_1750corr.mat')
     maxcorr_lat1500 = maxcorr_lat;
     maxcorr_lon1500 = maxcorr_lon;
     maxcorr_val1500 = cmax;
@@ -222,10 +224,11 @@ lonlimit=[-180 -145];
     %     surfm(double(latitude), double(longitude), squeeze(corr_spa_ave2(:,:,tt)))
 
     %%% add mooring SHRU
-    plotm(gps_site(1),gps_site(2),'xk','markersize',16,'linewidth',3)
+%     plotm(gps_site(1),gps_site(2),'xk','markersize',16,'linewidth',3)
+    plotm(gps_site_shru1(1),gps_site_shru1(2),'xk','markersize',16,'linewidth',3)
 
     % IMPORTANT: Location of path, assuming
-    %     p50 = plotm(maxcorr_lat50,maxcorr_lon50,'--r','linewidth',2);
+%         p50 = plotm(maxcorr_lat50,maxcorr_lon50,'--r','linewidth',2);
     p300 = plotm(maxcorr_lat300,maxcorr_lon300,'-g','linewidth',1);
     p500 = plotm(maxcorr_lat500,maxcorr_lon500,'-b','linewidth',1);
     p1000 = plotm(maxcorr_lat1000,maxcorr_lon1000,'-c','linewidth',1);
@@ -239,7 +242,7 @@ lonlimit=[-180 -145];
     %     sp1500 = scatterm(maxcorr_lat1500(3:end),maxcorr_lon1500(3:end),size1500(3:end),'hm');
 
     % scatter with color change,
-    % sp50 = scatterm(maxcorr_lat50(3:end),maxcorr_lon50(3:end),size50(3:end),maxcorr_val50(3:end),'o');
+%     sp50 = scatterm(maxcorr_lat50(3:end),maxcorr_lon50(3:end),size50(3:end),maxcorr_val50(3:end),'o');
     sp300 = scatterm(maxcorr_lat300(3:end),maxcorr_lon300(3:end),size300(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','g');
     sp500 = scatterm(maxcorr_lat500(3:end),maxcorr_lon500(3:end),size500(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','b');
     sp1000 = scatterm(maxcorr_lat1000(3:end),maxcorr_lon1000(3:end),size1000(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','c');
@@ -261,7 +264,7 @@ lonlimit=[-180 -145];
     %     ylabel([num2str(freq_range1) '-' num2str(freq_range2)], 'fontsize',30,'fontweight', 'bold')
 
     %     legend('SHRU5','50 Hz','300 Hz','500 Hz','1000 Hz','1500 Hz')
-    legend('SHRU5','300 Hz','500 Hz','1000 Hz','1500 Hz')
+    legend('SHRU1','300 Hz','500 Hz','1000 Hz','1500 Hz')
 
 
 %% next figure, distance
