@@ -2,7 +2,7 @@
 %% hist divider
 
 clear all
-close all
+% close all
 clc
 
 load ANLs_50_1900Hz.mat
@@ -191,19 +191,19 @@ legend('Ice with duct/Ice without duct','Ice with duct/No Ice','Ice without duct
 
 %% MODE DIFFS - this is essentially pairwise differnce
 figure
-p1 = plot(avg_freq,ANL_vec(ind_duct)-ANL_vec(ind_no_duct),'-o','Color','#7E2F8E','MarkerEdgeColor','#7E2F8E','MarkerFaceColor','#7E2F8E');
+p1 = plot(avg_freq,ANL_vec(ind_duct),'-o','MarkerEdgeColor','#4DBEEE','MarkerFaceColor','#4DBEEE');
 hold on
-p2 = plot(avg_freq,ANL_vec(ind_no_ice)-ANL_vec(ind_duct),'-o','Color','#77AC30','MarkerEdgeColor','#77AC30','MarkerFaceColor','#77AC30');
-p3 = plot(avg_freq,ANL_vec(ind_no_ice)-ANL_vec(ind_no_duct),'-o','Color','#FF8800','MarkerEdgeColor','#FF8800','MarkerFaceColor','#FF8800');
+p2 = plot(avg_freq,ANL_vec(ind_no_duct),'-o','MarkerEdgeColor','#D95319','MarkerFaceColor','#D95319');
+p3 = plot(avg_freq,ANL_vec(ind_no_ice),'-o','MarkerEdgeColor','#EDB120','MarkerFaceColor','#EDB120');
 
-ylabel(['Pairwise Differnce of Modes of ANL (dB re 1 \muPa^2 / Hz)'])
+ylabel(['Mode of ANL dB re 1 \muPa^2 / Hz'])
 xlabel('Frequency (Hz)')
 xticks([100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900])
 xtickangle(-45)
-title('Pairwise Difference between Modes of ANL at each frequency')
-legend('Ice with duct/Ice without duct','Ice with duct/No Ice','Ice without duct/No Ice')
+title('Mode of ANL at each frequency')
+legend('Ice with duct','Ice without duct','No Ice')
 
-%% MODE PLOTS %%%%%%%%%%%
+%% LOG MODE PLOTS %%%%%%%%%%%
 figure
 p1 = plot(avg_freq,log10(ANL_vec(ind_duct)),'-o','MarkerEdgeColor','#4DBEEE','MarkerFaceColor','#4DBEEE');
 hold on
@@ -214,10 +214,9 @@ ylabel(['Mode of ANL log(dB re 1 \muPa^2 / Hz)'])
 xlabel('Frequency (Hz)')
 xticks([100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900])
 xtickangle(-45)
-title('Mode of ANL at each frequency')
+title('Log Mode of ANL at each frequency')
 legend('Ice with duct','Ice without duct','No Ice')
 %% Try by pairwise again
-
 figure
 p1 = plot(avg_freq,pair_dist_duct_noduct,'-o','Color','#7E2F8E','MarkerEdgeColor','#7E2F8E','MarkerFaceColor','#7E2F8E');
 hold on

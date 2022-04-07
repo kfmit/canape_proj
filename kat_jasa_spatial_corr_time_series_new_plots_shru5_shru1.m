@@ -13,13 +13,13 @@ addpath('/home/kfung/Downloads/CANAPE/new_figs/')
 % comes from spatial_corr_analysis_loop_interp_new_SHRU1.m
 % ORIGINAL
 % load spatial_cor_results_interp_new_shru1.mat
-freq_range1 = 250;
-freq_range2 = 350;
+freq_range1 = 900;
+freq_range2 = 1100;
 filename1 = ['spatial_cor_results_interp_new_shru1_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
 filename2 = ['spatial_cor_results_interp_new_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
 
-freq_range3 = 450;
-freq_range4 = 550;
+freq_range3 = 1250;
+freq_range4 = 1750;
 filename3 = ['spatial_cor_results_interp_new_shru1_' num2str(freq_range3) '_' num2str(freq_range4) '.mat'];
 filename4 = ['spatial_cor_results_interp_new_' num2str(freq_range3) '_' num2str(freq_range4) '.mat'];
 
@@ -57,6 +57,7 @@ SPL_ANL_ave2_SHRU5_4 = SPL_ANL_ave2;
 
 % GPS data
 gps_site = [72+54.4580/60 , -(157+29.2442/60)];
+gps_site_shru1 = [72+54.4123/60 , -(159+1.0840/60)];
 dlon=40;
 lonlimit=[gps_site(2)-dlon gps_site(2)+dlon];
 lonlimit_ok=[lonlimit(2) lonlimit(1)+360];
@@ -164,7 +165,7 @@ for tt=3:loop_end  % loop 1 long
     scrsz = get(0,'ScreenSize');
     set(h,'Position',[scrsz(1) scrsz(2) scrsz(3)/2 floor(scrsz(4)*0.66)])
 
-    J=squeeze(corr_spa_ave2(:,:,tt));
+    J=squeeze(corr_spa_ave2_shru5_2(:,:,tt));
     J(tutu)=NaN;
     %    figure, imagesc(J)
     [cmax(tt), indc_ave2(tt)]=max(abs(J(:)));
@@ -176,9 +177,6 @@ for tt=3:loop_end  % loop 1 long
 
     %    figure, imagesc(J)
     [cmax_shru1(tt), indc_ave2_shru1(tt)]=max(abs(J_shru1(:)));
-    [ii_shru1 jj_shru1]=ind2sub(size(latitude), indc_ave2_shru1(tt));
-
-    [cmax_shru1(tt), indc_ave2_shru1(tt)]=max((J_shru1(:)));
     [ii_shru1 jj_shru1]=ind2sub(size(latitude), indc_ave2_shru1(tt));
 
 
@@ -204,7 +202,7 @@ for tt=3:loop_end  % loop 1 long
     geoshow(maph, land, 'FaceColor',[0.80 0.80 0.80],'EdgeColor',0.30*[1 1 1]);
 
     %%% plot data
-    surfm(double(latitude), double(longitude), squeeze(corr_spa_ave2(:,:,tt)))
+    surfm(double(latitude), double(longitude), squeeze(corr_spa_ave2_shru5_2(:,:,tt)))
 
     %%% add mooring
     plotm(gps_site(1),gps_site(2),'xk','markersize',16,'linewidth',3)
@@ -226,7 +224,7 @@ for tt=3:loop_end  % loop 1 long
 
     %% Time series SHRU5, FREQ 1-2
 
-    SPL_ANL_ok=SPL_ANL_ave2(ind_t_ok_osisaf);
+    SPL_ANL_ok=SPL_ANL_ave2_SHRU5_2(ind_t_ok_osisaf);
     d_ok=squeeze(d(ind_t_ok_osisaf,ii,jj));
     %    d_ok_interp=interp1(t_osisaf(ind_t_ok_osisaf), d_ok, t(ind_t_ok), 'nearest');
     t_ok=t_osisaf(ind_t_ok_osisaf); %%% common time axis
@@ -248,6 +246,7 @@ for tt=3:loop_end  % loop 1 long
     nb=1;
     block{nb}=d_ok_norm2(toto(1));
     ind_b{nb}=toto(1);
+    
     for iii=2:Ntoto
         if toto(iii)-toto(iii-1) == 1
             block{nb}=[block{nb} d_ok_norm2(toto(iii))];
@@ -258,8 +257,6 @@ for tt=3:loop_end  % loop 1 long
             ind_b{nb}= toto(iii);
         end
     end
-
-
 
     subplot(222)
     plot(t_ok-t_ok(1),(SPL_ANL_ok-mu_spl)/sigma_spl, 'Color', [0    0.4470    0.7410], 'linewidth',2)
@@ -277,8 +274,8 @@ for tt=3:loop_end  % loop 1 long
     ylim([-3 4])
     legend(['ANL ' num2str(freq_range1) '-' num2str(freq_range2)], 'Ice drift')
 
-
-    %% Correlation map SHRU5, FREQ 3-5 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    %%
+    %%%%%%%%% Correlation map SHRU5, FREQ 3-5 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     subplot(223)
     maph=axesm('MapProjection','lambertstd','MapLatLimit',latlimit,'MapLonLimit',lonlimit);
 
@@ -299,7 +296,7 @@ for tt=3:loop_end  % loop 1 long
     geoshow(maph, land, 'FaceColor',[0.80 0.80 0.80],'EdgeColor',0.30*[1 1 1]);
 
     %%% plot data
-    surfm(double(latitude), double(longitude), squeeze(corr_spa_ave2_shru5_2(:,:,tt)))
+    surfm(double(latitude), double(longitude), squeeze(corr_spa_ave2_shru5_4(:,:,tt)))
 
     %%% add mooring
     plotm(gps_site(1),gps_site(2),'xk','markersize',16,'linewidth',3)
@@ -319,9 +316,9 @@ for tt=3:loop_end  % loop 1 long
 
     dist_shru1(tt)=distance(gps_site_shru1(1), gps_site_shru1(2), double(latitude(toto, tata)),double(longitude(toto, tata)),referenceSphere('Earth'));
 
-    %% Time series SHRU1
+    %% Time series SHRU5, freq 3-4
 
-    SPL_ANL_ok=SPL_ANL_ave2_SHRU5_2(ind_t_ok_osisaf);
+    SPL_ANL_ok=SPL_ANL_ave2_SHRU5_4(ind_t_ok_osisaf);
     d_ok=squeeze(d(ind_t_ok_osisaf,ii_shru1,jj_shru1));
     %    d_ok_interp=interp1(t_osisaf(ind_t_ok_osisaf), d_ok, t(ind_t_ok), 'nearest');
     t_ok=t_osisaf(ind_t_ok_osisaf); %%% common time axis

@@ -9,8 +9,8 @@ addpath('/home/kfung/Downloads/CANAPE/kraken_data/singleduct_900km_5SD_attn/');
 addpath('/home/kfung/Downloads/CANAPE/kraken_data/5mSD_900km_166RD_attn/');
 addpath('/home/kfung/Downloads/CANAPE/kraken_data/doubleduct_900km_5SD_ attn/');
 % addpath('/home/kfung/Downloads/CANAPE/kraken_data/constant_tester/');
-% names_dir = dir('5mSD_900km_166RD_attn/');
-names_dir = dir('doubleduct_900km_5SD_ attn/');
+names_dir = dir('5mSD_900km_166RD_attn/');
+% names_dir = dir('doubleduct_900km_5SD_ attn/');
 
 actual_order=[7 5 6 3 4];
 figure(1)
@@ -18,7 +18,7 @@ k = 1000;
 for i=1:length(actual_order)
     act_ind = actual_order(i)
     disp(names_dir(act_ind).name)
-fig=openfig(names_dir(act_ind).name);  %'invisible'
+fig=openfig(names_dir(act_ind).name,'invisible');  %'invisible'
 axObjs = fig.Children;
 dataObjs = axObjs.Children;
 x = dataObjs(1).XData;
@@ -54,7 +54,8 @@ end
 set(gca,'YDir','reverse')
 xlabel('Range (m)')
 ylabel('Transmission Loss (dB)')
-title(['Single Duct TL (movmean: ' num2str(k) ' datapoints) Zr=166m'])
+title(['Double Duct TL (movmean: ' num2str(k) ' datapoints) Zr=166m'])
+% title(['Single Duct TL (movmean: ' num2str(k) ' datapoints) Zr=166m'])
 xlim([min(min(R)) max(max(R))])
 ylim([min(min(TL)) max(max(TL))])
 % change legend by hand
