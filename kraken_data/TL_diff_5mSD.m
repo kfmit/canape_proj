@@ -61,3 +61,60 @@ ylim([min(min(TL)) max(max(TL))])
 % change legend by hand
 % legend('50 Hz','300 Hz', '500 Hz','1000 Hz', '1500 Hz')   %for double
 legend('50 Hz','300 Hz', '500 Hz','1000 Hz', '1500 Hz')     % for single
+
+%%
+load('combo_40_60corr.mat')
+    maxcorr_lat50 = maxcorr_lat;
+    maxcorr_lon50 = maxcorr_lon;
+    maxcorr_val50 = cmax;
+    dist50 = dist;
+    size50=maxcorr_val50*200;
+
+    load('combo_250_350corr.mat')
+    maxcorr_lat300 = maxcorr_lat;
+    maxcorr_lon300 = maxcorr_lon;
+    maxcorr_val300 = cmax;
+    dist300 = dist;
+    size300=maxcorr_val300*200;
+
+    load('combo_450_550corr.mat')
+    maxcorr_lat500 = maxcorr_lat;
+    maxcorr_lon500 = maxcorr_lon;
+    maxcorr_val500 = cmax;
+    dist500 = dist;
+    size500=maxcorr_val500*200;
+
+    load('combo_900_1100corr.mat')
+    maxcorr_lat1000 = maxcorr_lat;
+    maxcorr_lon1000 = maxcorr_lon;
+    maxcorr_val1000 = cmax;
+    dist1000 = dist;
+    size1000=maxcorr_val1000*200;
+
+    load('combo_1250_1750corr.mat')
+    maxcorr_lat1500 = maxcorr_lat;
+    maxcorr_lon1500 = maxcorr_lon;
+    maxcorr_val1500 = cmax;
+    dist1500 = dist;
+    size1500=maxcorr_val1500*200;
+
+%% SL plot
+% make a plot that compares SL-TL = received
+% SLs from 110-180 dB
+figure
+SL = [110 140 180 200];
+% ind_TL=find(t >= t_beg_num & t <= t_end_num)
+% dist_vec = [1500];
+% for i = 1:4
+% test_dist = ['dist' num2str(dist_vec(i))];
+[maxdist,ind_TL] = max(dist1500);
+[min_diff,ind_mindiff]=min(abs(R'-maxdist));
+RL = SL-TL(ind_mindiff);
+scatter(SL,RL)
+hline(55)
+xlabel('Source Level (dB)')
+ylabel('Received Level (dB)')
+title('Source Level and Received Level')
+% hold on
+% RL = 
+

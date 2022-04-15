@@ -61,10 +61,6 @@ deltalon(deltalon>180)=deltalon(deltalon>180)-360;
 
 
 
-
-
-
-
 %% Plot map with vector drift
 
 latlimit=[65 85];

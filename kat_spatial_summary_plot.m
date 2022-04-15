@@ -288,6 +288,30 @@ c.Label.String = 'Correlation coefficient';
 ccc=[0.5 0.7];  %%% for caxis
 caxis(ccc)
 
+%%
+figure
+hold on
+% scatter(start_date_vec(3:end),dist50(3:end)/1000,size50(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','r','LineWidth',2)
+plot(start_date_vec(3:end),dist300(3:end)/1000,'-og','LineWidth',2)
+plot(start_date_vec(3:end),dist500(3:end)/1000,'--sb','LineWidth',2)
+plot(start_date_vec(3:end),dist1000(3:end)/1000,':dc','LineWidth',2)
+plot(start_date_vec(3:end),dist1500(3:end)/1000,'-.pm','LineWidth',2)
+scatter(start_date_vec(3:end),dist300(3:end)/1000,size300(3:end),maxcorr_val50(3:end),'o','filled','MarkerEdgeColor','g','LineWidth',2)
+scatter(start_date_vec(3:end),dist500(3:end)/1000,size300(3:end),maxcorr_val50(3:end),'s','filled','MarkerEdgeColor','b','LineWidth',2)
+scatter(start_date_vec(3:end),dist1000(3:end)/1000,size300(3:end),maxcorr_val50(3:end),'d','filled','MarkerEdgeColor','c','LineWidth',2)
+scatter(start_date_vec(3:end),dist1500(3:end)/1000,size300(3:end),maxcorr_val50(3:end),'p','filled','MarkerEdgeColor','m','LineWidth',2)
+
+datetick('x',1)
+ylabel('Distance (km)')
+% legend('50 Hz','300 Hz','500 Hz','1000 Hz','1500 Hz')
+legend('300 Hz','500 Hz','1000 Hz','1500 Hz')
+title('Distance between Max Correlation Point and SHRU5')
+
+colormap(1-gray)
+c=colorbar;
+c.Label.String = 'Correlation coefficient';
+ccc=[0.5 0.7];  %%% for caxis
+caxis(ccc)
 
 
 %%
