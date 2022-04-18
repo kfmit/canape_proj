@@ -50,6 +50,7 @@ load(filename2);
 %spatial_cor_results_interp_new_1250_1750.mat
 
 gps_site = [72+54.4580/60 , -(157+29.2442/60)];
+gps_site_shru1 = [72+54.4123/60 , -(159+1.0840/60)];
 dlon=40;
 lonlimit=[gps_site(2)-dlon gps_site(2)+dlon];
 lonlimit_ok=[lonlimit(2) lonlimit(1)+360];
@@ -149,7 +150,7 @@ for tt=3:loop_end
     %     longitude_type_ok=double(longitude_type(toto_type));
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE VISIBILITY HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    figure('visible','on');
+    figure(1,\'visible','on');
     %%%%%%%%%%%%%%%%%%%%%%%%%%5%% FIGURE VISIBILITY HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %     figure
     h = get(0,'children');
@@ -272,103 +273,102 @@ for tt=3:loop_end
 
 
 
-    %% Correlation map SHRU1
-    subplot(223)
-    maph=axesm('MapProjection','lambertstd','MapLatLimit',latlimit,'MapLonLimit',lonlimit);
-
-    %%% add grid
-    setm(maph,'Grid','on','Glinewidth',1,'PLineLocation',parallel, 'MLineLocation',MLabelLocation);
-
-    %%% add grid labeling
-    setm(maph,'Fontangle','normal',...
-        'FontSize',12,'fontweight','b',...
-        'MeridianLabel','on',...
-        'MLabelLocation',MLabelLocation,...
-        'MLabelParallel',Mpos,...
-        'ParallelLabel','on',...
-        'PLabelLocation',parallel,...
-        'PLabelMeridian',PLabelMeridian);
-
-    %%% add land
-    geoshow(maph, land, 'FaceColor',[0.80 0.80 0.80],'EdgeColor',0.30*[1 1 1]);
-
-    %%% plot data
-    surfm(double(latitude), double(longitude), squeeze(corr_spa_ave2_shru1(:,:,tt)))
-
-    %%% add mooring
-    plotm(gps_site_shru1(1),gps_site_shru1(2),'xk','markersize',16,'linewidth',3)
-    [toto, tata]=ind2sub(size(latitude), indc_ave2_shru1(tt));
-    plotm(double(latitude(toto, tata)),double(longitude(toto,tata)),'xr','markersize',16,'linewidth',3)
-
-    %     %%% add edges
-    %     plotm(latitude_edge_ok, longitude_edge_ok, '.k','markersize',3,'linewidth',1)
-
-    c=colorbar;
-    c.Label.String = 'Correlation coefficient';
-    caxis(ccc)
-    %     title(['2-day averaged SPL - Max corr = ' num2str(R(tt))])
-    %     title([datestr(t_beg_num, 'dd mmm yyyy') ' to ' datestr(t_end_num, 'dd mmm yyyy')], 'fontsize',20,'fontweight', 'bold')
-
-    ylabel('SHRU1', 'fontsize',30,'fontweight', 'bold')
-
-    dist_shru1(tt)=distance(gps_site_shru1(1), gps_site_shru1(2), double(latitude(toto, tata)),double(longitude(toto, tata)),referenceSphere('Earth'));
-
-    %% Time series   SHRU1
-
-    SPL_ANL_ok=SPL_ANL_ave2_SHRU1(ind_t_ok_osisaf);
-    d_ok=squeeze(d(ind_t_ok_osisaf,ii_shru1,jj_shru1));
-    %    d_ok_interp=interp1(t_osisaf(ind_t_ok_osisaf), d_ok, t(ind_t_ok), 'nearest');
-    t_ok=t_osisaf(ind_t_ok_osisaf); %%% common time axis
-
-
-    ind_no_nan=~isnan(d_ok);
-
-
-    [SPL_ANL_ok_norm, mu_spl, sigma_spl]=zscore(SPL_ANL_ok(ind_no_nan));
-    [d_ok_norm, mu_d, sigma_d]=zscore(d_ok(ind_no_nan));
-    d_ok_norm2=(d_ok-mu_d)/sigma_d;
-
-    [R_shru1(tt), Pvalue]=corr(SPL_ANL_ok_norm,d_ok_norm,'type','Pearson','rows','all','tail','both');
-
-    toto=find(~isnan(d_ok));
-
-    Ntoto=length(toto);
-    nb=1;
-    block{nb}=d_ok_norm2(toto(1));
-    ind_b{nb}=toto(1);
-    for iii=2:Ntoto
-        if toto(iii)-toto(iii-1) == 1
-            block{nb}=[block{nb} d_ok_norm2(toto(iii))];
-            ind_b{nb}=[ind_b{nb} toto(iii)];
-        else %%% new block
-            nb=nb+1;
-            block{nb}= d_ok_norm2(toto(iii));
-            ind_b{nb}= toto(iii);
-        end
-    end
-
-
-
-    subplot(224)
-    plot(t_ok-t_ok(1),(SPL_ANL_ok-mu_spl)/sigma_spl, 'Color', [0    0.4470    0.7410], 'linewidth',2)
-
-    hold on
-    for bb=1:nb
-        plot(t_ok(ind_b{bb})-t_ok(1), block{bb}, '-', 'Color', [0.8500    0.3250    0.0980], 'linewidth',2)
-        hold on
-    end
-
-    plot(t_ok(ind_no_nan)-t_ok(1), d_ok_norm, 'o', 'Color', [0.8500    0.3250    0.0980], 'linewidth',2)
-    title(['R_{max}=' num2str(R_shru1(tt))])
-    xlabel('Days')
-    grid on
-    ylim([-3 4])
-
-    legend('ANL (SHRU1)', 'Ice drift')
+%     %% Correlation map SHRU1
+%     subplot(223)
+%     maph=axesm('MapProjection','lambertstd','MapLatLimit',latlimit,'MapLonLimit',lonlimit);
+% 
+%     %%% add grid
+%     setm(maph,'Grid','on','Glinewidth',1,'PLineLocation',parallel, 'MLineLocation',MLabelLocation);
+% 
+%     %%% add grid labeling
+%     setm(maph,'Fontangle','normal',...
+%         'FontSize',12,'fontweight','b',...
+%         'MeridianLabel','on',...
+%         'MLabelLocation',MLabelLocation,...
+%         'MLabelParallel',Mpos,...
+%         'ParallelLabel','on',...
+%         'PLabelLocation',parallel,...
+%         'PLabelMeridian',PLabelMeridian);
+% 
+%     %%% add land
+%     geoshow(maph, land, 'FaceColor',[0.80 0.80 0.80],'EdgeColor',0.30*[1 1 1]);
+% 
+%     %%% plot data
+%     surfm(double(latitude), double(longitude), squeeze(corr_spa_ave2_shru1(:,:,tt)))
+% 
+%     %%% add mooring
+%     plotm(gps_site_shru1(1),gps_site_shru1(2),'xk','markersize',16,'linewidth',3)
+%     [toto, tata]=ind2sub(size(latitude), indc_ave2_shru1(tt));
+%     plotm(double(latitude(toto, tata)),double(longitude(toto,tata)),'xr','markersize',16,'linewidth',3)
+% 
+%     %     %%% add edges
+%     %     plotm(latitude_edge_ok, longitude_edge_ok, '.k','markersize',3,'linewidth',1)
+% 
+%     c=colorbar;
+%     c.Label.String = 'Correlation coefficient';
+%     caxis(ccc)
+%     %     title(['2-day averaged SPL - Max corr = ' num2str(R(tt))])
+%     %     title([datestr(t_beg_num, 'dd mmm yyyy') ' to ' datestr(t_end_num, 'dd mmm yyyy')], 'fontsize',20,'fontweight', 'bold')
+% 
+%     ylabel('SHRU1', 'fontsize',30,'fontweight', 'bold')
+% 
+%     dist_shru1(tt)=distance(gps_site_shru1(1), gps_site_shru1(2), double(latitude(toto, tata)),double(longitude(toto, tata)),referenceSphere('Earth'));
+% 
+%     %% Time series   SHRU1
+% 
+%     SPL_ANL_ok=SPL_ANL_ave2_SHRU1(ind_t_ok_osisaf);
+%     d_ok=squeeze(d(ind_t_ok_osisaf,ii_shru1,jj_shru1));
+%     %    d_ok_interp=interp1(t_osisaf(ind_t_ok_osisaf), d_ok, t(ind_t_ok), 'nearest');
+%     t_ok=t_osisaf(ind_t_ok_osisaf); %%% common time axis
+% 
+% 
+%     ind_no_nan=~isnan(d_ok);
+% 
+% 
+%     [SPL_ANL_ok_norm, mu_spl, sigma_spl]=zscore(SPL_ANL_ok(ind_no_nan));
+%     [d_ok_norm, mu_d, sigma_d]=zscore(d_ok(ind_no_nan));
+%     d_ok_norm2=(d_ok-mu_d)/sigma_d;
+% 
+%     [R_shru1(tt), Pvalue]=corr(SPL_ANL_ok_norm,d_ok_norm,'type','Pearson','rows','all','tail','both');
+% 
+%     toto=find(~isnan(d_ok));
+% 
+%     Ntoto=length(toto);
+%     nb=1;
+%     block{nb}=d_ok_norm2(toto(1));
+%     ind_b{nb}=toto(1);
+%     for iii=2:Ntoto
+%         if toto(iii)-toto(iii-1) == 1
+%             block{nb}=[block{nb} d_ok_norm2(toto(iii))];
+%             ind_b{nb}=[ind_b{nb} toto(iii)];
+%         else %%% new block
+%             nb=nb+1;
+%             block{nb}= d_ok_norm2(toto(iii));
+%             ind_b{nb}= toto(iii);
+%         end
+%     end
+% 
+% 
+% 
+%     subplot(224)
+%     plot(t_ok-t_ok(1),(SPL_ANL_ok-mu_spl)/sigma_spl, 'Color', [0    0.4470    0.7410], 'linewidth',2)
+% 
+%     hold on
+%     for bb=1:nb
+%         plot(t_ok(ind_b{bb})-t_ok(1), block{bb}, '-', 'Color', [0.8500    0.3250    0.0980], 'linewidth',2)
+%         hold on
+%     end
+% 
+%     plot(t_ok(ind_no_nan)-t_ok(1), d_ok_norm, 'o', 'Color', [0.8500    0.3250    0.0980], 'linewidth',2)
+%     title(['R_{max}=' num2str(R_shru1(tt))])
+%     xlabel('Days')
+%     grid on
+%     ylim([-3 4])
+% 
+%     legend('ANL (SHRU1)', 'Ice drift')
 
     % title of the whole figure
-    sgtitle(['Ice Drift Correlation for ' num2str(freq_range1) '-' num2str(freq_range2) ...
-        ' to ' num2str(freq_range3) '-' num2str(freq_range4) ' Hz'])
+    sgtitle(['Ice Drift Correlation for ' num2str(freq_range1) '-' num2str(freq_range2) ' Hz'])
 
     % printer currently OFF
     %%%%%%%%%%%% TURN ON AND OFF PRINTING %%%%%%%%%%%%%%%%%%%%%%%%
@@ -376,9 +376,8 @@ for tt=3:loop_end
 %             num2str(freq_range4) '/spatial_corr_' datestr(t_beg_num, 'yyyymmdd') '-' datestr(t_end_num, 'yyyymmdd')]  ...
 %             ,'-dpng')
 
-    %      print(gcf,['./spatial_corr_result/jasa_plot/spatial_corr_' ...
-    %         datestr(t_beg_num, 'yyyymmdd') '-' datestr(t_end_num, 'yyyymmdd')]  ...
-    %         ,'-dpng')
+%       savestring = ['SHRU2_' num2str(freq_range1) '_' num2str(freq_range2) 'corr']
+%     save(savestring,'freq_range1','freq_range2','maxcorr_lat','maxcorr_lon','cmax','dist')
 
 end
 %%%% end of the figure generator %%%%

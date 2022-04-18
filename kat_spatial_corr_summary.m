@@ -47,6 +47,7 @@ for i=1:5 %(length(freq_array1)-1)
 
     % GPS data
     gps_site = [72+54.4580/60 , -(157+29.2442/60)];
+    gps_site_shru1 = [72+54.4123/60 , -(159+1.0840/60)];
     dlon=40;
     lonlimit=[gps_site(2)-dlon gps_site(2)+dlon];
     lonlimit_ok=[lonlimit(2) lonlimit(1)+360];
@@ -224,7 +225,7 @@ for i=1:5 %(length(freq_array1)-1)
     %             num2str(freq_range4) '/spatial_corr_' datestr(t_beg_num, 'yyyymmdd') '-' datestr(t_end_num, 'yyyymmdd')]  ...
     %             ,'-dpng')
 
-    savestring = ['SHRU1_' num2str(freq_range1) '_' num2str(freq_range2) 'corr']
+    savestring = ['SHRU2_' num2str(freq_range1) '_' num2str(freq_range2) 'corr']
     save(savestring,'freq_range1','freq_range2','maxcorr_lat','maxcorr_lon','cmax','dist')
 end     % end of loop going through freqs
 
