@@ -116,8 +116,8 @@ ccc=[0 0.7];  %%% for caxis
 
 %% Loop
 
-
-for tt=3:11
+loop_end = 3;
+for tt=3:loop_end
     %     for tt=1
     t_beg_num=date_loop(1,tt);
     t_end_num=date_loop(2,tt);
@@ -149,7 +149,7 @@ for tt=3:11
     %     longitude_type_ok=double(longitude_type(toto_type));
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%% FIGURE VISIBILITY HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    figure('visible','off');
+    figure('visible','on');
     %%%%%%%%%%%%%%%%%%%%%%%%%%5%% FIGURE VISIBILITY HERE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %     figure
     h = get(0,'children');
@@ -200,6 +200,7 @@ for tt=3:11
     %%% add mooring
     plotm(gps_site(1),gps_site(2),'xk','markersize',16,'linewidth',3)
     [toto, tata]=ind2sub(size(latitude), indc_ave2(tt));
+    %%% add location of max point
     plotm(double(latitude(toto, tata)),double(longitude(toto,tata)),'xr','markersize',16,'linewidth',3)
 
     %     %%% add edges

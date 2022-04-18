@@ -56,6 +56,7 @@ longitude_type = ncread(file_edge, 'lon');
 
 load ANL_far
 
+% f band = [50 500 1000 1500 300 ]
 ff=4;
 SPL_ANL_ok=SPL_ANL(:,ff);
 
@@ -182,6 +183,7 @@ for t_num_loop=t0_num:15:t1_num
             
             X2 = [vecSPL_tt2(ind_no_nan), auxData_tt(ind_no_nan,ii)];
             X_norma2=zscore(X2,[],1);
+            % THE CODE FOR CORR
             [rho2,pval2] = corr(X_norma2(:,1),X_norma2(:,2),'type','Pearson','rows','all','tail','both');  
             if pval2 < 0.05
                 corr_spa_ave2(iii, jjj, tt)=rho2;
