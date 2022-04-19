@@ -72,8 +72,8 @@ end
     %% prepare plot map
     latlimit=[72 78];
     dlon=20;
-%     lonlimit=[gps_site(2)-dlon gps_site(2)+dlon];
-lonlimit=[-180 -145];
+    %     lonlimit=[gps_site(2)-dlon gps_site(2)+dlon];
+    lonlimit=[-180 -145];
     centralmeridian=-160;
     parallel=[70:2:80];
     MLabelLocation=[-180:5:180];

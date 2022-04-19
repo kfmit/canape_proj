@@ -75,8 +75,8 @@ for i=1:5 %(length(freq_array1)-1)
     Nloop=size(date_loop,2);
 
     %% prepare plot map
-    latlimit=[65 85];
-    dlon=40;
+    latlimit=[69 85];
+    dlon=20;
     lonlimit=[gps_site(2)-dlon gps_site(2)+dlon];
     centralmeridian=-160;
     parallel=[70 75 80];
@@ -225,7 +225,7 @@ for i=1:5 %(length(freq_array1)-1)
     %             num2str(freq_range4) '/spatial_corr_' datestr(t_beg_num, 'yyyymmdd') '-' datestr(t_end_num, 'yyyymmdd')]  ...
     %             ,'-dpng')
 
-    savestring = ['SHRU2_' num2str(freq_range1) '_' num2str(freq_range2) 'corr']
+    savestring = ['SHRU5_' num2str(freq_range1) '_' num2str(freq_range2) 'corr']
     save(savestring,'freq_range1','freq_range2','maxcorr_lat','maxcorr_lon','cmax','dist')
 end     % end of loop going through freqs
 

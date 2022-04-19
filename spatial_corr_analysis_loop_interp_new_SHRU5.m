@@ -196,6 +196,8 @@ for t_num_loop=t0_num:15:t1_num
             ind_no_nan_far=~isnan(auxData_tt(:,ii)) & ~isnan(vecSPL_tt2_far) ;
             X2_far = [vecSPL_tt2_far(ind_no_nan_far), auxData_tt(ind_no_nan_far,ii)];
             X_norma2_far=zscore(X2_far,[],1);
+
+            % the corr function
             [rho2_far,pval2_far] = corr(X_norma2_far(:,1),X_norma2_far(:,2),'type','Pearson','rows','all','tail','both');  
             if pval2_far < 0.05
                 corr_spa_ave2_far(iii, jjj, tt)=rho2_far;
