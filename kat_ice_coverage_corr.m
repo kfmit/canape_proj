@@ -119,7 +119,7 @@ ccc=[0 0.7];  %%% for caxis, will have to modiy to match the 0.5 cutoff AFTER
 
 %% Loop
 
-loop_end = 11;
+loop_end = 3;
 for tt=3:loop_end
     %     for tt=1
     t_beg_num=date_loop(1,tt);
@@ -280,7 +280,10 @@ for tt=3:loop_end
 
     % title of the whole figure
     sgtitle(['Ice Drift Correlation for ' num2str(freq_range1) '-' num2str(freq_range2) ' Hz'])
-    %%
+    
+    
+    
+    %% CUTTING VALUES
     %%% plot data over 0.5
     corr_spa_ave2_cut=zeros(119,177,tt);
 
@@ -299,11 +302,31 @@ for tt=3:loop_end
         end
     end
 
+    nans_corr_cut = ~isnan(corr_spa_ave2_cut(:,:,tt)); %nan is 0, # is 1
+    [r_ind, c_ind,v_corr] = find(nans_corr_cut);    % finds non zeros and saves inds
+    % length x whatever lat/long area is shows coverage
+    uncut_corr = corr_spa_ave2_cut(r_ind,c_ind,3);   %
+
+    % find all the distances
+    for iv=1:length(r_ind)
+        ri=r_ind(iv);
+        ci=c_ind(iv);
+        dist_map(iv)=distance(gps_site(1), gps_site(2), double(latitude(ri, ci)),double(longitude(ri,ci)),referenceSphere('Earth'));
+    end
     % find index of closest point
+    [min_dist(tt), min_ind(tt)]=min(dist_map);
+    minlat=double(latitude(r_ind(min_ind(tt)), c_ind(min_ind(tt))));
+    minlon=double(longitude(r_ind(min_ind(tt)),c_ind(min_ind(tt))));
 
     % find index of farthest
+    [max_dist(tt),max_ind(tt)]=max(dist_map);
+    maxlat=double(latitude(r_ind(max_ind(tt)), c_ind(max_ind(tt))));
+    maxlon=double(longitude(r_ind(max_ind(tt)),c_ind(max_ind(tt))));
 
-    % find index of mid of avg point
+    % find index of mid of avg point ( for plotting purposes)
+    [avg_dist(tt), avg_ind(tt)]=min(abs(mean(dist_map)-dist_map));
+    avglat=double(latitude(r_ind(avg_ind(tt)), c_ind(avg_ind(tt))));
+    avglon=double(longitude(r_ind(avg_ind(tt)),c_ind(avg_ind(tt))));
 
     %%%% make the figure(s) plotting this
     figure
@@ -325,17 +348,24 @@ for tt=3:loop_end
     %%% add land
     geoshow(maph, land, 'FaceColor',[0.80 0.80 0.80],'EdgeColor',0.30*[1 1 1]);
 
-    %%% plot data
+    %%% plot CUTOFF data
     surfm(double(latitude), double(longitude), squeeze(corr_spa_ave2_cut(:,:,tt)))
 
     %%% add mooring
     plotm(gps_site(1),gps_site(2),'xk','markersize',16,'linewidth',3)
     [toto, tata]=ind2sub(size(latitude), indc_ave2(tt));
-    %%% add location of max point
+    %%% add location of max corr point
     plotm(double(latitude(toto, tata)),double(longitude(toto,tata)),'xr','markersize',16,'linewidth',3)
 
     %%% location of far point
+    plotm(maxlat,maxlon,'.m','markersize',16,'linewidth',3)
+   
+    %%% location of min point
+    plotm(minlat,minlon,'.c','markersize',16,'linewidth',3)
 
+    %%% location of avg point
+    plotm(avglat,avglon,'db','markersize',10,'linewidth',3)
+   
     %     %%% add edges
     %     plotm(latitude_edge_ok, longitude_edge_ok, '.k','markersize',3,'linewidth',1)
 
@@ -343,7 +373,8 @@ for tt=3:loop_end
     c.Label.String = 'Correlation coefficient';
     caxis([0.4 0.7])
     title(['Correlation over 0.45 for ' num2str(freq_range1) '-' num2str(freq_range2) ' Hz'])
-    xlabel([datestr(t_beg_num, 'dd mmm yyyy') ' to ' datestr(t_end_num, 'dd mmm yyyy')])
+    ylabel([datestr(t_beg_num, 'dd mmm yyyy') ' to ' datestr(t_end_num, 'dd mmm yyyy')])
+    xlabel(['MinDist: ' num2str(min_dist(3)) ' MaxDist: ' num2str(max_dist(3)) 'AvgDist: ' num2str(avg_dist(3))])
 
 
 
