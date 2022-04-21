@@ -22,3 +22,9 @@ end
 [max_dist,max_ind]=max(dist_map);
 % find index of mid of avg point ( for plotting purposes)
 [avg_dist, avg_ind]=min(abs(mean(dist_map)-dist_map));
+%%
+toto=find(corr_spa_ave2(:,:,tt)>0.45) ;
+N_pixel=length(toto)
+pixel_lat=latitude(toto)
+pixel_lon=longitude(toto)
+size_pixels = N_pixel*62.5*62.5

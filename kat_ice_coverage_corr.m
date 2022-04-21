@@ -317,10 +317,16 @@ for tt=3:loop_end
     % find size of boi
     earthellipsoid = referenceSphere('earth','km');
 %     area_base = areaquad(double(latitude(1,1)),double(longitude(1,1)),double(latitude(1,2)),double(longitude(1,2)),earthellipsoid,'degrees');
-    area_cov(tt) = areaint(double(latitude(r_ind,c_ind)),double(longitude(r_ind,c_ind)),earthellipsoid)
+%     area_cov(tt) = areaint(double(latitude(r_ind,c_ind)),double(longitude(r_ind,c_ind)),earthellipsoid)
     
     % count # of pixels active, mulitply by pixel
-%     r_ind*area
+    %     r_ind*area
+    toto=find(corr_spa_ave2_cut(:,:,tt)>0.4) ;
+    N_pixel=length(toto);
+    pixel_lat=latitude(toto);
+    pixel_lon=longitude(toto);
+    area_cov(tt) = N_pixel*62.5*62.5
+
 
     % find all the distances
     for iv=1:length(r_ind)
@@ -340,7 +346,8 @@ for tt=3:loop_end
     maxlon(tt)=double(longitude(r_ind(max_ind(tt)),c_ind(max_ind(tt))));
 
     % find index of mid of avg point ( for plotting purposes)
-    [avg_dist(tt), avg_ind(tt)]=min(abs(mean(dist_map)-dist_map));
+    avg_dist(tt)=mean(dist_map);
+    [close_avg_dist(tt), avg_ind(tt)]=min(abs(mean(dist_map)-dist_map));
     avglat(tt)=double(latitude(r_ind(avg_ind(tt)), c_ind(avg_ind(tt))));
     avglon(tt)=double(longitude(r_ind(avg_ind(tt)),c_ind(avg_ind(tt))));
 
