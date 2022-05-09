@@ -325,7 +325,7 @@ for tt=3:loop_end
     N_pixel=length(toto);
     pixel_lat=latitude(toto);
     pixel_lon=longitude(toto);
-    area_cov(tt) = N_pixel*62.5*62.5
+    area_cov(tt) = N_pixel*62.5*62.5    % this is in km!!!!
 
 
     % find all the distances

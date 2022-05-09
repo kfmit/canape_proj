@@ -168,32 +168,40 @@ axis xy
 %% Correlation is NOT covariance
 % correff(A) A, where the columns of A represent random variables and the rows represent observations.
 
-close all
+% close all
 %%% corr code coming from spatial
 [corr_ANL_no_ice, p_no_ice] = corrcoef(ANL_no_ice); %'type','Pearson','rows','all','tail','both');
 [corr_ANL_no_duct, p_no_duct] = corr(ANL_no_duct,'type','Pearson','rows','all','tail','both');
 [corr_ANL_duct, p_duct] = corr(ANL_duct,'type','Pearson','rows','all','tail','both');
 
 figure
+tiledlayout(1,3)
+nexttile
 imagesc(avg_freq,avg_freq,corr_ANL_no_ice)
 xlabel('Frequency (Hz)')
-title('Correlation between Frequencies with No Ice')
+title('No Ice')
+xticks([200 400 600 800 1000 1200 1400 1600 1800])
+xtickangle(-45)
 c = colorbar
-caxis([0 1]);
+caxis([0.4 1]);
 axis xy
 
-figure
+nexttile
 imagesc(avg_freq,avg_freq,corr_ANL_no_duct)
 xlabel('Frequency (Hz)')
-title('Correlation between Frequencies with No Duct')
+title('Ice Without Duct')
+xticks([200 400 600 800 1000 1200 1400 1600 1800])
+xtickangle(-45)
 c = colorbar
-caxis([0 1]);
+caxis([0.4 1]);
 axis xy
 
-figure
+nexttile
 imagesc(avg_freq,avg_freq,corr_ANL_duct)
 xlabel('Frequency (Hz)')
-title('Correlation between Frequencies with Duct')
+title('Ice with Duct')
+xticks([200 400 600 800 1000 1200 1400 1600 1800])
+xtickangle(-45)
 c = colorbar
-caxis([0 1]);
+caxis([0.4 1]);
 axis xy
