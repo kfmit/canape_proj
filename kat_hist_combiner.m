@@ -179,7 +179,7 @@ xtickangle(-45)
 title('Total Variation Distance of ANL at each frequency')
 legend('Ice with duct/Ice without Duct','Ice with duct/No Ice','No Ice/Ice No Duct','Location','best')
 
-%% MODE DIFFS - this is essentially pairwise differnce
+%% MODE DIFFS - this is essentially pairwise differnce %%%%%%%%%%%%%%%%%%%%%%
 figure
 p1 = plot(avg_freq,ANL_vec(ind_duct)-ANL_vec(ind_no_duct),'-o','Color','#7E2F8E','MarkerEdgeColor','#7E2F8E','MarkerFaceColor','#7E2F8E');
 hold on
@@ -223,7 +223,8 @@ xticks([100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1
 xtickangle(-45)
 title('Log Mode of ANL at each frequency')
 legend('Ice with duct','Ice without duct','No Ice')
-%% Try by pairwise again
+
+%% Try by pairwise again %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 figure
 p1 = plot(avg_freq,pair_dist_duct_noduct,'-o','Color','#7E2F8E','MarkerEdgeColor','#7E2F8E','MarkerFaceColor','#7E2F8E');
 hold on
@@ -238,7 +239,7 @@ xtickangle(-45)
 title('Pairwise Difference of ANL at each frequency')
 legend('Ice with duct/Ice without Duct','Ice with Duct/No Ice','Ice without Duct/No Ice','Location','best')
 
-%% Pairwise but just the last one
+%% Pairwise but just the last on %%%%%%%%%%%%%%%%%%%%%%%e
 figure
 p1 = plot(avg_freq,pair_dist_duct_noduct,'-o','Color','#FF8800','MarkerEdgeColor','#FF0000','MarkerFaceColor','#FF0000');
 
