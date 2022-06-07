@@ -50,6 +50,7 @@ ANL_no_duct=ANL_ice(end/2+1:end);
 ANL_min=min([min(ANL_ice) min(ANL_no_ice)]);
 ANL_max=max([max(ANL_ice) max(ANL_no_ice)]);
 ANL_vec=linspace(ANL_min, ANL_max, 50);
+binsize(i) = ANL_vec(2)-ANL_vec(1)
 
 avg_freq = (f1(ff)+f2(ff))/2;
 

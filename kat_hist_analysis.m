@@ -61,11 +61,12 @@ ANL_no_ice_avg(i)= mean(ANL_no_ice);
 
 %% Figure Creation: Trend Analysis
 figure
-p1 = plot(avg_freq,ANL_duct_avg,'-o','MarkerEdgeColor','#4DBEEE','MarkerFaceColor','#4DBEEE')
+p1 = plot(avg_freq(1:38),ANL_duct_avg(1:38),'-o','MarkerEdgeColor','#4DBEEE','MarkerFaceColor','#4DBEEE')
 hold on
-p2 = plot(avg_freq,ANL_no_duct_avg,'-o','MarkerEdgeColor','#D95319','MarkerFaceColor','#D95319')
-p3 = plot(avg_freq,ANL_no_ice_avg,'-o','MarkerEdgeColor','#EDB120','MarkerFaceColor','#EDB120')
+p2 = plot(avg_freq(1:38),ANL_no_duct_avg(1:38),'-o','MarkerEdgeColor','#D95319','MarkerFaceColor','#D95319')
+p3 = plot(avg_freq(1:38),ANL_no_ice_avg(1:38),'-o','MarkerEdgeColor','#EDB120','MarkerFaceColor','#EDB120')
 
+grid on
 ylabel(['ANL (dB re 1 \muPa^2 / Hz)'])
 xlabel('Frequency (Hz)')
 % xticks([50 100 150 200 250 300 350 400 450 500 550 600 ...

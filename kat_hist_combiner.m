@@ -5,6 +5,7 @@ clear all
 close all
 clc
 
+addpath('/home/kfung/Downloads/CANAPE/mat_files/')
 load ANLs_50_1900Hz.mat
 
 %% separate by MAXIMUM %%%%%%%%

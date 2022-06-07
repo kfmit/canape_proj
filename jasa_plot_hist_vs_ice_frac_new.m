@@ -7,6 +7,7 @@ clc
 load ANL_SHRU5_newfreq.mat
 load sunrise_sunset_2017_feb_april.mat
 
+% arrays for ref
 % f1=[40 450 900 1250 250];
 % f2=[60 550 1100 1750 350];
 

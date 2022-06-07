@@ -2,6 +2,8 @@ close all
 clear all
 clc
 
+addpath('/home/kfung/Downloads/CANAPE/mat_files');
+
 % change load names as needed
 % load ANL_SHRU5.mat
 load ANL_SHRU5_bigfreqs.mat
