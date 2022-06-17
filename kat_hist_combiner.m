@@ -7,14 +7,38 @@ clc
 
 addpath('/home/kfung/Downloads/CANAPE/mat_files/')
 load ANLs_50_1900Hz.mat
+avg_freq = avg_freq(1:38);
 
+for i = 1:38
+ANL_duct_avg(i) = mean(ANL_duct(:,i));
+ANL_no_duct_avg(i) = mean(ANL_no_duct(:,i));
+ANL_no_ice_avg(i)= mean(ANL_no_ice(:,i));
+end
+
+figure
+p1 = plot(avg_freq(1:38),ANL_duct_avg(1:38),'-o','MarkerEdgeColor','#4DBEEE','MarkerFaceColor','#4DBEEE')
+hold on
+p2 = plot(avg_freq(1:38),ANL_no_duct_avg(1:38),'-o','MarkerEdgeColor','#D95319','MarkerFaceColor','#D95319')
+p3 = plot(avg_freq(1:38),ANL_no_ice_avg(1:38),'-o','MarkerEdgeColor','#EDB120','MarkerFaceColor','#EDB120')
+
+grid on
+ylabel(['ANL (dB re 1 \muPa^2 / Hz)'])
+xlabel('Frequency (Hz)')
+% xticks([50 100 150 200 250 300 350 400 450 500 550 600 ...
+%     650 700 750 800 850 900 950 1000 1050 1100 1150 1200 1250 1300 1350 1400 1450 ...
+%     1500 1550 1600 1650 1700 1750 1800 1850 1900 1950])
+xticks([100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900])
+xtickangle(-45)
+ylim([50 90])
+title('Average ANL at each frequency')
+legend('Ice with duct','Ice without duct','No Ice')
 %% separate by MAXIMUM %%%%%%%%
 
-ANL_duct_max = zeros(1,39);
-ANL_no_duct_max = zeros(1,39); 
-ANL_no_ice_max = zeros(1,39);
+ANL_duct_max = zeros(1,38);
+ANL_no_duct_max = zeros(1,38); 
+ANL_no_ice_max = zeros(1,38);
 
-for i = 1:39
+for i = 1:38 %used to be 38 from 50-1950
 ANL_no_duct_max(i) = max(ANL_no_duct(:,i));
 ANL_no_ice_max(i) = max(ANL_no_ice(:,i));
 ANL_duct_max(i) = max(ANL_duct(:,i));
@@ -39,10 +63,10 @@ title('Max ANL at each frequency')
 legend('Ice with duct','Ice without duct','No Ice')
 %% separate by min
 
-ANL_duct_min = zeros(1,39);
-ANL_no_duct_min = zeros(1,39); 
-ANL_no_ice_min = zeros(1,39);
-for i = 1:39
+ANL_duct_min = zeros(1,38);
+ANL_no_duct_min = zeros(1,38); 
+ANL_no_ice_min = zeros(1,38);
+for i = 1:38
 ANL_no_duct_min(i) = min(ANL_no_duct(:,i));
 ANL_no_ice_min(i) = min(ANL_no_ice(:,i));
 ANL_duct_min(i) = min(ANL_duct(:,i));
@@ -86,10 +110,10 @@ title('Difference of Max-Min ANL at each frequency')
 legend('Ice with duct','Ice without duct','No Ice')
 
 %% separate by median
-ANL_duct_med = zeros(1,39);
-ANL_no_duct_med = zeros(1,39); 
-ANL_no_ice_med = zeros(1,39);
-for i = 1:39
+ANL_duct_med = zeros(1,38);
+ANL_no_duct_med = zeros(1,38); 
+ANL_no_ice_med = zeros(1,38);
+for i = 1:38
 ANL_no_duct_med(i) = median(ANL_no_duct(:,i));
 ANL_no_ice_med(i) = median(ANL_no_ice(:,i));
 ANL_duct_med(i) = median(ANL_duct(:,i));
@@ -119,15 +143,15 @@ legend('Ice with duct','Ice without duct','No Ice')
 % Total Variation Distance can be put into this too
 
 % INITIALIZE
-max_duct=zeros(1,39);
-max_no_duct=zeros(1,39);
-max_no_ice=zeros(1,39);
-ind_duct = zeros(1,39);
-ind_no_duct = zeros(1,39);
-ind_no_ice = zeros(1,39);
-totalvar_dist_duct_noduct = zeros(1,39);
-totalvar_dist_duct_noice = zeros(1,39);
-totalvar_dist_noice_noduct = zeros(1,39);
+max_duct=zeros(1,38);
+max_no_duct=zeros(1,38);
+max_no_ice=zeros(1,38);
+ind_duct = zeros(1,38);
+ind_no_duct = zeros(1,38);
+ind_no_ice = zeros(1,38);
+totalvar_dist_duct_noduct = zeros(1,38);
+totalvar_dist_duct_noice = zeros(1,38);
+totalvar_dist_noice_noduct = zeros(1,38);
 
 ANL_min=min([min(ANL_ice) min(ANL_no_ice)]);
 ANL_max=max([max(ANL_ice) max(ANL_no_ice)]);
@@ -136,7 +160,7 @@ ANL_vec=linspace(ANL_min, ANL_max, 50);
 % histrograms with 50 bins, N is the count in each bin and thers also edges
 % speicfy bin vector
 
-for i=1:39
+for i=1:38
     % number in each bin, edges
 [N_duct,edges_duct] = histcounts(ANL_duct(:,i),ANL_vec,'Normalization','pdf');    %,'Normalization','pdf');
 [N_no_duct,edges_no_duct] = histcounts(ANL_no_duct(:,i),ANL_vec,'Normalization','pdf');    %,'Normalization','pdf');
@@ -178,7 +202,7 @@ xlabel('Frequency (Hz)')
 xticks([100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900])
 xtickangle(-45)
 title('Total Variation Distance of ANL at each frequency')
-legend('Ice with duct/Ice without Duct','Ice with duct/No Ice','No Ice/Ice No Duct','Location','best')
+legend('Ice with duct/Ice without Duct','Ice with duct/No Ice','Ice without Duct/No Ice','Location','best')
 
 %% MODE DIFFS - this is essentially pairwise differnce %%%%%%%%%%%%%%%%%%%%%%
 figure
@@ -192,6 +216,7 @@ ylabel(['Pairwise Differnce of ANL (dB re 1 \muPa^2 / Hz)'])
 xlabel('Frequency (Hz)')
 xticks([100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900])
 xtickangle(-45)
+ylim([-2 25])
 title('Pairwise Difference of ANL between Modes of each frequency')
 legend('Ice with duct/Ice without duct','Ice with duct/No Ice','Ice without duct/No Ice','Location','best')
 
@@ -207,6 +232,7 @@ ylabel(['Mode of ANL dB re 1 \muPa^2 / Hz'])
 xlabel('Frequency (Hz)')
 xticks([100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900])
 xtickangle(-45)
+ylim([50 90])
 title('Mode of ANL at each frequency')
 legend('Ice with duct','Ice without duct','No Ice')
 
@@ -225,7 +251,7 @@ xtickangle(-45)
 title('Log Mode of ANL at each frequency')
 legend('Ice with duct','Ice without duct','No Ice')
 
-%% Try by pairwise again %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Try by pairwise again PAIRWISE %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 figure
 p1 = plot(avg_freq,pair_dist_duct_noduct,'-o','Color','#7E2F8E','MarkerEdgeColor','#7E2F8E','MarkerFaceColor','#7E2F8E');
 hold on
@@ -235,6 +261,7 @@ p3 = plot(avg_freq,pair_dist_noice_noduct,'-o','Color','#FF8800','MarkerEdgeColo
 grid on
 ylabel(['Pairwise Differnce of Peak (dB re 1 \muPa^2 / Hz)'])
 xlabel('Frequency (Hz)')
+ylim([-2 25])
 xticks([100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900])
 xtickangle(-45)
 title('Pairwise Difference of ANL at each frequency')
