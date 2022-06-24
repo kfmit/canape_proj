@@ -228,12 +228,12 @@ p2 = plot(avg_freq,ANL_vec(ind_no_duct),'-o','MarkerEdgeColor','#D95319','Marker
 p3 = plot(avg_freq,ANL_vec(ind_no_ice),'-o','MarkerEdgeColor','#EDB120','MarkerFaceColor','#EDB120');
 
 grid on
-ylabel(['Mode of ANL dB re 1 \muPa^2 / Hz'])
+ylabel(['ANL dB re 1 \muPa^2 / Hz'])
 xlabel('Frequency (Hz)')
 xticks([100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 1600 1700 1800 1900])
 xtickangle(-45)
 ylim([50 90])
-title('Mode of ANL at each frequency')
+title('Peak Probability of ANL at each frequency')
 legend('Ice with duct','Ice without duct','No Ice')
 
 %% LOG MODE PLOTS %%%%%%%%%%%
