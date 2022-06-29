@@ -1,5 +1,9 @@
 %% kat's code to plot a couple of timeseries next to each other
 
+close all
+clear all
+clc
+
 addpath('/home/kfung/Downloads/CANAPE/mat_files/');
 
 

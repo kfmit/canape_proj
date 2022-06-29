@@ -22,7 +22,7 @@ addpath('/home/kfung/Downloads/CANAPE/new_figs/')
 freq_array1=[40 250 450 900 1250];
 freq_array2=[60 350 550 1100 1750];
 
-for i = 1:5 % length(freq_array2)
+for i = 3:3 % length(freq_array2)
 
 freq_range1 = freq_array1(i);
 freq_range2 = freq_array2(i);
@@ -352,7 +352,10 @@ for tt=3:loop_end
     avglon(tt)=double(longitude(r_ind(avg_ind(tt)),c_ind(avg_ind(tt))));
 
     %%%% make the figure(s) plotting this
-    figure
+    
+    figure('visible','off');
+%     figure(2)
+%     nexttile
     maph=axesm('MapProjection','lambertstd','MapLatLimit',latlimit,'MapLonLimit',lonlimit);
 
     %%% add grid
@@ -412,9 +415,9 @@ for tt=3:loop_end
 
 end
 %%%% end of the figure generator %%%%
-savestring = ['cutoff_' num2str(freq_range1) '_' num2str(freq_range2) '_icecorr']
-    save(savestring,'freq_range1','freq_range2','corr_spa_ave2_cut','area_cov','min_dist','minlat','minlon',...
-        'max_dist','maxlat','maxlon','avg_dist','avglat','avglon')
+% savestring = ['cutoff_' num2str(freq_range1) '_' num2str(freq_range2) '_icecorr']
+%     save(savestring,'freq_range1','freq_range2','corr_spa_ave2_cut','area_cov','min_dist','minlat','minlon',...
+%         'max_dist','maxlat','maxlon','avg_dist','avglat','avglon')
 
 end % of freq rounder
 

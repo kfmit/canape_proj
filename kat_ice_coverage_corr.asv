@@ -22,7 +22,7 @@ addpath('/home/kfung/Downloads/CANAPE/new_figs/')
 freq_array1=[40 250 450 900 1250];
 freq_array2=[60 350 550 1100 1750];
 
-for i = 2:2 % length(freq_array2)
+for i = 4:4 % length(freq_array2)
 
 freq_range1 = freq_array1(i);
 freq_range2 = freq_array2(i);
@@ -119,7 +119,7 @@ ccc=[0 0.7];  %%% for caxis, will have to modiy to match the 0.5 cutoff AFTER
 
 %% Loop
 
-loop_end = 4;
+loop_end = 11;
 for tt=3:loop_end
     %     for tt=1
     t_beg_num=date_loop(1,tt);
@@ -287,20 +287,27 @@ for tt=3:loop_end
     %%% plot data over 0.5
     corr_spa_ave2_cut=zeros(119,177,tt);
 
+
     % take out anything below 0.45
     for i = 1:119
         for ii = 1:177
             if 1==isnan(corr_spa_ave2(i,ii,tt))
                 corr_spa_ave2_cut(i,ii,tt)=nan;
                 % do nothing
-            elseif (corr_spa_ave2(i,ii,tt))<=0.45
-                % change tht index to a nan if less than 0.45
+            elseif (corr_spa_ave2(i,ii,tt))<=0.4
+                % change tht index to a nan if less than 0.4
                 corr_spa_ave2_cut(i,ii,tt)=nan;
-            elseif (corr_spa_ave2(i,ii,tt))>0.45
+            elseif (corr_spa_ave2(i,ii,tt))>0.4
                 corr_spa_ave2_cut(i,ii,tt)=corr_spa_ave2(i,ii,tt);
             end
         end
     end
+
+    % clear so not rewritten every round
+    clear r_ind c_ind
+    clear dist_map
+    clear nans_corr_cut 
+
 
     nans_corr_cut = ~isnan(corr_spa_ave2_cut(:,:,tt)); %nan is 0, # is 1
     [r_ind, c_ind,v_corr] = find(nans_corr_cut);    % finds non zeros and saves inds
@@ -310,14 +317,24 @@ for tt=3:loop_end
     % find size of boi
     earthellipsoid = referenceSphere('earth','km');
 %     area_base = areaquad(double(latitude(1,1)),double(longitude(1,1)),double(latitude(1,2)),double(longitude(1,2)),earthellipsoid,'degrees');
-    area_cov(tt) = areaint(double(latitude(r_ind,c_ind)),double(longitude(r_ind,c_ind)),earthellipsoid)
+%     area_cov(tt) = areaint(double(latitude(r_ind,c_ind)),double(longitude(r_ind,c_ind)),earthellipsoid)
     
+    % count # of pixels active, mulitply by pixel
+    %     r_ind*area
+    toto=find(corr_spa_ave2_cut(:,:,tt)>0.4) ;
+    N_pixel=length(toto);
+    pixel_lat=latitude(toto);
+    pixel_lon=longitude(toto);
+    area_cov(tt) = N_pixel*62.5*62.5    % this is in km!!!!
+
+
     % find all the distances
     for iv=1:length(r_ind)
         ri=r_ind(iv);
         ci=c_ind(iv);
         dist_map(iv)=distance(gps_site(1), gps_site(2), double(latitude(ri, ci)),double(longitude(ri,ci)),referenceSphere('Earth'));
     end
+
     % find index of closest point
     [min_dist(tt), min_ind(tt)]=min(dist_map);
     minlat(tt)=double(latitude(r_ind(min_ind(tt)), c_ind(min_ind(tt))));
@@ -329,12 +346,16 @@ for tt=3:loop_end
     maxlon(tt)=double(longitude(r_ind(max_ind(tt)),c_ind(max_ind(tt))));
 
     % find index of mid of avg point ( for plotting purposes)
-    [avg_dist(tt), avg_ind(tt)]=min(abs(mean(dist_map)-dist_map));
+    avg_dist(tt)=mean(dist_map);
+    [close_avg_dist(tt), avg_ind(tt)]=min(abs(mean(dist_map)-dist_map));
     avglat(tt)=double(latitude(r_ind(avg_ind(tt)), c_ind(avg_ind(tt))));
     avglon(tt)=double(longitude(r_ind(avg_ind(tt)),c_ind(avg_ind(tt))));
 
     %%%% make the figure(s) plotting this
-    figure
+    
+    figure('visible','off');
+%     figure(2)
+%     nexttile
     maph=axesm('MapProjection','lambertstd','MapLatLimit',latlimit,'MapLonLimit',lonlimit);
 
     %%% add grid
@@ -394,8 +415,9 @@ for tt=3:loop_end
 
 end
 %%%% end of the figure generator %%%%
-savestring = ['cutoff_' num2str(freq_range1) '_' num2str(freq_range2) '_icecorr']
-    save(savestring,'freq_range1','freq_range2','corr_spa_ave2_cut','area_cov','min_dist','minlat','minlon')
+% savestring = ['cutoff_' num2str(freq_range1) '_' num2str(freq_range2) '_icecorr']
+%     save(savestring,'freq_range1','freq_range2','corr_spa_ave2_cut','area_cov','min_dist','minlat','minlon',...
+%         'max_dist','maxlat','maxlon','avg_dist','avglat','avglon')
 
 end % of freq rounder
 
