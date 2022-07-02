@@ -22,7 +22,9 @@ addpath('/home/kfung/Downloads/CANAPE/new_figs/')
 freq_array1=[40 250 450 900 1250];
 freq_array2=[60 350 550 1100 1750];
 
-for i = 4:4 % length(freq_array2)
+for i = 5:5 % length(freq_array2)
+figure(3)
+tfig=tiledlayout(3,3);
 
 freq_range1 = freq_array1(i);
 freq_range2 = freq_array2(i);
@@ -402,9 +404,53 @@ for tt=3:loop_end
     ylabel([datestr(t_beg_num, 'dd mmm yyyy') ' to ' datestr(t_end_num, 'dd mmm yyyy')])
     xlabel(['MinDist:' num2str(min_dist(tt)) ' MaxDist:' num2str(max_dist(tt)) ' AvgDist:' num2str(avg_dist(tt))])
 
+%%  new megamap
 
+figure(3)
+nexttile
+maph=axesm('MapProjection','lambertstd','MapLatLimit',latlimit,'MapLonLimit',lonlimit);
 
+    %%% add grid
+    setm(maph,'Grid','on','Glinewidth',1,'PLineLocation',parallel, 'MLineLocation',MLabelLocation);
 
+    %%% add grid labeling
+    setm(maph,'Fontangle','normal',...
+        'FontSize',12,'fontweight','b',...
+        'MeridianLabel','on',...
+        'MLabelLocation',MLabelLocation,...
+        'MLabelParallel',Mpos,...
+        'ParallelLabel','on',...
+        'PLabelLocation',parallel,...
+        'PLabelMeridian',PLabelMeridian);
+
+    %%% add land
+    geoshow(maph, land, 'FaceColor',[0.80 0.80 0.80],'EdgeColor',0.30*[1 1 1]);
+
+    %%% plot CUTOFF data
+    surfm(double(latitude), double(longitude), squeeze(corr_spa_ave2_cut(:,:,tt)))
+
+    %%% add mooring
+    plotm(gps_site(1),gps_site(2),'xk','markersize',16,'linewidth',3)
+    [toto, tata]=ind2sub(size(latitude), indc_ave2(tt));
+    %%% add location of max corr point
+    plotm(double(latitude(toto, tata)),double(longitude(toto,tata)),'xr','markersize',10,'linewidth',3)
+
+     %%% location of far point
+    px = plotm(maxlat(tt),maxlon(tt),'.m','markersize',20,'linewidth',3);
+   
+    %%% location of min point
+    pn = plotm(minlat(tt),minlon(tt),'.c','markersize',20,'linewidth',3);
+
+    %%% location of avg point
+    pa = plotm(avglat(tt),avglon(tt),'dg','markersize',10,'linewidth',3)%'MarkerFaceColor','#D95319')
+   
+    %     %%% add edges
+    %     plotm(latitude_edge_ok, longitude_edge_ok, '.k','markersize',3,'linewidth',1)
+
+    title([datestr(t_beg_num, 'ddmmmyyyy') ' to ' datestr(t_end_num, 'ddmmmyyyy')])
+    xlabel(['Min: ' num2str(min_dist(tt)) ' Max: ' num2str(max_dist(tt))]) %' Avg: ' num2str(avg_dist(tt))])
+
+    sgtitle(['Correlation over 0.45 for ' num2str(freq_range1) '-' num2str(freq_range2) ' Hz'])
     % printer currently OFF
     %%%%%%%%%%%% TURN ON AND OFF PRINTING %%%%%%%%%%%%%%%%%%%%%%%%
 %         print(gcf,['./new_figs/spatial_corr_result/jasa_plot/' num2str(freq_range1) '_' ... 
@@ -414,6 +460,16 @@ for tt=3:loop_end
 %       
 
 end
+    c=colorbar;
+    c.Label.String = 'Correlation coefficient';
+    caxis([0.4 0.7]);
+    c.Layout.Tile = 'east';
+    tfig.TileSpacing = 'compact';
+    tig.Padding = 'compact';
+    tfig.Position = [];
+    ll = legend([pn px pa],{'Minimum', 'Maximum', 'Average'})
+    ll.Layout.Tile = 'west'
+    ll.Title.String = 'Distance Markers'
 %%%% end of the figure generator %%%%
 % savestring = ['cutoff_' num2str(freq_range1) '_' num2str(freq_range2) '_icecorr']
 %     save(savestring,'freq_range1','freq_range2','corr_spa_ave2_cut','area_cov','min_dist','minlat','minlon',...
