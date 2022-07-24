@@ -30,8 +30,16 @@ ind_capt=4;
 % f2=[80 500 1000 2000 350];
 
 %%% NEW Frequencies that I do
-f1=[40 450 900 1250 250];
-f2=[60 550 1100 1750 350];
+% f1=[40 450 900 1250 250];
+% f2=[60 550 1100 1750 350];
+
+f1 = zeros(1,40);
+f2 = zeros(1,40);
+
+for i=1:40
+   f1(i)= 25 + 50*(i-1);
+   f2(i)= 75 + 50*(i-1);
+end
 
 ANL=squeeze(vPSD_kinda(:,:,ind_p,ind_capt));
 LTSA=squeeze(vPSD_pwelch_kinda(:,:,ind_capt));
@@ -90,5 +98,5 @@ for ff=1:Nf
     title('Raw data')
 end
 
-save ANL_SHRU1 timestamp_num_spectro SPL_ANL SPL_raw  ind_p ind_capt f1 f2 Nf Nt ...
+save ANL_SHRU1_bigfreqs timestamp_num_spectro SPL_ANL SPL_raw  ind_p ind_capt f1 f2 Nf Nt ...
     T_ssmi timestamp_num_ssmi T_ecmwf timestamp_num_ecmwf T_smos timestamp_num_smos T_temp timestamp_num_temp 
