@@ -15,7 +15,7 @@ addpath('/home/kfung/Downloads/CANAPE/new_figs/')
 % load spatial_cor_results_interp_new_shru1.mat
 freq_range1 = 900;
 freq_range2 = 1100;
-filename1 = ['spatial_cor_results_interp_new_shru1_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
+filename1 = ['spatial_cor_results_interp_new_shru1_50' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
 filename2 = ['spatial_cor_results_interp_new_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
 
 freq_range3 = 1250;
