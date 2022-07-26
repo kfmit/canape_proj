@@ -13,15 +13,15 @@ addpath('/home/kfung/Downloads/CANAPE/new_figs/')
 % comes from spatial_corr_analysis_loop_interp_new_SHRU1.m
 % ORIGINAL
 % load spatial_cor_results_interp_new_shru1.mat
-freq_range1 = 900;
-freq_range2 = 1100;
-filename1 = ['spatial_cor_results_interp_new_shru1_50' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
-filename2 = ['spatial_cor_results_interp_new_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
+freq_range1 = 475;
+freq_range2 = 525;
+filename1 = ['spatial_cor_results_interp_new_shru1_50Hz_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
+filename2 = ['spatial_cor_results_interp_new_SHRU5_50Hz_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
 
-freq_range3 = 1250;
-freq_range4 = 1750;
-filename3 = ['spatial_cor_results_interp_new_shru1_' num2str(freq_range3) '_' num2str(freq_range4) '.mat'];
-filename4 = ['spatial_cor_results_interp_new_' num2str(freq_range3) '_' num2str(freq_range4) '.mat'];
+freq_range3 = 975;
+freq_range4 = 1025;
+filename3 = ['spatial_cor_results_interp_new_shru1_50Hz_' num2str(freq_range3) '_' num2str(freq_range4) '.mat'];
+filename4 = ['spatial_cor_results_interp_new_SHRU5_50Hz_' num2str(freq_range3) '_' num2str(freq_range4) '.mat'];
 
 % Load SHRU1 files, SKIPPED
 %spatial_cor_results_interp_new_shru1_1250_1750.mat
@@ -163,7 +163,8 @@ for tt=3:loop_end  % loop 1 long
 
     h = get(0,'children');
     scrsz = get(0,'ScreenSize');
-    set(h,'Position',[scrsz(1) scrsz(2) scrsz(3)/2 floor(scrsz(4)*0.66)]);
+%     set(h,'Position',[scrsz(1) scrsz(2) scrsz(3)/2 floor(scrsz(4)*0.66)]);
+    set(h,'Position',scrsz);
 %     set(h,'Position',[scrsz(1) scrsz(2) 2567 1112]); % [x y width height]
 %     on full screen
 
@@ -378,7 +379,8 @@ for tt=3:loop_end  % loop 1 long
 
     % printer currently OFF
     %%%%%%%%%%%% TURN ON AND OFF PRINTING %%%%%%%%%%%%%%%%%%%%%%%%
-        print(gcf,['./new_figs/spatial_corr_result/jasa_plot/' num2str(freq_range1) '_' ... 
+    % og path: './new_figs/spatial_corr_result/jasa_plot/'
+        print(gcf,['./new_figs/spatial_corr_result_50/' num2str(freq_range1) '_' ... 
             num2str(freq_range4) '/spatial_corr_' datestr(t_beg_num, 'yyyymmdd') '-' datestr(t_end_num, 'yyyymmdd')]  ...
             ,'-dpng')
 

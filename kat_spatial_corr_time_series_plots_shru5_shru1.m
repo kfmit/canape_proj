@@ -9,14 +9,19 @@ addpath('/home/kfung/Downloads/CANAPE/new_figs/')
 % comes from spatial_corr_analysis_loop_interp_new_SHRU1.m
 % ORIGINAL
 % load spatial_cor_results_interp_new_shru1.mat
-freq_array1 = [40 250 450 900 1250];
-freq_array2 = [60 350 550 1100 1750];
+% freq_array1 = [40 250 450 900 1250];
+% freq_array2 = [60 350 550 1100 1750];
 
-for ind_f = 1:5
+freq_array1 = [275 475 975 1475];
+freq_array2 = [325 525 1025 1525];
+
+for ind_f = 1:4
 freq_range1 = freq_array1(ind_f);
 freq_range2 = freq_array2(ind_f);
-filename1 = ['spatial_cor_results_interp_new_shru1_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
-filename2 = ['spatial_cor_results_interp_new_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
+% og name shru1: 'spatial_cor_results_interp_new_shru1_'
+% ogname shru5: 'spatial_cor_results_interp_new_'
+filename1 = ['spatial_cor_results_interp_new_shru1_50Hz_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
+filename2 = ['spatial_cor_results_interp_new_SHRU5_50Hz_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
 
 % NEW
 load(filename1);
@@ -139,7 +144,8 @@ for tt=3:11
     %     figure
     h = get(0,'children');
     scrsz = get(0,'ScreenSize');
-    set(h,'Position',[scrsz(1) scrsz(2) scrsz(3)/2 floor(scrsz(4)*0.66)])
+    %     set(h,'Position',[scrsz(1) scrsz(2) scrsz(3)/2 floor(scrsz(4)*0.66)])
+    set(h,'Position',scrsz)
 
     J=squeeze(corr_spa_ave2(:,:,tt));
     J(tutu)=NaN;
@@ -354,8 +360,9 @@ for tt=3:11
     sgtitle(['Ice Drift Correlation for ' num2str(freq_range1) ' to ' num2str(freq_range2) ' Hz'])
 
     %%%%%%%%%%%% TURN ON AND OFF PRINTING %%%%%%%%%%%%%%%%%%%%%%%%
+% og path: ./new_figs/spatial_corr_result/jasa_plot
 
-    print(gcf,['./new_figs/spatial_corr_result/jasa_plot/' num2str(freq_range1) '_' num2str(freq_range2) '/spatial_corr_' ...
+    print(gcf,['./new_figs/spatial_corr_result_50/' num2str(freq_range1) '_' num2str(freq_range2) '/spatial_corr_' ...
         datestr(t_beg_num, 'yyyymmdd') '-' datestr(t_end_num, 'yyyymmdd') '_' num2str(freq_range1) '_' num2str(freq_range2)]  ...
         ,'-dpng')
 
