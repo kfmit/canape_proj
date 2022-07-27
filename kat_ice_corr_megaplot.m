@@ -1,30 +1,31 @@
 %% MUST RUN ICE COVERAGE CORR FIRST
-% run kat_ice_coverage_corr.m
+% run kat_ice_coverage_corr_cutter.m
 
 close all
 figure(2)
 t=tiledlayout(3,3)
 
-freq_array1=[40 250 450 900 1250];
-freq_array2=[60 350 550 1100 1750];
+freq_array1=[275 475 975 1475];
+freq_array2=[325 525 1025 1525];
 
     loop_end = 11;
 for tt=3:loop_end
     %% CUTTING VALUES
     %%% plot data over 0.5
+    cut_val = 0.40
     corr_spa_ave2_cut=zeros(119,177,tt);
 
 
-    % take out anything below 0.45
+    % take out anything below cutval
     for i = 1:119
         for ii = 1:177
             if 1==isnan(corr_spa_ave2(i,ii,tt))
                 corr_spa_ave2_cut(i,ii,tt)=nan;
                 % do nothing
-            elseif (corr_spa_ave2(i,ii,tt))<=0.4
+            elseif (corr_spa_ave2(i,ii,tt))<=cut_val
                 % change tht index to a nan if less than 0.4
                 corr_spa_ave2_cut(i,ii,tt)=nan;
-            elseif (corr_spa_ave2(i,ii,tt))>0.4
+            elseif (corr_spa_ave2(i,ii,tt))>cut_val
                 corr_spa_ave2_cut(i,ii,tt)=corr_spa_ave2(i,ii,tt);
             end
         end
@@ -81,7 +82,7 @@ for tt=3:loop_end
     %%%% make the figure(s) plotting this
     
 %     figure('visible','off');
-    figure(2)
+    fig_name= figure(2)
     nexttile
     maph=axesm('MapProjection','lambertstd','MapLatLimit',latlimit,'MapLonLimit',lonlimit);
 
@@ -126,14 +127,11 @@ for tt=3:loop_end
     title([datestr(t_beg_num, 'dd mmm yyyy') ' to ' datestr(t_end_num, 'dd mmm yyyy')])
     xlabel(['Min: ' num2str(min_dist(tt)) ' Max: ' num2str(max_dist(tt))]) %' Avg: ' num2str(avg_dist(tt))])
 
-    sgtitle(['Correlation over 0.45 for ' num2str(freq_range1) '-' num2str(freq_range2) ' Hz'])
+    sgtitle(['Correlation over ' num2str(cut_val) ' for ' num2str(freq_range1) '-' num2str(freq_range2) ' Hz'])
 
 
     % printer currently OFF
     %%%%%%%%%%%% TURN ON AND OFF PRINTING %%%%%%%%%%%%%%%%%%%%%%%%
-%         print(gcf,['./new_figs/spatial_corr_result/jasa_plot/' num2str(freq_range1) '_' ... 
-%             num2str(freq_range4) '/spatial_corr_' datestr(t_beg_num, 'yyyymmdd') '-' datestr(t_end_num, 'yyyymmdd')]  ...
-%             ,'-dpng')
 
 %       
 
@@ -146,8 +144,15 @@ end
     t.TileSpacing = 'compact';
     t.Padding = 'compact';
     ll = legend([pn px pa],{'Minimum', 'Maximum', 'Average'})
-    ll.Layout.Tile = 'west'
+    ll.Layout.Tile = 'north'
     ll.Title.String = 'Distance Markers'
+    ll.FontSize = 10;
+
+    scrsz = get(0,'ScreenSize');
+set(fig_name,'Position',scrsz)
+        print(gcf,['./new_figs/spatial_corr_result_50/megamap_' num2str(freq_range1) '_' ... 
+            num2str(freq_range2) '_' num2str(cut_val)],'-dpng')
+
 %%%% end of the figure generator %%%%
 % savestring = ['cutoff_' num2str(freq_range1) '_' num2str(freq_range2) '_icecorr']
 %     save(savestring,'freq_range1','freq_range2','corr_spa_ave2_cut','area_cov','min_dist','minlat','minlon',...

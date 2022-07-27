@@ -13,14 +13,15 @@ addpath('/home/kfung/Downloads/CANAPE/new_figs/')
 % comes from spatial_corr_analysis_loop_interp_new_SHRU1.m
 % ORIGINAL
 % load spatial_cor_results_interp_new_shru1.mat
-freq_array1=[40 250 450 900 1250];
-freq_array2=[60 350 550 1100 1750];
+freq_array1=[275 475 975 1475];
+freq_array2=[325 525 1025 1525];
 
-for i=1:5 %(length(freq_array1)-1)
+
+for i=1:4 %(length(freq_array1)-1)
     freq_range1 = freq_array1(i);
     freq_range2 = freq_array2(i);
-    filename1 = ['spatial_cor_results_interp_new_shru1_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
-    filename2 = ['spatial_cor_results_interp_new_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
+    filename1 = ['spatial_cor_results_interp_new_shru1_50Hz_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
+    filename2 = ['spatial_cor_results_interp_new_SHRU5_50Hz_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
 
 %     load(filename1);
 %     % save the specific variables to new names!
@@ -225,7 +226,7 @@ for i=1:5 %(length(freq_array1)-1)
     %             num2str(freq_range4) '/spatial_corr_' datestr(t_beg_num, 'yyyymmdd') '-' datestr(t_end_num, 'yyyymmdd')]  ...
     %             ,'-dpng')
 
-    savestring = ['SHRU5_' num2str(freq_range1) '_' num2str(freq_range2) 'corr']
+    savestring = ['SHRU5_50Hz_' num2str(freq_range1) '_' num2str(freq_range2) 'corr']
     save(savestring,'freq_range1','freq_range2','maxcorr_lat','maxcorr_lon','cmax','dist')
 end     % end of loop going through freqs
 

@@ -19,8 +19,8 @@ freq_array2=[60 350 550 1100 1750];
 for i=3:3 %(length(freq_array1)-1)
     freq_range1 = freq_array1(i);
     freq_range2 = freq_array2(i);
-    filename1 = ['spatial_cor_results_interp_new_shru1_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
-    filename2 = ['spatial_cor_results_interp_new_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
+    filename1 = ['spatial_cor_results_interp_new_shru1_50Hz' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
+    filename2 = ['spatial_cor_results_interp_new_SH' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
 end
 load(filename1);
 % save the specific variables to new names!
@@ -165,7 +165,7 @@ end        % end of loop looking through the months
 
 %% load oldcorrs for plotting
 % its either shru1_max, c_max_shru1, dist_shru1
-load('cutoff_40_60_icecorr.mat')
+load('cutoff_50Hz_275_325_icecorr.mat')
 min_dist50 = min_dist; minlat50 = minlat; minlon50 = minlon;
 max_dist50 = max_dist; maxlat50 = maxlat; maxlon50 = maxlon;
 avg_dist50 = avg_dist; avglat50 = avglat; avglon50 = avglon;
