@@ -13,14 +13,14 @@ addpath('/home/kfung/Downloads/CANAPE/new_figs/')
 % comes from spatial_corr_analysis_loop_interp_new_SHRU1.m
 % ORIGINAL
 % load spatial_cor_results_interp_new_shru1.mat
-freq_array1=[40 250 450 900 1250];
-freq_array2=[60 350 550 1100 1750];
+freq_array1=[275 475 975 1475];
+freq_array2=[325 525 1025 1525];
 
 for i=3:3 %(length(freq_array1)-1)
     freq_range1 = freq_array1(i);
     freq_range2 = freq_array2(i);
-    filename1 = ['spatial_cor_results_interp_new_shru1_50Hz' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
-    filename2 = ['spatial_cor_results_interp_new_SH' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
+    filename1 = ['spatial_cor_results_interp_new_shru1_50Hz_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
+    filename2 = ['spatial_cor_results_interp_new_SHRU5_50Hz_' num2str(freq_range1) '_' num2str(freq_range2) '.mat'];
 end
 load(filename1);
 % save the specific variables to new names!
@@ -165,35 +165,42 @@ end        % end of loop looking through the months
 
 %% load oldcorrs for plotting
 % its either shru1_max, c_max_shru1, dist_shru1
-load('cutoff_50Hz_275_325_icecorr.mat')
-min_dist50 = min_dist; minlat50 = minlat; minlon50 = minlon;
-max_dist50 = max_dist; maxlat50 = maxlat; maxlon50 = maxlon;
-avg_dist50 = avg_dist; avglat50 = avglat; avglon50 = avglon;
-area_cov50 = area_cov;
+cut_val = '0.4';
+filename300 = strcat('noisland_50Hz_', cut_val ,'_275_325_icecorr.mat');
+filename500 = strcat('noisland_50Hz_', cut_val ,'_475_525_icecorr.mat');
+filename1000 = strcat('noisland_50Hz_', cut_val ,'_975_1025_icecorr.mat');
+filename1500 = strcat('noisland_50Hz_', cut_val ,'_1475_1525_icecorr.mat');
+% 
+% load('cutoff_50Hz_275_325_icecorr.mat')
+% min_dist50 = min_dist; minlat50 = minlat; minlon50 = minlon;
+% max_dist50 = max_dist; maxlat50 = maxlat; maxlon50 = maxlon;
+% avg_dist50 = avg_dist; avglat50 = avglat; avglon50 = avglon;
+% area_cov50 = area_cov;
 
-load('cutoff_250_350_icecorr.mat')
+load(filename300)
 min_dist300 = min_dist; minlat300 = minlat; minlon300 = minlon;
 max_dist300 = max_dist; maxlat300 = maxlat; maxlon300 = maxlon;
 avg_dist300 = avg_dist; avglat300 = avglat; avglon300 = avglon;
 area_cov300 = area_cov;
 
-load('cutoff_450_550_icecorr.mat')
+load(filename500)
 min_dist500 = min_dist; minlat500 = minlat; minlon500 = minlon;
 max_dist500 = max_dist; maxlat500 = maxlat; maxlon500 = maxlon;
 avg_dist500 = avg_dist; avglat500 = avglat; avglon500 = avglon;
 area_cov500 = area_cov;
 
-load('cutoff_900_1100_icecorr.mat')
+load(filename1000)
 min_dist1000 = min_dist; minlat1000 = minlat; minlon1000 = minlon;
 max_dist1000 = max_dist; maxlat1000 = maxlat; maxlon1000 = maxlon;
 avg_dist1000 = avg_dist; avglat1000 = avglat; avglon1000 = avglon;
 area_cov1000 = area_cov;
 
-load('cutoff_1250_1750_icecorr.mat')
+load(filename1500)
 min_dist1500 = min_dist; minlat1500 = minlat; minlon1500 = minlon;
 max_dist1500 = max_dist; maxlat1500 = maxlat; maxlon1500 = maxlon;
 avg_dist1500 = avg_dist; avglat1500 = avglat; avglon1500 = avglon;
 area_cov1500 = area_cov;
+avglat1500(7) = avglat2(7); avglon1500(7)=avglon2(7);
 
 % its either shru1_max, c_max_shru1, dist_shru1
 load('combo_40_60corr.mat')
@@ -203,28 +210,28 @@ maxcorr_val50 = cmax;
 dist50 = dist;
 size50=maxcorr_val50*200;
 
-load('combo_250_350corr.mat')
+load('combo_50_275_325corr.mat')
 maxcorr_lat300 = maxcorr_lat;
 maxcorr_lon300 = maxcorr_lon;
 maxcorr_val300 = cmax;
 dist300 = dist;
 size300=maxcorr_val300*200;
 
-load('combo_450_550corr.mat')
+load('combo_50_475_525corr.mat')
 maxcorr_lat500 = maxcorr_lat;
 maxcorr_lon500 = maxcorr_lon;
 maxcorr_val500 = cmax;
 dist500 = dist;
 size500=maxcorr_val500*200;
 
-load('combo_900_1100corr.mat')
+load('combo_50_975_1025corr.mat')
 maxcorr_lat1000 = maxcorr_lat;
 maxcorr_lon1000 = maxcorr_lon;
 maxcorr_val1000 = cmax;
 dist1000 = dist;
 size1000=maxcorr_val1000*200;
 
-load('combo_1250_1750corr.mat')
+load('combo_50_1475_1525corr.mat')
 maxcorr_lat1500 = maxcorr_lat;
 maxcorr_lon1500 = maxcorr_lon;
 maxcorr_val1500 = cmax;
@@ -251,7 +258,7 @@ sz = 50*ones(1,11);
 
 % scatter with color change,
 %     sp50 = scatterm(maxcorr_lat50(3:end),maxcorr_lon50(3:end),size50(3:end),maxcorr_val50(3:end),'o');
-%         sp300 = scatterm(maxcorr_lat300(3:end),maxcorr_lon300(3:end),size300(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','g');
+%     sp300 = scatterm(maxcorr_lat300(3:end),maxcorr_lon300(3:end),size300(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','g');
 %     sp500 = scatterm(maxcorr_lat500(3:end),maxcorr_lon500(3:end),size500(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','b');
 %     sp1000 = scatterm(maxcorr_lat1000(3:end),maxcorr_lon1000(3:end),size1000(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','c');
 %     sp1500 = scatterm(maxcorr_lat1500(3:end),maxcorr_lon1500(3:end),size1500(3:end),maxcorr_val50(3:end),'filled','MarkerEdgeColor','m');
@@ -319,7 +326,7 @@ c.Label.String = 'Correlation Area (km^{2})';
 %     c.Label.String = 'Correlation coefficient';
 %     ccc=[0.5 0.7];  %%% for caxis
 %     caxis(ccc)
-title('Farthest Point of Correlation Spread')
+title(['Farthest Point of >' cut_val ' Correlation Spread'])
 %     ylabel([num2str(freq_range1) '-' num2str(freq_range2)], 'fontsize',30,'fontweight', 'bold')
 
 %     legend('SHRU5','50 Hz','300 Hz','500 Hz','1000 Hz','1500 Hz')
@@ -358,7 +365,7 @@ p500 = plotm(minlat500,minlon500,'-vb','linewidth',1);
 p1000 = plotm(minlat1000,minlon1000,'-vc','linewidth',1);
 p1500 = plotm(minlat1500,minlon1500,'-vm','linewidth',1);
 
-title('Closest Point of Correlation Spread')
+title(['Closest Point of >' cut_val ' Correlation Spread'])
 %     ylabel([num2str(freq_range1) '-' num2str(freq_range2)], 'fontsize',30,'fontweight', 'bold')
 
 %     legend('SHRU5','50 Hz','300 Hz','500 Hz','1000 Hz','1500 Hz')
@@ -422,7 +429,7 @@ c=colorbar;
 c.Label.String = 'Correlation Area (km^{2})';
 % ccc=[0.4 0.7];  %%% for caxis
 % caxis(ccc)
-title('Average of Ice Drift Correlation Spread')
+title(['Average of >' cut_val ' Ice Drift Correlation Spread'])
 %     ylabel([num2str(freq_range1) '-' num2str(freq_range2)], 'fontsize',30,'fontweight', 'bold')
 
 %     legend('SHRU5','50 Hz','300 Hz','500 Hz','1000 Hz','1500 Hz')
@@ -443,7 +450,7 @@ xlim([starter_tick ender_tick])
 ylabel('Area (km^{2})')
 % legend('50 Hz','300 Hz','500 Hz','1000 Hz','1500 Hz')
 legend('300 Hz','500 Hz','1000 Hz','1500 Hz')
-title('Area Covered by >0.4 Correlation')
+title(['Area Covered by >' cut_val ' Correlation'])
 
 colormap(1-gray)
 c=colorbar;
@@ -515,7 +522,7 @@ ylabel('Distance (km)')
 xlabel('Date')
 title('1500 Hz')
 
-sgtitle('Distance between midpoint of correlation spread and SHRU5')
+sgtitle(['Distance between midpoint of >' cut_val ' correlation spread and SHRU5'])
 %% ERRORBARS: what about all one plot %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 figure
@@ -529,7 +536,7 @@ datetick('x',2,'keepticks')
 xlim([starter_tick ender_tick])
 xlabel('Date')
 ylabel('Distance (km)')
-title('Distance between Correlation Spread and SHRU5')
+title(['Distance between >' cut_val ' Correlation Spread and SHRU5'])
 legend('300Hz','500Hz','1000Hz','1500Hz')
 
 
