@@ -433,7 +433,8 @@ title(['Average of >' cut_val ' Ice Drift Correlation Spread'])
 %     ylabel([num2str(freq_range1) '-' num2str(freq_range2)], 'fontsize',30,'fontweight', 'bold')
 
 %     legend('SHRU5','50 Hz','300 Hz','500 Hz','1000 Hz','1500 Hz')
-legend('SHRU5','300 Hz','500 Hz','1000 Hz','1500 Hz')
+avg_ll = legend('SHRU5','300 Hz','500 Hz','1000 Hz','1500 Hz');
+avg_ll.Location = 'southwest'
 
 %% Area coverage %%%%%%%%%%%%%%%%%%%%%%%
 
