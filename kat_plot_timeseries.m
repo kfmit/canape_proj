@@ -79,7 +79,7 @@ end
 hold off
 xlim([736878 736885])
 % ylim([50 110])
-ylabel('SPL ANL')
+ylabel(['ANL (dB re 1 \muPa^2 / Hz)'])
 legend('500 Hz','1000 Hz','1500 Hz','Location','best')
 
 % datetick('x',1)

@@ -1,3 +1,5 @@
+%% This is a code that will plot four histograms on the same plot
+
 close all
 clear all
 clc
@@ -84,7 +86,7 @@ vecsize = ANL_vec(2)-ANL_vec(1)
 end
 
 leg = legend('Ice with duct', 'Ice without duct', 'No ice')
-leg.Layout.Tile = 'East'
+leg.Layout.Tile = 'North'
 sgtitle('Ambient Noise for Selected Frequencies')
 
 %% another figure
@@ -154,4 +156,4 @@ vecsize = ANL_vec(2)-ANL_vec(1)
 end
 
 leg = legend('Ice with duct', 'Ice without duct', 'No ice')
-% leg.Layout.Tile = 'East'
+leg.Location = 'north'

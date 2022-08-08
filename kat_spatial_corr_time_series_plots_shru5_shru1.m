@@ -15,7 +15,7 @@ addpath('/home/kfung/Downloads/CANAPE/new_figs/')
 freq_array1 = [275 475 975 1475];
 freq_array2 = [325 525 1025 1525];
 
-for ind_f = 1:4
+for ind_f = 1:1
 freq_range1 = freq_array1(ind_f);
 freq_range2 = freq_array2(ind_f);
 % og name shru1: 'spatial_cor_results_interp_new_shru1_'
@@ -362,9 +362,9 @@ for tt=3:11
     %%%%%%%%%%%% TURN ON AND OFF PRINTING %%%%%%%%%%%%%%%%%%%%%%%%
 % og path: ./new_figs/spatial_corr_result/jasa_plot
 
-    print(gcf,['./new_figs/spatial_corr_result_50/' num2str(freq_range1) '_' num2str(freq_range2) '/spatial_corr_' ...
-        datestr(t_beg_num, 'yyyymmdd') '-' datestr(t_end_num, 'yyyymmdd') '_' num2str(freq_range1) '_' num2str(freq_range2)]  ...
-        ,'-dpng')
+%     print(gcf,['./new_figs/spatial_corr_result_50/' num2str(freq_range1) '_' num2str(freq_range2) '/spatial_corr_' ...
+%         datestr(t_beg_num, 'yyyymmdd') '-' datestr(t_end_num, 'yyyymmdd') '_' num2str(freq_range1) '_' num2str(freq_range2)]  ...
+%         ,'-dpng')
 
     %      print(gcf,['./spatial_corr_result/jasa_plot/spatial_corr_' ...
     %         datestr(t_beg_num, 'yyyymmdd') '-' datestr(t_end_num, 'yyyymmdd')]  ...
