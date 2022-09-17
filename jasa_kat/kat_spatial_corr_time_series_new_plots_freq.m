@@ -1,4 +1,6 @@
 %%%% A code to let me fuck around with the spatial correlation anlysis
+% kat_spatial_corr_time_series_freqs and kat_spatial_corr_time_series_freq
+% are the same thing
 
 
 close all

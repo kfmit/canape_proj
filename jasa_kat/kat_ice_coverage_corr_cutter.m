@@ -376,7 +376,7 @@ for i = f_ind:f_ind % length(freq_array2)
 
         %%%% make the figure(s) plotting this
 
-        figure('visible','off');
+        figure('visible','on');
         %     figure(2)
         %     nexttile
         maph=axesm('MapProjection','lambertstd','MapLatLimit',latlimit,'MapLonLimit',lonlimit);
@@ -484,7 +484,6 @@ for i = f_ind:f_ind % length(freq_array2)
 
 
     end % of timer
-
 
 %     savestring = ['noisland_50Hz_' num2str(cut_val) '_' num2str(freq_range1) '_' num2str(freq_range2) '_icecorr.mat']
 % 

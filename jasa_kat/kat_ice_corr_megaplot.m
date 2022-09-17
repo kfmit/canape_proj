@@ -1,5 +1,5 @@
 %% MUST RUN ICE COVERAGE CORR FIRST
-% run kat_ice_coverage_corr_cutter.m
+% run kat_ice_coverage_corr_cutter.m FIRST
 
 close all
 figure(2)
