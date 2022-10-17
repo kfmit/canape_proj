@@ -20,7 +20,7 @@ load sunrise_sunset_2017_feb_april.mat
 % f2=[60 550 1100 1750 350];
 fourfreq = [5 10 15 20 25 30];
 figure
-tiledlayout(3,2)
+tiledlayout(2,3)
 
 for i=1:6
 ff=fourfreq(i); % this picks the freq
